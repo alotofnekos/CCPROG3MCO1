@@ -6,7 +6,6 @@ import com.bill.Bill;
 import com.billWallet.BillWallet;
 
 public class BillMain {
-    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         BillWallet userWallet = new BillWallet();
         BillWallet vndStock = new BillWallet();
@@ -45,5 +44,4 @@ public class BillMain {
                 userWallet.clearWallet();
             }
         }
-    }
 }
