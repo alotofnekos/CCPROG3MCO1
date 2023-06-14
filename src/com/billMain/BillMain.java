@@ -18,9 +18,7 @@ public class BillMain {
         vndStock.addBill(new Bill(10, 500));  
         while (vndStock.getTotalAmount() > 0) {
             System.out.println("Total amount of bills in Vending machine: " + vndStock.getTotalAmount());
-            System.out.print("Enter the price of your item:");
-            int price = sc.nextInt();
-            sc.nextLine();
+           
             int[] userBills = new int[userWallet.getBills().length];
 
             for (int i = 0; i < userBills.length; i++) {
@@ -29,11 +27,11 @@ public class BillMain {
                 userBills[i] = sc.nextInt();
                 sc.nextLine();
                 userWallet.addBill(new Bill(userBills[i], billValue));
-                if(userWallet.getTotalAmount()>price){
-                    break;
-                }
             }
-
+            System.out.println("Total amount inserted:" + userWallet.getTotalAmount());
+            System.out.print("Enter the price of your item:");
+            int price = sc.nextInt();
+            sc.nextLine();
 
             if ((vndStock.pay(userWallet.getTotalAmount(),price)==true)&&(userWallet.getTotalAmount()>price)) {
                 userWallet.transferBills(vndStock);
