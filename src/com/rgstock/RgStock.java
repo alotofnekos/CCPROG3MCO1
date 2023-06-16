@@ -7,7 +7,6 @@ import com.rgitem.RgItem;
  * The class Rg stock
  */ 
 public class RgStock{
-
 /* 
  * Main
  *
