@@ -51,11 +51,11 @@ public class RgItem{
     }
 
     //Quantity Add/Sub
-    public void changeQuantitySub(int intQty){
+    public void changeQtySub(int intQty){
         this.intQty = this.intQty - intQty;
     }
 
-    public void changeQuantityAdd(int intQty){
+    public void changeQtyAdd(int intQty){
         this.intQty = this.intQty + intQty;
     }
 
