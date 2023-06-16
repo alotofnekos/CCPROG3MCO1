@@ -1,6 +1,6 @@
-package 
+package com.rgstock;
 
-import mcone.rgitem.RgItem;
+import com.rgitem.RgItem;
 
 public class RgStock{
     public static void main(String[] args){
