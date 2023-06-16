@@ -1,6 +1,6 @@
 package com.rgitem;
  /*
- * The class Rg item
+ * The class  Rg item
  */ 
 public class RgItem{
     
@@ -12,7 +12,7 @@ public class RgItem{
 /*
  * Sets the name
  *
- * @param strName the str name. 
+ * @param strName  The String Name. 
  */
     public void setName(String strName){ 
         this.strName = strName;
@@ -20,7 +20,7 @@ public class RgItem{
 /*
  * Sets the description
  *
- * @param strDesc the str description. 
+ * @param strDesc  The String Description. 
  */
     public void setDesc(String strDesc){ 
         this.strDesc = strDesc;
@@ -28,7 +28,7 @@ public class RgItem{
 /*
  * Sets the calorie
  *
- * @param intCalorie the int calorie. 
+ * @param intCalorie  The Integer Calorie. 
  */
     public void setCalorie(int intCalorie){ 
         this.intCalorie = intCalorie;
@@ -36,7 +36,7 @@ public class RgItem{
 /*
  * Sets the price
  *
- * @param intPrice the int price. 
+ * @param intPrice  The Integer Price. 
  */
     public void setPrice(int intPrice){ 
         this.intPrice = intPrice;
@@ -44,7 +44,7 @@ public class RgItem{
 /*
  * Sets the quantity
  *
- * @param intQty the int quantity. 
+ * @param intQty  The Integer Quantity. 
  */
     public void setQty(int intQty){ 
         this.intQty = intQty;
@@ -52,7 +52,7 @@ public class RgItem{
 /*
  * Gets the name
  *
- * @return the name
+ * @return  The String Name
  */
     public String getName(){ 
         return strName;
@@ -60,7 +60,7 @@ public class RgItem{
 /*
  * Gets the description
  *
- * @return the description
+ * @return  The String Description
  */
     public String getDesc(){ 
         return strDesc;
@@ -68,7 +68,7 @@ public class RgItem{
 /*
  * Gets the calorie
  *
- * @return the calorie
+ * @return  The Integer Calorie
  */
     public int getCalorie(){ 
         return intCalorie;
@@ -76,7 +76,7 @@ public class RgItem{
 /*
  * Gets the price
  *
- * @return the price
+ * @return  The Integer Price
  */
     public int getPrice(){ 
         return intPrice;
@@ -84,7 +84,7 @@ public class RgItem{
 /*
  * Gets the quantity
  *
- * @return the quantity
+ * @return  The Integer Quantity
  */
     public int getQty(){ 
         return intQty;
@@ -92,7 +92,7 @@ public class RgItem{
 /*
  * Changes the quantity through subtraction
  *
- * @param intQty the int quantity to be subtracted. 
+ * @param intQty  The Integer quantity to be subtracted. 
  */
     public void changeQtySub(int intQty){ 
         this.intQty = this.intQty - intQty;
@@ -100,7 +100,7 @@ public class RgItem{
 /*
  * Changes the quantity through addition
  *
- * @param intQty the int quantity to be added.
+ * @param intQty  The Integer quantity to be added.
  */
     public void changeQtyAdd(int intQty){ 
         this.intQty = this.intQty + intQty;
