@@ -1,4 +1,4 @@
-package com.rgitem;
+package mcone.rgitem;
 
 public class RgItem{
     
@@ -25,8 +25,8 @@ public class RgItem{
         this.intPrice = intPrice;
     }
 
-    public void setQty(int intCalorie){
-        this.intCalorie = intCalorie;
+    public void setQty(int intQty){
+        this.intQty = intQty;
     }
 
     //Get
