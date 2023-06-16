@@ -42,6 +42,7 @@ public class RgStock{
                     System.out.println("Invalid Input...");
                     break;
             }
+            System.out.println("------------------------");
         }
 
         intMenu.close();
