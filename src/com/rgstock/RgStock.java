@@ -73,7 +73,6 @@ public class RgStock{
         int intCounter = CountCakes(Item);
         int intBooleanEdit = 0;
         String strLetter;
-        String strSentence;
 
         System.out.print("Choose a cake to edit [1 - " + intCounter + "]: ");
         intChosen = intMenu.nextInt();
@@ -96,8 +95,8 @@ public class RgStock{
                         break;
                     case 2:
                         System.out.print("Enter new Description: ");
-                        strSentence = strEdit.nextLine();
-                        Item[intChosen].setDesc(strSentence);
+                        strLetter = strEdit.nextLine();
+                        Item[intChosen].setDesc(strLetter);
                         break;
                     case 3:
                         System.out.print("Enter new Calorie: ");
@@ -151,7 +150,7 @@ public class RgStock{
             }
     }
 /*
- * Add cake
+ * Add Cake into the Array
  *
  * @param Item  The Item Array. 
  * @param intMenu  The Integer Scanner. 
@@ -197,7 +196,7 @@ public class RgStock{
         System.out.println("------------------------");
     }
 /*
- * Count cakes
+ * Count Cakes within the Array.
  *
  * @param Item  The Item Array. 
  * @return int  Number of Cakes in Item.
@@ -217,9 +216,7 @@ public class RgStock{
         return intCounter;
     }
 /*
- *
- * Display stock menu
- *
+ * Display Stock Menu
  */
     public static void DisplayStockMenu(){ 
 
@@ -231,7 +228,7 @@ public class RgStock{
         System.out.print("Enter Choice: ");
     }
 /*
- * Display edit menu
+ * Display Edit Menu
  */
     public static void DisplayEditMenu(){ 
 
