@@ -8,7 +8,7 @@ public class RgStock{
         int a;
         RgItem[] Item = new RgItem[100];
 
-        for(a=0;a<20;a++){
+        for(a=0;a<100;a++){
             Item[a] = new RgItem();
         }
         
