@@ -1,5 +1,8 @@
 package com.rgstock;
 
+import java.util.Scanner;
+import com.rgitem.RgItem;
+
 /*
  * The class Rg stock
  */ 
