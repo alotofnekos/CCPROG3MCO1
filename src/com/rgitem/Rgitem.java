@@ -1,4 +1,4 @@
-package mcone.rgitem;
+package com.rgitem;
 
 public class RgItem{
     
