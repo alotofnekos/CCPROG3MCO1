@@ -1,10 +1,17 @@
 package com.rgstock;
 
-import java.util.Scanner;
-import mcone.rgitem.RgItem;
-
+/*
+ * The class Rg stock
+ */ 
 public class RgStock{
-    public static void main(String[] args){
+
+/* 
+ * Main
+ *
+ * @param args the args. 
+ */
+    public static void main(String[] args){ 
+
 
         int intLoop;
         int intChosen;
@@ -31,7 +38,7 @@ public class RgStock{
                     editMenu(Item, intMenu, strEdit);
                     break;
                 case 3:
-                    AddCake(Item, intMenu);
+                    AddCake(Item, intMenu, strEdit);
                     break;
                 case 4:
                     System.out.println("Returning...");
@@ -42,16 +49,21 @@ public class RgStock{
                     System.out.println("Invalid Input...");
                     break;
             }
-            System.out.println("------------------------");
         }
 
         intMenu.close();
         strEdit.close();
 
     }
-    
+/*
+ * Edit menu
+ *
+ * @param Item  The Item Array. 
+ * @param intMenu  the Integer Scanner. 
+ * @param strEdit  the String Scanner. 
+ */
+    public static void editMenu(RgItem[] Item, Scanner intMenu, Scanner strEdit){ 
 
-    public static void editMenu(RgItem[] Item, Scanner intMenu, Scanner strEdit){
 
         int intChosen;
         int intEditMenu;
@@ -128,6 +140,7 @@ public class RgStock{
                         System.out.println("Invalid Input...");
                         break;
                     }
+                    System.out.println("------------------------");
                 }
             }
             else{
@@ -135,22 +148,29 @@ public class RgStock{
                 System.out.println("------------------------");
             }
     }
+/*
+ * Add cake
+ *
+ * @param Item  The Item Array. 
+ * @param intMenu  The Integer Scanner. 
+ * @param strEdit  the String Scanner.
+ */
+    public static void AddCake(RgItem[] Item, Scanner intMenu, Scanner strEdit){ 
 
-    public static void AddCake(RgItem[] Item, Scanner intMenu){
 
         int intValue;
         int intCounter = CountCakes(Item);
         String strName;
         String strDesc;
 
-        intMenu.nextLine();
+        strEdit.nextLine();
         System.out.print("Enter Name: ");
-        strName = intMenu.nextLine();
+        strName = strEdit.nextLine();
         Item[intCounter].setName(strName);
         System.out.println("------------------------");
 
         System.out.print("Enter Description: ");
-        strDesc = intMenu.nextLine();
+        strDesc = strEdit.nextLine();
         Item[intCounter].setDesc(strDesc);
         System.out.println("------------------------");
         
@@ -176,8 +196,14 @@ public class RgStock{
         System.out.println("Cake Registration Done");
         System.out.println("------------------------");
     }
+/*
+ * Count cakes
+ *
+ * @param Item  The Item Array. 
+ * @return int  Number of Cakes in Item.
+ */
+    public static int CountCakes(RgItem[] Item){ 
 
-    public static int CountCakes(RgItem[] Item){
 
         int intLoop;
         int intCounter = 0;
@@ -190,8 +216,13 @@ public class RgStock{
 
         return intCounter;
     }
+/*
+ *
+ * Display stock menu
+ *
+ */
+    public static void DisplayStockMenu(){ 
 
-    public static void DisplayStockMenu(){
         System.out.println("[1] Initialize Standard 10 Cakes");
         System.out.println("[2] Edit Cake");
         System.out.println("[3] Add Cake");
@@ -199,8 +230,11 @@ public class RgStock{
         System.out.println("------------------------");
         System.out.print("Enter Choice: ");
     }
-    
-    public static void DisplayEditMenu(){
+/*
+ * Display edit menu
+ */
+    public static void DisplayEditMenu(){ 
+
         System.out.println("[1] Edit Name");
         System.out.println("[2] Edit Description");
         System.out.println("[3] Edit Calorie");
@@ -212,8 +246,13 @@ public class RgStock{
         System.out.println("------------------------");
         System.out.print("Enter Choice: ");
     }
+/*
+ * Initialize
+ *
+ * @param Item  The Item Array. 
+ */
+    public static void Initialize(RgItem[] Item){ 
 
-    public static void Initialize(RgItem[] Item){
 
         Item[0].setName("Apple Crumble");
         Item[0].setDesc("Treat yourself with our irresistible apple crumble! Indulge in layers of tender apples, delicately spiced with cinnamon, and crowned with a mouthwatering crumbly crust.");
@@ -274,7 +313,5 @@ public class RgStock{
         Item[9].setCalorie(266);
         Item[9].setPrice(180);
         Item[9].setQty(0);
-
     }
-
 }
