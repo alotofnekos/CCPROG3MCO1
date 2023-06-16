@@ -59,6 +59,7 @@ public class RgItem{
         this.intQty = this.intQty + intQty;
     }
 
+    //Delete
     public void deleteCake(){
         intQty = 0;
         intPrice = 0;
@@ -67,6 +68,7 @@ public class RgItem{
         strName = " ";
     }
 
+    //Display
     public void displayCake(){
         System.out.println("Cake Name: " + strName);
         System.out.println("Description: " + strDesc);
