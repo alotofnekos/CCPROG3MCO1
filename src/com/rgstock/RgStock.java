@@ -1,30 +1,185 @@
 package com.rgstock;
 
-import com.rgitem.RgItem;
 import java.util.Scanner;
+import mcone.rgitem.RgItem;
 
 public class RgStock{
     public static void main(String[] args){
 
         int intLoop;
         int intChosen;
-        int intEdit;
-        int intChange;
-        int intCounter = 0;
         int intBoolean = 0;
-        String strLetter;
         RgItem[] Item = new RgItem[100];
-        Scanner itemNum = new Scanner(System.in);
-        Scanner itemNam = new Scanner(System.in);
-        Scanner itemDsc = new Scanner(System.in);
+        Scanner intMenu = new Scanner(System.in);
+        Scanner strEdit = new Scanner(System.in);
         
-
         for(intLoop=0;intLoop<100;intLoop++){
             Item[intLoop] = new RgItem();
             Item[intLoop].setName(" ");
         }
 
-        Initialize(Item);
+        while(intBoolean == 0){
+            DisplayStockMenu();
+            intChosen = intMenu.nextInt();
+            switch(intChosen){
+                case 1:
+                    System.out.println("Initialized 10 Base Cakes...");
+                    System.out.println("------------------------");
+                    Initialize(Item);
+                    break;
+                case 2:
+                    editMenu(Item, intMenu, strEdit);
+                    break;
+                case 3:
+                    AddCake(Item, intMenu);
+                    break;
+                case 4:
+                    System.out.println("Returning...");
+                    System.out.println("------------------------");
+                    intBoolean = 1;
+                    break;
+                default:
+                    System.out.println("Invalid Input...");
+                    break;
+            }
+        }
+
+        intMenu.close();
+        strEdit.close();
+
+    }
+    
+
+    public static void editMenu(RgItem[] Item, Scanner intMenu, Scanner strEdit){
+
+        int intChosen;
+        int intEditMenu;
+        int intChange;
+        int intCounter = CountCakes(Item);
+        int intBooleanEdit = 0;
+        String strLetter;
+        String strSentence;
+
+        System.out.print("Choose a cake to edit [1 - " + intCounter + "]: ");
+        intChosen = intMenu.nextInt();
+        System.out.println("------------------------");
+
+        if((intChosen > 0)&&(intChosen <= intCounter)){
+            intChosen = intChosen - 1;
+                
+            while(intBooleanEdit == 0){
+                Item[intChosen].displayCake();
+                DisplayEditMenu();
+                intEditMenu = intMenu.nextInt();
+
+                switch(intEditMenu) {
+                    case 1:
+                        intMenu.nextLine();
+                        System.out.print("Enter new Name: ");
+                        strLetter = strEdit.nextLine();
+                        Item[intChosen].setName(strLetter);
+                        break;
+                    case 2:
+                        System.out.print("Enter new Description: ");
+                        strSentence = strEdit.nextLine();
+                        Item[intChosen].setDesc(strSentence);
+                        break;
+                    case 3:
+                        System.out.print("Enter new Calorie: ");
+                        intChange = intMenu.nextInt();
+                        Item[intChosen].setCalorie(intChange);
+                        break;
+                    case 4:
+                        System.out.print("Enter new Price: ");
+                        intChange = intMenu.nextInt();
+                        Item[intChosen].setPrice(intChange);
+                        break;
+                    case 5:
+                        System.out.print("Enter Inventory to Add: ");
+                        intChange = intMenu.nextInt();
+                        if(Item[intChosen].getQty() + intChange <= 10){
+                            Item[intChosen].changeQtyAdd(intChange);
+                        }
+                        else{
+                            System.out.println("Invalid Number. Exceeds Total Capacity of 10");
+                        }
+                        break;
+                    case 6:
+                        System.out.print("Enter Inventory to Subtract: ");
+                        intChange = intMenu.nextInt();
+                        if(Item[intChosen].getQty() - intChange >= 0){
+                            Item[intChosen].changeQtySub(intChange);
+                        }
+                        else{
+                            System.out.println("Invalid Number. Quantity Results to Less Than 0");
+                        }
+                        break;
+                    case 7:
+                        System.out.println("Cake Deleted...");
+                        Item[intChosen].deleteCake();
+                        intBooleanEdit = 1;
+                        break;
+                    case 8:
+                        System.out.println("Returned...");
+                        intBooleanEdit = 1;
+                        break;
+                    default:
+                        System.out.println("Invalid Input...");
+                        break;
+                    }
+                }
+            }
+            else{
+                System.out.println("Invalid Cake...");
+                System.out.println("------------------------");
+            }
+    }
+
+    public static void AddCake(RgItem[] Item, Scanner intMenu){
+
+        int intValue;
+        int intCounter = CountCakes(Item);
+        String strName;
+        String strDesc;
+
+        intMenu.nextLine();
+        System.out.print("Enter Name: ");
+        strName = intMenu.nextLine();
+        Item[intCounter].setName(strName);
+        System.out.println("------------------------");
+
+        System.out.print("Enter Description: ");
+        strDesc = intMenu.nextLine();
+        Item[intCounter].setDesc(strDesc);
+        System.out.println("------------------------");
+        
+        System.out.print("Enter Calorie Count: ");
+        intValue = intMenu.nextInt();
+        Item[intCounter].setCalorie(intValue);
+        System.out.println("------------------------");
+        
+        System.out.print("Enter Price Count: ");
+        intValue = intMenu.nextInt();
+        Item[intCounter].setPrice(intValue);
+        System.out.println("------------------------");
+        
+        System.out.print("Enter Quantity Count [Max 10]: ");
+        intValue = intMenu.nextInt();
+        if(intValue > 10){
+            intValue = 0;
+            System.out.println("Invalid Quantity. Setting Quantity to 0.");
+        }
+        Item[intCounter].setQty(intValue);
+        System.out.println("------------------------");
+
+        System.out.println("Cake Registration Done");
+        System.out.println("------------------------");
+    }
+
+    public static int CountCakes(RgItem[] Item){
+
+        int intLoop;
+        int intCounter = 0;
 
         for(intLoop=0;intLoop<100;intLoop++){
             if(Item[intLoop].getName() != " "){
@@ -32,80 +187,19 @@ public class RgStock{
             }
         }
 
-        System.out.print("Choose a cake to edit [1 - " + intCounter + "]: ");
-        intChosen = itemNum.nextInt() - 1;
+        return intCounter;
+    }
+
+    public static void DisplayStockMenu(){
+        System.out.println("[1] Initialize Standard 10 Cakes");
+        System.out.println("[2] Edit Cake");
+        System.out.println("[3] Add Cake");
+        System.out.println("[4] Return");
         System.out.println("------------------------");
-
-        while(intBoolean == 0)
-        {
-            Item[intChosen].displayCake();
-            Menu();
-            intEdit = itemNum.nextInt();
-
-            switch(intEdit) {
-                case 1:
-                    System.out.print("Enter new Name: ");
-                    strLetter = itemNam.nextLine();
-                    Item[intChosen].setName(strLetter);
-                    break;
-                case 2:
-                    System.out.print("Enter new Description: ");
-                    strLetter = itemDsc.nextLine();
-                    Item[intChosen].setDesc(strLetter);
-                    break;
-                case 3:
-                    System.out.print("Enter new Calorie: ");
-                    intChange = itemNum.nextInt();
-                    Item[intChosen].setCalorie(intChange);
-                    break;
-                case 4:
-                    System.out.print("Enter new Price: ");
-                    intChange = itemNum.nextInt();
-                    Item[intChosen].setPrice(intChange);
-                    break;
-                case 5:
-                    System.out.print("Enter Inventory to Add: ");
-                    intChange = itemNum.nextInt();
-                    if(Item[intChosen].getQty() + intChange <= 10){
-                        Item[intChosen].changeQtyAdd(intChange);
-                    }
-                    else{
-                        System.out.println("Invalid Number. Exceeds Total Capacity of 10");
-                    }
-                    break;
-                case 6:
-                    System.out.print("Enter Inventory to Subtract: ");
-                    intChange = itemNum.nextInt();
-                    if(Item[intChosen].getQty() - intChange >= 0){
-                        Item[intChosen].changeQtySub(intChange);
-                    }
-                    else{
-                        System.out.println("Invalid Number. Quantity Results to Less Than 0");
-                    }
-                    break;
-                case 7:
-                    System.out.println("Cake Deleted...");
-                    Item[intChosen].deleteCake();
-                    intBoolean = 1;
-                    break;
-                case 8:
-                    System.out.println("Returned...");
-                    intBoolean = 1;
-                    break;
-                default:
-                    System.out.println("Invalid Input...");
-                   break;
-            }
-            System.out.println("------------------------");
-        }
-    
-        itemNum.close();
-        itemNam.close();
-        itemDsc.close();
-    
+        System.out.print("Enter Choice: ");
     }
     
-    public static void Menu(){
+    public static void DisplayEditMenu(){
         System.out.println("[1] Edit Name");
         System.out.println("[2] Edit Description");
         System.out.println("[3] Edit Calorie");
@@ -181,4 +275,5 @@ public class RgStock{
         Item[9].setQty(0);
 
     }
+
 }
