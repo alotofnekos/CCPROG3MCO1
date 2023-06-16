@@ -194,7 +194,6 @@ public class RgStock{
         }
         Item[intCounter].setQty(intValue);
         System.out.println("------------------------");
-
         System.out.println("Cake Registration Done");
         System.out.println("------------------------");
     }
