@@ -47,7 +47,7 @@ public class RgItem{
     }
 
     public int getQty(){
-        return intCalorie;
+        return intQty;
     }
 
     //Quantity Add/Sub
