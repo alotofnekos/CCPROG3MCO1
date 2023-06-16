@@ -75,5 +75,6 @@ public class RgItem{
         System.out.println("Calorie Count: " + intCalorie);
         System.out.println("Price: " + intPrice);
         System.out.println("Available Quantity: " + intQty);
+        System.out.println("---------------------------");
     }
 }
