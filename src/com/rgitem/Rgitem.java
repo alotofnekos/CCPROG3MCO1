@@ -15,7 +15,6 @@ public class RgItem{
  * @param strName the str name. 
  */
     public void setName(String strName){ 
-
         this.strName = strName;
     }
 /*
@@ -24,7 +23,6 @@ public class RgItem{
  * @param strDesc the str description. 
  */
     public void setDesc(String strDesc){ 
-
         this.strDesc = strDesc;
     }
 /*
@@ -33,7 +31,6 @@ public class RgItem{
  * @param intCalorie the int calorie. 
  */
     public void setCalorie(int intCalorie){ 
-
         this.intCalorie = intCalorie;
     }
 /*
@@ -42,7 +39,6 @@ public class RgItem{
  * @param intPrice the int price. 
  */
     public void setPrice(int intPrice){ 
-
         this.intPrice = intPrice;
     }
 /*
@@ -51,7 +47,6 @@ public class RgItem{
  * @param intQty the int quantity. 
  */
     public void setQty(int intQty){ 
-
         this.intQty = intQty;
     }
 /*
@@ -60,7 +55,6 @@ public class RgItem{
  * @return the name
  */
     public String getName(){ 
-
         return strName;
     }
 /*
@@ -69,7 +63,6 @@ public class RgItem{
  * @return the description
  */
     public String getDesc(){ 
-
         return strDesc;
     }
 /*
@@ -78,7 +71,6 @@ public class RgItem{
  * @return the calorie
  */
     public int getCalorie(){ 
-
         return intCalorie;
     }
 /*
@@ -87,7 +79,6 @@ public class RgItem{
  * @return the price
  */
     public int getPrice(){ 
-
         return intPrice;
     }
 /*
@@ -96,7 +87,6 @@ public class RgItem{
  * @return the quantity
  */
     public int getQty(){ 
-
         return intQty;
     }
 /*
@@ -105,7 +95,6 @@ public class RgItem{
  * @param intQty the int quantity to be subtracted. 
  */
     public void changeQtySub(int intQty){ 
-
         this.intQty = this.intQty - intQty;
     }
 /*
@@ -114,14 +103,12 @@ public class RgItem{
  * @param intQty the int quantity to be added.
  */
     public void changeQtyAdd(int intQty){ 
-
         this.intQty = this.intQty + intQty;
     }
 /*
  * Deletes cake
  */
     public void deleteCake(){ 
-
         intQty = 0;
         intPrice = 0;
         intCalorie = 0;
@@ -132,7 +119,6 @@ public class RgItem{
  * Display cake
  */
     public void displayCake(){ 
-
         System.out.println("Cake Name: " + strName);
         System.out.println("Description: " + strDesc);
         System.out.println("Calorie Count: " + intCalorie);
