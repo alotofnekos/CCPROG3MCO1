@@ -8,7 +8,6 @@ public class RgItem{
     private String strDesc;
     private String strName;
 
-    //Set
     public void setName(String strName){
         this.strName = strName;
     }
@@ -29,7 +28,6 @@ public class RgItem{
         this.intQty = intQty;
     }
 
-    //Get
     public String getName(){
         return strName;
     }
@@ -50,7 +48,6 @@ public class RgItem{
         return intQty;
     }
 
-    //Quantity Add/Sub
     public void changeQtySub(int intQty){
         this.intQty = this.intQty - intQty;
     }
@@ -59,7 +56,6 @@ public class RgItem{
         this.intQty = this.intQty + intQty;
     }
 
-    //Delete
     public void deleteCake(){
         intQty = 0;
         intPrice = 0;
@@ -68,13 +64,12 @@ public class RgItem{
         strName = " ";
     }
 
-    //Display
     public void displayCake(){
         System.out.println("Cake Name: " + strName);
         System.out.println("Description: " + strDesc);
         System.out.println("Calorie Count: " + intCalorie);
         System.out.println("Price: " + intPrice);
         System.out.println("Available Quantity: " + intQty);
-        System.out.println("---------------------------");
+        System.out.println("------------------------");
     }
 }
