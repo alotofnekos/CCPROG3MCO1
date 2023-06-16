@@ -165,7 +165,6 @@ public class RgStock{
         String strName;
         String strDesc;
 
-        strEdit.nextLine();
         System.out.print("Enter Name: ");
         strName = strEdit.nextLine();
         Item[intCounter].setName(strName);
