@@ -1,6 +1,6 @@
-package mcone.data;
+package com.rgitem;
 
-public class RGITEM {
+public class Rgitem {
     
     private int[] intQty;
     private int[] intPrice;
