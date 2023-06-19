@@ -27,7 +27,7 @@ public class BillVending {
                         vnd.setDefaults();
                     }
                     else if(subChoice==4){
-                        vnd.collect();
+                        vnd.collectProfit();
                     }
                     else if(subChoice==5){
                         vnd.reciept();
