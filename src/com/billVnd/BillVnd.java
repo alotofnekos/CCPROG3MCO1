@@ -4,14 +4,18 @@ import java.util.Scanner;
 
 import com.bill.Bill;
 import com.billWallet.BillWallet;
+import com.rgitem.Rgitem;
 
 public class BillVnd {
-    
+    private Rgitem itemStock;
     private BillWallet userWallet;
     private BillWallet vndStock;
+    private BillWallet vndProfit;
     public BillVnd(){
         userWallet = new BillWallet();
         vndStock = new BillWallet();
+        vndProfit = new BillWallet();
+
     }
     public void billMaintenance(){
         Scanner sc = new Scanner(System.in);
@@ -26,6 +30,14 @@ public class BillVnd {
                 }
         }
         //sc.close();
+    }
+    public void itemMaintenance(){
+
+    }
+
+    public void collectProfit(){
+        System.out.println("Total Profit obtained: "+vndProfit.getTotalAmount()+ ". Clearing wallet.");
+        vndProfit.clearWallet();
     }
     public void purchaseItem(){
         Scanner sc = new Scanner(System.in);
@@ -69,7 +81,7 @@ public class BillVnd {
                 userWallet.clearWallet();
             }
             else if ((vndStock.pay(userWallet.getTotalAmount(),price)==true)&&(userWallet.getTotalAmount()>price)) {
-                userWallet.transferBills(vndStock);
+                userWallet.transferBills(vndProfit);
             } 
 
             else{
@@ -78,6 +90,19 @@ public class BillVnd {
             }
         }   
         //sc.close();     
+    }
+    
+    public void setDefaults(){
+        //sets stock of ten for all bills
+        int defaultStock = 10;
+        for (int i = 0; i < vndStock.getBills().length; i++) {
+                int billValue = vndStock.getBills()[i].getValue();
+                vndStock.addBill(new Bill(defaultStock, billValue));
+        }
+        //set a preset stock for cakes
+
+
+
     }
     
 }
