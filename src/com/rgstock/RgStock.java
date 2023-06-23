@@ -3,11 +3,11 @@ package com.rgstock;
 import java.util.Scanner;
 import com.rgitem.RgItem;
 
-/*
+/**
  * The class Rg stock
  */ 
 public class RgStock{
-/* 
+/**
  * Main
  *
  * @param args the args. 
@@ -56,7 +56,7 @@ public class RgStock{
         strEdit.close();
 
     }
-/*
+/**
  * Edit menu
  *
  * @param Item  The Item Array. 
@@ -148,7 +148,7 @@ public class RgStock{
                 System.out.println("------------------------");
             }
     }
-/*
+/**
  * Add cake
  *
  * @param Item  The Item Array. 
@@ -194,7 +194,7 @@ public class RgStock{
         System.out.println("Cake Registration Done");
         System.out.println("------------------------");
     }
-/*
+/**
  * Count cakes
  *
  * @param Item  The Item Array. 
@@ -214,7 +214,7 @@ public class RgStock{
 
         return intCounter;
     }
-/*
+/**
  *
  * Display stock menu
  *
@@ -244,7 +244,7 @@ public class RgStock{
         System.out.println("------------------------");
         System.out.print("Enter Choice: ");
     }
-/*
+/**
  * Initialize
  *
  * @param Item  The Item Array. 
