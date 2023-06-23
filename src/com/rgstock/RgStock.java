@@ -12,8 +12,7 @@ public class RgStock{
  *
  * @param args the args. 
  */
-    public static void main(String[] args){ 
-
+    public void stockMenu(){ 
 
         int intLoop;
         int intChosen;
@@ -64,7 +63,7 @@ public class RgStock{
  * @param intMenu  the Integer Scanner. 
  * @param strEdit  the String Scanner. 
  */
-    public static void editMenu(RgItem[] Item, Scanner intMenu, Scanner strEdit){ 
+    public void editMenu(RgItem[] Item, Scanner intMenu, Scanner strEdit){ 
 
 
         int intChosen;
@@ -150,13 +149,13 @@ public class RgStock{
             }
     }
 /*
- * Add Cake into the Array
+ * Add cake
  *
  * @param Item  The Item Array. 
  * @param intMenu  The Integer Scanner. 
  * @param strEdit  the String Scanner.
  */
-    public static void AddCake(RgItem[] Item, Scanner intMenu, Scanner strEdit){ 
+    public void AddCake(RgItem[] Item, Scanner intMenu, Scanner strEdit){ 
 
 
         int intValue;
@@ -196,12 +195,12 @@ public class RgStock{
         System.out.println("------------------------");
     }
 /*
- * Count Cakes within the Array.
+ * Count cakes
  *
  * @param Item  The Item Array. 
  * @return int  Number of Cakes in Item.
  */
-    public static int CountCakes(RgItem[] Item){ 
+    public int CountCakes(RgItem[] Item){ 
 
 
         int intLoop;
@@ -216,9 +215,11 @@ public class RgStock{
         return intCounter;
     }
 /*
- * Display Stock Menu
+ *
+ * Display stock menu
+ *
  */
-    public static void DisplayStockMenu(){ 
+    public void DisplayStockMenu(){ 
 
         System.out.println("[1] Initialize Standard 10 Cakes");
         System.out.println("[2] Edit Cake");
@@ -228,9 +229,9 @@ public class RgStock{
         System.out.print("Enter Choice: ");
     }
 /*
- * Display Edit Menu
+ * Display edit menu
  */
-    public static void DisplayEditMenu(){ 
+    public void DisplayEditMenu(){ 
 
         System.out.println("[1] Edit Name");
         System.out.println("[2] Edit Description");
@@ -248,7 +249,7 @@ public class RgStock{
  *
  * @param Item  The Item Array. 
  */
-    public static void Initialize(RgItem[] Item){ 
+    public void Initialize(RgItem[] Item){ 
 
         int intCounter = CountCakes(Item);
 
