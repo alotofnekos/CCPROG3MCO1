@@ -252,64 +252,24 @@ public class RgStock{
 
         int intCounter = CountCakes(Item);
 
-        Item[intCounter].setName("Apple Crumble");
-        Item[intCounter].setDesc("Treat yourself with our irresistible apple crumble! Indulge in layers of tender apples, delicately spiced with cinnamon, and crowned with a mouthwatering crumbly crust.");
-        Item[intCounter].setCalorie(156);
-        Item[intCounter].setPrice(160);
-        Item[intCounter].setQty(0);
+        Item[intCounter].rgItem("Apple Crumble", 0, 160, 156, "Treat yourself with our irresistible apple crumble! Indulge in layers of tender apples, delicately spiced with cinnamon, and crowned with a mouthwatering crumbly crust.");
 
-        Item[intCounter+1].setName("Black Forest Cake");
-        Item[intCounter+1].setDesc("Savor the taste of the classic Black Forest Cake, where the tangy sweetness of cherries perfectly complements the rich chocolate layers, all brought together with light and fluffy cream.");
-        Item[intCounter+1].setCalorie(282);
-        Item[intCounter+1].setPrice(140);
-        Item[intCounter+1].setQty(0);
+        Item[intCounter+1].rgItem("Black Forest Cake", 0, 140, 282,"Savor the taste of the classic Black Forest Cake, where the tangy sweetness of cherries perfectly complements the rich chocolate layers, all brought together with light and fluffy cream.");
+
+        Item[intCounter+2].rgItem("Premium Chocolate Cake", 0, 190, 389, "Treat yourself with this moist, rich, and bittersweet Chocolate cake, adorned with a lucious dark chocolate ganache.");
         
-        Item[intCounter+2].setName("Premium Chocolate Cake");
-        Item[intCounter+2].setDesc("Treat yourself with this moist, rich, and bittersweet Chocolate cake, adorned with a lucious dark chocolate ganache.");
-        Item[intCounter+2].setCalorie(389);
-        Item[intCounter+2].setPrice(190);
-        Item[intCounter+2].setQty(0);
-        
-        Item[intCounter+3].setName("Strawberry Shortcake");
-        Item[intCounter+3].setDesc("Indulge in the freshness of Benguet's finest strawberries with our Strawberry Bliss Short Cake. Enjoy the perfect blend of delicate sponge cake, heavenly cream, and juicy strawberries, sourced directly from the strawberry capital of the Philippines.");
-        Item[intCounter+3].setCalorie(247);
-        Item[intCounter+3].setPrice(250);
-        Item[intCounter+3].setQty(0);
+        Item[intCounter+3].rgItem("Strawberry Shortcake", 0, 250, 247, "Indulge in the freshness of Benguet's finest strawberries with our Strawberry Bliss Short Cake. Enjoy the perfect blend of delicate sponge cake, heavenly cream, and juicy strawberries, sourced directly from the strawberry capital of the Philippines.");
 
-        Item[intCounter+4].setName("Lemon Blueberry Cake");
-        Item[intCounter+4].setDesc("Enjoy the vibrant combination of zesty lemon-infused cake, bursting blueberries, and the smooth cream cheese frosting that creates a perfect balance of flavors with this Lemon Blueberry cake.");
-        Item[intCounter+4].setCalorie(244);
-        Item[intCounter+4].setPrice(240);
-        Item[intCounter+4].setQty(0);
+        Item[intCounter+4].rgItem("Lemon Blueberry Cake", 0, 240, 244, "Enjoy the vibrant combination of zesty lemon-infused cake, bursting blueberries, and the smooth cream cheese frosting that creates a perfect balance of flavors with this Lemon Blueberry cake.");
 
-        Item[intCounter+5].setName("Chocolate Mousse Cake");
-        Item[intCounter+5].setDesc("Revel in joy with a decadent dessert featuring layers of moist chocolate cake and creamy chocolate mousse, altogether forming a rich and indulgent treat.");
-        Item[intCounter+5].setCalorie(349);
-        Item[intCounter+5].setPrice(220);
-        Item[intCounter+5].setQty(0);
+        Item[intCounter+5].rgItem("Chocolate Mousse Cake", 0, 220, 349, "Revel in joy with a decadent dessert featuring layers of moist chocolate cake and creamy chocolate mousse, altogether forming a rich and indulgent treat.");
 
-        Item[intCounter+6].setName("Butterscotch Cake");
-        Item[intCounter+6].setDesc("A delectable dessert with a moist and fluffy base infused with the rich and caramel-like flavor of butterscotch, topped with creamy butterscotch frosting and caramel sauce.");
-        Item[intCounter+6].setCalorie(379);
-        Item[intCounter+6].setPrice(280);
-        Item[intCounter+6].setQty(0);
+        Item[intCounter+6].rgItem("Butterscotch Cake", 0, 280, 379, "A delectable dessert with a moist and fluffy base infused with the rich and caramel-like flavor of butterscotch, topped with creamy butterscotch frosting and caramel sauce.");
 
-        Item[intCounter+7].setName("Mocha Delight Cake");
-        Item[intCounter+7].setDesc("Enjoy a heavenly dessert featuring layers of moist chocolate cake infused with the bold flavors of coffee and espresso, complemented by a velvety mocha frosting for a delightful and indulgent treat.");
-        Item[intCounter+7].setCalorie(308);
-        Item[intCounter+7].setPrice(210);
-        Item[intCounter+7].setQty(0);
+        Item[intCounter+7].rgItem("Mocha Delight Cake", 0, 210, 308, "Enjoy a heavenly dessert featuring layers of moist chocolate cake infused with the bold flavors of coffee and espresso, complemented by a velvety mocha frosting for a delightful and indulgent treat.");
 
-        Item[intCounter+8].setName("Mango Surprise Cake");
-        Item[intCounter+8].setDesc("A tropical delight that combines layers of moist mango-infused cake with a luscious mango filling, providing a delightful surprise of fruity sweetness in every bite.");
-        Item[intCounter+8].setCalorie(228);
-        Item[intCounter+8].setPrice(230);
-        Item[intCounter+8].setQty(0);
+        Item[intCounter+8].rgItem("Mango Surprise Cake", 0, 230, 228, "A tropical delight that combines layers of moist mango-infused cake with a luscious mango filling, providing a delightful surprise of fruity sweetness in every bite.");
 
-        Item[intCounter+9].setName("Carrot Cake");
-        Item[intCounter+9].setDesc("Treat yourself with a moist and flavorful dessert made with grated carrots, warm spices, and a rich cream cheese frosting, offering a delightful combination of sweet and spiced flavors.");
-        Item[intCounter+9].setCalorie(266);
-        Item[intCounter+9].setPrice(180);
-        Item[intCounter+9].setQty(0);
+        Item[intCounter+9].rgItem("Carrot Cake", 0, 180, 266, "Treat yourself with a moist and flavorful dessert made with grated carrots, warm spices, and a rich cream cheese frosting, offering a delightful combination of sweet and spiced flavors.");
     }
 }
