@@ -158,41 +158,40 @@ public class RgStock{
     public void AddCake(RgItem[] Item, Scanner intMenu, Scanner strEdit){ 
 
 
-        int intValue;
+        int intCalorie;
+        int intPrice;
+        int intQty;
         int intCounter = CountCakes(Item);
         String strName;
         String strDesc;
 
         System.out.print("Enter Name: ");
         strName = strEdit.nextLine();
-        Item[intCounter].setName(strName);
         System.out.println("------------------------");
 
         System.out.print("Enter Description: ");
         strDesc = strEdit.nextLine();
-        Item[intCounter].setDesc(strDesc);
         System.out.println("------------------------");
         
         System.out.print("Enter Calorie Count: ");
-        intValue = intMenu.nextInt();
-        Item[intCounter].setCalorie(intValue);
+        intCalorie = intMenu.nextInt();
         System.out.println("------------------------");
         
         System.out.print("Enter Price Count: ");
-        intValue = intMenu.nextInt();
-        Item[intCounter].setPrice(intValue);
+        intPrice = intMenu.nextInt();
         System.out.println("------------------------");
         
         System.out.print("Enter Quantity Count [Max 10]: ");
-        intValue = intMenu.nextInt();
-        if(intValue > 10){
-            intValue = 0;
+        intQty = intMenu.nextInt();
+        if(intQty > 10){
+            intQty = 0;
             System.out.println("Invalid Quantity. Setting Quantity to 0.");
         }
-        Item[intCounter].setQty(intValue);
         System.out.println("------------------------");
         System.out.println("Cake Registration Done");
         System.out.println("------------------------");
+
+        Item[intCounter].rgItem(strName, intQty, intPrice, intCalorie, strDesc);
     }
 /**
  * Count cakes
