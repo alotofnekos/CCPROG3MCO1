@@ -266,7 +266,7 @@ public class RgStock{
  *  @return boolean  Returns true if the cake is valid, false otherwise.
  */
     public boolean validItem(int cakeIndex) {
-        return (cakeIndex >= 0 && cakeIndex < Item.length && Item[cakeIndex].getName() != " ");
+        return (cakeIndex >= 0 && cakeIndex < Item.length && Item[cakeIndex].getName() != " " && Item[cakeIndex].getQty()>0);
     }
 
 /**
