@@ -30,7 +30,7 @@ public class BillVending {
                         vnd.collectProfit();
                     }
                     else if(subChoice==5){
-                        vnd.reciept();
+                        vnd.receipt();
                     }
                     else if(subChoice==6){
                         System.out.println("Returning to the main menu...");
