@@ -34,9 +34,7 @@ public class RgStock{
 
     public void setStockDefaults(){
         for(int i = 0;i<Item.length;i++){
-            if(validItem(i)){
             Item[i].setQty(10);
-            }
         }
     }
 /**
@@ -266,7 +264,7 @@ public class RgStock{
  *  @return boolean  Returns true if the cake is valid, false otherwise.
  */
     public boolean validItem(int cakeIndex) {
-        return (cakeIndex >= 0 && cakeIndex < Item.length && Item[cakeIndex].getName() != " " && Item[cakeIndex].getQty()>0);
+        return (cakeIndex >= 0 && cakeIndex < Item.length && !Item[cakeIndex].getName().equals(" ") && Item[cakeIndex].getQty() > 0);
     }
 
 /**
