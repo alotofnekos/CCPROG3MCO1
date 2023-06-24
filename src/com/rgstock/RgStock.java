@@ -68,9 +68,10 @@ public class RgStock{
 
         System.out.print("Choose a cake to edit [1 - " + intCounter + "]: ");
         intChosen = intMenu.nextInt();
+        intMenu.nextLine();
         System.out.println("------------------------");
 
-        if((intChosen > 0)&&(intChosen <= intCounter)){
+        if(this.validItem(intChosen-1)){
             intChosen = intChosen - 1;
                 
             while(intBooleanEdit == 0){
@@ -86,7 +87,6 @@ public class RgStock{
                 System.out.println("------------------------");
                 System.out.print("Enter Choice: ");
                 intEditMenu = intMenu.nextInt();
-
                 switch(intEditMenu) {
                     case 1:
                         intMenu.nextLine();
@@ -95,21 +95,25 @@ public class RgStock{
                         Item[intChosen].setName(strLetter);
                         break;
                     case 2:
+                        intMenu.nextLine();
                         System.out.print("Enter new Description: ");
                         strLetter = strEdit.nextLine();
                         Item[intChosen].setDesc(strLetter);
                         break;
                     case 3:
+                        intMenu.nextLine();    
                         System.out.print("Enter new Calorie: ");
                         intChange = intMenu.nextInt();
                         Item[intChosen].setCalorie(intChange);
                         break;
                     case 4:
+                        intMenu.nextLine();    
                         System.out.print("Enter new Price: ");
                         intChange = intMenu.nextInt();
                         Item[intChosen].setPrice(intChange);
                         break;
                     case 5:
+                        intMenu.nextLine();    
                         System.out.print("Enter Inventory to Add: ");
                         intChange = intMenu.nextInt();
                         if(Item[intChosen].getQty() + intChange <= 10){
@@ -120,6 +124,7 @@ public class RgStock{
                         }
                         break;
                     case 6:
+                        intMenu.nextLine();    
                         System.out.print("Enter Inventory to Subtract: ");
                         intChange = intMenu.nextInt();
                         if(Item[intChosen].getQty() - intChange >= 0){
@@ -130,15 +135,18 @@ public class RgStock{
                         }
                         break;
                     case 7:
+                        intMenu.nextLine();
                         System.out.println("Cake Deleted...");
                         Item[intChosen].deleteCake();
                         intBooleanEdit = 1;
                         break;
                     case 8:
+                        intMenu.nextLine();
                         System.out.println("Returned...");
                         intBooleanEdit = 1;
                         break;
                     default:
+                        intMenu.nextLine();
                         System.out.println("Invalid Input...");
                         break;
                     }
@@ -206,7 +214,7 @@ public class RgStock{
             int intCounter = 0;
 
             for (intLoop = 0; intLoop < 20; intLoop++) {
-                if (this.Item[intLoop].getName() != null) {
+                if (!Item[intLoop].getName().equals(" ") ) {
                     intCounter = intCounter + 1;
                 }
             }
@@ -232,6 +240,18 @@ public class RgStock{
         return (cakeIndex >= 0 && cakeIndex < Item.length && !Item[cakeIndex].getName().equals(" ") && Item[cakeIndex].getQty() > 0);
     }
 
+/**
+ * Checks if there's any cake in stock
+ * @return boolean true if any cake is in stock, false otherwise
+ */
+    public boolean hasCakeInStock() {
+        for (int i = 0; i < Item.length; i++) {
+            if (Item[i].getQty() > 0) {
+                return true; // Found a cake with stock
+            }
+        }
+        return false; // No cakes have stock
+    }
 
 /**
  * Display the receipt showing the cake name, quantity, and total price for each cake.
@@ -256,18 +276,5 @@ public class RgStock{
  */
     public int getCakePrice(int cakeIndex) {
         return Item[cakeIndex].getPrice();
-    }
-
-/**
- * Checks if there's any cake in stock
- * @return boolean true if any cake is in stock, false otherwise
- */
-    public boolean hasCakeInStock() {
-        for (int i = 0; i < Item.length; i++) {
-            if (Item[i].getQty() > 0) {
-                return true; // Found a cake with stock
-            }
-        }
-        return false; // No cakes have stock
     }
 }
