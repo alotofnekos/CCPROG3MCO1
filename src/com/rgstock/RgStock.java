@@ -18,16 +18,19 @@ public class RgStock{
     public RgStock(){ 
         int intCounter = CountCakes(Item);
         Item = new RgItem[20];
-        Item[intCounter].rgItem("Apple Crumble", 0, 160, 156, "Treat yourself with our irresistible apple crumble! Indulge in layers of tender apples, delicately spiced with cinnamon, and crowned with a mouthwatering crumbly crust.");
-        Item[intCounter+1].rgItem("Black Forest Cake", 0, 140, 282,"Savor the taste of the classic Black Forest Cake, where the tangy sweetness of cherries perfectly complements the rich chocolate layers, all brought together with light and fluffy cream.");
-        Item[intCounter+2].rgItem("Premium Chocolate Cake", 0, 190, 389, "Treat yourself with this moist, rich, and bittersweet Chocolate cake, adorned with a lucious dark chocolate ganache.");        
-        Item[intCounter+3].rgItem("Strawberry Shortcake", 0, 250, 247, "Indulge in the freshness of Benguet's finest strawberries with our Strawberry Bliss Short Cake. Enjoy the perfect blend of delicate sponge cake, heavenly cream, and juicy strawberries, sourced directly from the strawberry capital of the Philippines.");
-        Item[intCounter+4].rgItem("Lemon Blueberry Cake", 0, 240, 244, "Enjoy the vibrant combination of zesty lemon-infused cake, bursting blueberries, and the smooth cream cheese frosting that creates a perfect balance of flavors with this Lemon Blueberry cake.");
-        Item[intCounter+5].rgItem("Chocolate Mousse Cake", 0, 220, 349, "Revel in joy with a decadent dessert featuring layers of moist chocolate cake and creamy chocolate mousse, altogether forming a rich and indulgent treat.");
-        Item[intCounter+6].rgItem("Butterscotch Cake", 0, 280, 379, "A delectable dessert with a moist and fluffy base infused with the rich and caramel-like flavor of butterscotch, topped with creamy butterscotch frosting and caramel sauce.");
-        Item[intCounter+7].rgItem("Mocha Delight Cake", 0, 210, 308, "Enjoy a heavenly dessert featuring layers of moist chocolate cake infused with the bold flavors of coffee and espresso, complemented by a velvety mocha frosting for a delightful and indulgent treat.");
-        Item[intCounter+8].rgItem("Mango Surprise Cake", 0, 230, 228, "A tropical delight that combines layers of moist mango-infused cake with a luscious mango filling, providing a delightful surprise of fruity sweetness in every bite.");
-        Item[intCounter+9].rgItem("Carrot Cake", 0, 180, 266, "Treat yourself with a moist and flavorful dessert made with grated carrots, warm spices, and a rich cream cheese frosting, offering a delightful combination of sweet and spiced flavors.");
+            public RgStock(){ 
+        int intCounter = CountCakes(Item);
+        Item = new RgItem[20];
+        Item[intCounter] = new RgItem("Apple Crumble", 0, 160, 156, "Treat yourself with our irresistible apple crumble! Indulge in layers of tender apples, delicately spiced with cinnamon, and crowned with a mouthwatering crumbly crust.");
+        Item[intCounter+1]= new RgItem("Black Forest Cake", 0, 140, 282,"Savor the taste of the classic Black Forest Cake, where the tangy sweetness of cherries perfectly complements the rich chocolate layers, all brought together with light and fluffy cream.");
+        Item[intCounter+2]= new RgItem("Premium Chocolate Cake", 0, 190, 389, "Treat yourself with this moist, rich, and bittersweet Chocolate cake, adorned with a lucious dark chocolate ganache.");        
+        Item[intCounter+3]= new RgItem("Strawberry Shortcake", 0, 250, 247, "Indulge in the freshness of Benguet's finest strawberries with our Strawberry Bliss Short Cake. Enjoy the perfect blend of delicate sponge cake, heavenly cream, and juicy strawberries, sourced directly from the strawberry capital of the Philippines.");
+        Item[intCounter+4]= new RgItem("Lemon Blueberry Cake", 0, 240, 244, "Enjoy the vibrant combination of zesty lemon-infused cake, bursting blueberries, and the smooth cream cheese frosting that creates a perfect balance of flavors with this Lemon Blueberry cake.");
+        Item[intCounter+5]= new RgItem("Chocolate Mousse Cake", 0, 220, 349, "Revel in joy with a decadent dessert featuring layers of moist chocolate cake and creamy chocolate mousse, altogether forming a rich and indulgent treat.");
+        Item[intCounter+6]= new RgItem("Butterscotch Cake", 0, 280, 379, "A delectable dessert with a moist and fluffy base infused with the rich and caramel-like flavor of butterscotch, topped with creamy butterscotch frosting and caramel sauce.");
+        Item[intCounter+7]= new RgItem("Mocha Delight Cake", 0, 210, 308, "Enjoy a heavenly dessert featuring layers of moist chocolate cake infused with the bold flavors of coffee and espresso, complemented by a velvety mocha frosting for a delightful and indulgent treat.");
+        Item[intCounter+8]= new RgItem("Mango Surprise Cake", 0, 230, 228, "A tropical delight that combines layers of moist mango-infused cake with a luscious mango filling, providing a delightful surprise of fruity sweetness in every bite.");
+        Item[intCounter+9]= new RgItem("Carrot Cake", 0, 180, 266, "Treat yourself with a moist and flavorful dessert made with grated carrots, warm spices, and a rich cream cheese frosting, offering a delightful combination of sweet and spiced flavors.");
     }
     public void setStockDefaults(){
         for(int i = 0;i<Item.length;i++){
