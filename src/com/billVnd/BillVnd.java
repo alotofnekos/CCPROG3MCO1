@@ -34,9 +34,33 @@ public class BillVnd {
         //sc.close();
     }
     public void itemMaintenance(){
-        vndItemSold.stockMenu();
+        //vndItemSold.stockMenu();
+        Scanner sc = new Scanner(System.in);
+        int intChosen=0;
+        while(intChosen != 3){
+            System.out.println("[1] Edit Cake");
+            System.out.println("[2] Add Cake");
+            System.out.println("[3] Return");
+            System.out.println("------------------------");
+            System.out.print("Enter Choice: ");
+            intChosen = sc.nextInt();
+            switch(intChosen){
+                case 1:
+                    vndItemStock.editMenu();
+                    break;
+                case 2:
+                    vndItemStock.addCake();
+                    break;
+                case 3:
+                    System.out.println("Returning...");
+                    System.out.println("------------------------");
+                    break;
+                default:
+                    System.out.println("Invalid Input...");
+                    break;
+            }
+        }
     }
-
     public void collectProfit(){
         System.out.println("Total Profit obtained: "+vndProfit.getTotalAmount()+ ". Clearing wallet.");
         vndProfit.clearWallet();
@@ -55,6 +79,7 @@ public class BillVnd {
             System.out.println("The Vending Machine can process change right now");
             canGiveChange = true;
         }
+        vndItemStock.displayMenu();
         int[] userBills = new int[userWallet.getBills().length];
         for (int i = 0; i < userBills.length; i++) {
             int billValue = userWallet.getBills()[i].getValue();
@@ -67,7 +92,7 @@ public class BillVnd {
         }
         System.out.println("Total amount inserted:" + userWallet.getTotalAmount());
         while(isItemValid==false){
-            vndItemStock.displayMenu();
+            
             System.out.print("Enter the number of the item you want to buy");
             cakeIndex = sc.nextInt();
             sc.nextLine();
