@@ -1,4 +1,5 @@
-package com.rgitem;
+package com.rgItem;
+
  /**
  * The class  Rg item defines the regular items to be sold in the vending machine
  */ 
@@ -25,6 +26,13 @@ public class RgItem{
         this.intCalorie=intCalorie;
         this.strDesc=strDesc;
    }
+    public RgItem(){ 
+        intQty = 0;
+        intPrice = 0;
+        intCalorie = 0;
+        strDesc = " ";
+        strName = " ";
+    }
 /**
  * Sets the name
  *
