@@ -1,6 +1,6 @@
 package com.rgitem;
- /*
- * The class  Rg item
+ /**
+ * The class  Rg item defines the regular items to be sold in the vending machine
  */ 
 public class RgItem{
     
@@ -9,87 +9,103 @@ public class RgItem{
     private int intCalorie;
     private String strDesc;
     private String strName;
-/*
+/**
+ * This is a constructor. 
+ *
+ * @param strName  The String Name of the item. 
+ * @param intQty  The Integer Quantity of the item. 
+ * @param intPrice  The Integer Price of the item.
+ * @param intCalorie  The Integer Calorie of the item. 
+ * @param strDesc  The String Description of the item. 
+ */
+    public RgItem(String strName, int intQty, int intPrice, int intCalorie, String strDesc){
+        this.strName = strName;
+        this.intQty = intQty;
+        this.intPrice = intPrice;
+        this.intCalorie=intCalorie;
+        this.strDesc=strDesc;
+   }
+/**
  * Sets the name
  *
- * @param strName  The String Name. 
+ * @param strName  The String Name of the item.  
  */
     public void setName(String strName){ 
         this.strName = strName;
     }
-/*
+/**
  * Sets the description
  *
- * @param strDesc  The String Description. 
+ * @param strDesc  The String Description of the item.  
  */
     public void setDesc(String strDesc){ 
         this.strDesc = strDesc;
     }
-/*
+/**
  * Sets the calorie
  *
- * @param intCalorie  The Integer Calorie. 
+ * @param intCalorie  The Integer Calorie of the item.  
  */
     public void setCalorie(int intCalorie){ 
         this.intCalorie = intCalorie;
     }
-/*
+/**
  * Sets the price
  *
- * @param intPrice  The Integer Price. 
+ * @param intPrice  The Integer Price of the item.  
  */
     public void setPrice(int intPrice){ 
         this.intPrice = intPrice;
     }
-/*
+/**
  * Sets the quantity
  *
- * @param intQty  The Integer Quantity. 
+ * @param intQty  The Integer Quantity of the item.  
  */
     public void setQty(int intQty){ 
         this.intQty = intQty;
     }
-/*
+/**
  * Gets the name
  *
- * @return  The String Name
+ * @return  The String Name of the item. 
  */
     public String getName(){ 
         return strName;
     }
-/*
+/**
  * Gets the description
  *
- * @return  The String Description
+ * @return  The String Description of the item. 
  */
     public String getDesc(){ 
         return strDesc;
     }
-/*
+/**
  * Gets the calorie
  *
- * @return  The Integer Calorie
+ * @return  The Integer Calorie of the item. 
  */
     public int getCalorie(){ 
         return intCalorie;
     }
-/*
+/**
  * Gets the price
  *
- * @return  The Integer Price
+ * @return  The Integer Price of the item. 
  */
     public int getPrice(){ 
         return intPrice;
     }
-/*
+/**
  * Gets the quantity
  *
- * @return  The Integer Quantity
+ * @return  The Integer Quantity of the item. 
  */
     public int getQty(){ 
         return intQty;
     }
-/*
+/**
  * Changes the quantity through subtraction
  *
  * @param intQty  The Integer quantity to be subtracted. 
@@ -97,7 +113,7 @@ public class RgItem{
     public void changeQtySub(int intQty){ 
         this.intQty = this.intQty - intQty;
     }
-/*
+/**
  * Changes the quantity through addition
  *
  * @param intQty  The Integer quantity to be added.
@@ -105,7 +121,7 @@ public class RgItem{
     public void changeQtyAdd(int intQty){ 
         this.intQty = this.intQty + intQty;
     }
-/*
+/**
  * Deletes cake
  */
     public void deleteCake(){ 
@@ -115,7 +131,7 @@ public class RgItem{
         strDesc = " ";
         strName = " ";
     }
-/*
+/**
  * Display cake
  */
     public void displayCake(){ 
