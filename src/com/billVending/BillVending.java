@@ -3,6 +3,10 @@ package com.billVending;
 import java.util.Scanner;
 
 import com.billVnd.BillVnd;
+//for easier running. Updates every thing. Dont forget to remove before passing!
+import com.bill.Bill;
+import com.rgItem.RgItem;
+import com.rgStock.RgStock;
 
 public class BillVending {
     public static void main(String[] args) {
