@@ -1,10 +1,10 @@
-package com.billvnd;
+package com.billVnd;
 
 import java.util.Scanner;
 
 import com.bill.Bill;
 import com.billWallet.BillWallet;
-import com.rgstock.RgStock;
+import com.rgStock.RgStock;
 
 public class BillVnd {
     private RgStock vndItemStock;
@@ -44,7 +44,7 @@ public class BillVnd {
     public void purchaseItem(){
         Scanner sc = new Scanner(System.in);
         boolean canGiveChange;
-        int cakeIndex;
+        int cakeIndex=-1;
         boolean isItemValid = false;
         System.out.println("Total amount of bills in Vending machine: " + vndStock.getTotalAmount());
         if(vndStock.getTotalAmount()==0){
@@ -76,7 +76,7 @@ public class BillVnd {
                 System.out.println("Invalid item. Please try again");
             }
         }
-        int price = vndItemStock.Item[cakeIndex].getPrice();
+        int price = vndItemStock.getCakePrice(cakeIndex);
         if(canGiveChange == false){
             if(userWallet.getTotalAmount()==price){
                 vndStock.pay(userWallet.getTotalAmount(),price);
