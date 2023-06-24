@@ -50,41 +50,6 @@ public class RgStock{
         }        
     }
 /**
- * Main
- * 
- */
-    public void stockMenu(){ 
-        int intChosen=0;
-
-        while(intChosen != 3){
-            System.out.println("[1] Edit Cake");
-            System.out.println("[2] Add Cake");
-            System.out.println("[3] Return");
-            System.out.println("------------------------");
-            System.out.print("Enter Choice: ");
-            intChosen = intMenu.nextInt();
-            switch(intChosen){
-                case 1:
-                    editMenu();
-                    break;
-                case 2:
-                    addCake();
-                    break;
-                case 3:
-                    System.out.println("Returning...");
-                    System.out.println("------------------------");
-                    break;
-                default:
-                    System.out.println("Invalid Input...");
-                    break;
-            }
-        }
-
-        intMenu.close();
-        strEdit.close();
-
-    }
-/**
  * Edit menu
  *
  * @param Item  The Item Array. 
@@ -266,6 +231,7 @@ public class RgStock{
     public boolean validItem(int cakeIndex) {
         return (cakeIndex >= 0 && cakeIndex < Item.length && !Item[cakeIndex].getName().equals(" ") && Item[cakeIndex].getQty() > 0);
     }
+
 
 /**
  * Display the receipt showing the cake name, quantity, and total price for each cake.
