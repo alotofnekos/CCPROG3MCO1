@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 import com.bill.Bill;
 import com.billWallet.BillWallet;
-import com.rgitem.Rgitem;
+import com.rgstock.RgStock;
 
 public class BillVnd {
-    private Rgitem itemStock;
+    private RgStock vndItemStock;
+    private RgStock vndItemSold;
     private BillWallet userWallet;
     private BillWallet vndStock;
     private BillWallet vndProfit;
@@ -15,7 +16,8 @@ public class BillVnd {
         userWallet = new BillWallet();
         vndStock = new BillWallet();
         vndProfit = new BillWallet();
-
+        vndItemSold = new RgStock();
+        vndItemStock = new RgStock();
     }
     public void billMaintenance(){
         Scanner sc = new Scanner(System.in);
@@ -32,7 +34,7 @@ public class BillVnd {
         //sc.close();
     }
     public void itemMaintenance(){
-
+        vndItemSold.stockMenu();
     }
 
     public void collectProfit(){
@@ -42,6 +44,8 @@ public class BillVnd {
     public void purchaseItem(){
         Scanner sc = new Scanner(System.in);
         boolean canGiveChange;
+        int cakeIndex;
+        boolean isItemValid = false;
         System.out.println("Total amount of bills in Vending machine: " + vndStock.getTotalAmount());
         if(vndStock.getTotalAmount()==0){
             System.out.println("The Vending Machine does not have money to process change right now");
@@ -62,13 +66,22 @@ public class BillVnd {
             }
         }
         System.out.println("Total amount inserted:" + userWallet.getTotalAmount());
-        System.out.print("Enter the price of your item:");
-        int price = sc.nextInt();
-        sc.nextLine();
+        while(isItemValid==false){
+            vndItemStock.displayMenu();
+            System.out.print("Enter the number of the item you want to buy");
+            cakeIndex = sc.nextInt();
+            sc.nextLine();
+            isItemValid = vndItemStock.validItem(cakeIndex);
+            if(isItemValid==false){
+                System.out.println("Invalid item. Please try again");
+            }
+        }
+        int price = vndItemStock.Item[cakeIndex].getPrice();
         if(canGiveChange == false){
             if(userWallet.getTotalAmount()==price){
                 vndStock.pay(userWallet.getTotalAmount(),price);
                 userWallet.transferBills(vndStock);
+                vndItemStock.transferCake(vndItemSold,cakeIndex);
             }
             else if(userWallet.getTotalAmount()>price){
                 System.out.println("Please pay exact amount. No change available");
@@ -82,6 +95,7 @@ public class BillVnd {
             }
             else if ((vndStock.pay(userWallet.getTotalAmount(),price)==true)&&(userWallet.getTotalAmount()>price)) {
                 userWallet.transferBills(vndProfit);
+                vndItemStock.transferCake(vndItemSold,cakeIndex);
             } 
 
             else{
@@ -91,7 +105,9 @@ public class BillVnd {
         }   
         //sc.close();     
     }
-    
+    public void receipt(){
+        vndItemSold.getReceipt();
+    }
     public void setDefaults(){
         //sets stock of ten for all bills
         int defaultStock = 10;
@@ -100,9 +116,7 @@ public class BillVnd {
                 vndStock.addBill(new Bill(defaultStock, billValue));
         }
         //set a preset stock for cakes
-
-
-
+        vndItemStock.setStockDefaults();
     }
     
 }
