@@ -257,4 +257,17 @@ public class RgStock{
     public int getCakePrice(int cakeIndex) {
         return Item[cakeIndex].getPrice();
     }
+
+/**
+ * Checks if there's any cake in stock
+ * @return boolean true if any cake is in stock, false otherwise
+ */
+    public boolean hasCakeInStock() {
+        for (int i = 0; i < Item.length; i++) {
+            if (Item[i].getQty() > 0) {
+                return true; // Found a cake with stock
+            }
+        }
+        return false; // No cakes have stock
+    }
 }
