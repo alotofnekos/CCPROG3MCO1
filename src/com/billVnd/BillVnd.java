@@ -65,7 +65,7 @@ public class BillVnd {
         //implement add Cake here
     }
     public void deleteACake(int cakeIndex){
-        //implement delete Cake here
+        vndItemStock.deleteCake(cakeIndex);
     }
     public void editCake(int choice, int cakeIndex, int value){
         if(choice==3){
