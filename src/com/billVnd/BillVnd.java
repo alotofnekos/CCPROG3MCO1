@@ -61,8 +61,36 @@ public class BillVnd {
             }
         }
     }
-    public void addNewCake(){
-
+    public void addNewCake(int cakeIndex){
+        //implement add Cake here
+    }
+    public void deleteACake(int cakeIndex){
+        //implement delete Cake here
+    }
+    public void editCake(int choice, int cakeIndex, int value){
+        if(choice==3){
+            //edit Calorie
+        }
+        else if(choice==4){
+            //edit Price
+        }
+        else if(choice ==5){
+            //Add inventory
+        } 
+        else if(choice==6){
+            //Subtract inventory
+        }
+        else{
+            //invalid
+        }
+    }
+    public void editCake(int choice, int cakeIndex, String value){
+        if(choice==1){
+            //Edit name
+        }
+        else if(choice == 2){
+            //Edit Description
+        }
     }
     public void collectProfit(){
         System.out.println("Total Profit obtained: "+vndProfit.getTotalAmount()+ ". Clearing wallet.");
