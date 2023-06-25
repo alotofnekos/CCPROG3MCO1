@@ -52,6 +52,58 @@ public class RgStock{
         }        
     }
 /**
+ * 
+ * 
+ */
+    public void editCalorie(int cakeIndex, int value){
+        Item[cakeIndex].setCalorie(value);
+    }
+/**
+ * 
+ * 
+ */
+    public void editPrice(int cakeIndex, int value){
+        Item[cakeIndex].setPrice(value);
+    }
+/**
+ * 
+ * 
+ */
+    public void addInt(int cakeIndex, int value){
+        if(Item[cakeIndex].getQty() + value <= 10){
+            Item[cakeIndex].changeQtyAdd(value);
+        }
+        else{
+            System.out.println("Invalid Number. Exceeds Total Capacity of 10");
+        }
+    }
+/**
+ * 
+ * 
+ */
+    public void subInt(int cakeIndex, int value){
+        if(Item[cakeIndex].getQty() - value >= 0){
+            Item[cakeIndex].changeQtySub(value);
+        }
+        else{
+            System.out.println("Invalid Number. Quantity Results to Less Than 0");
+        }
+    }
+/**
+ * 
+ * 
+ */
+    public void editName(int cakeIndex, String value){
+        Item[cakeIndex].setName(value);
+    }
+/**
+ * 
+ * 
+ */
+    public void editDesc(int cakeIndex, String value){
+        Item[cakeIndex].setDesc(value);
+    }
+/**
  * Function that lets user edit a cake's parameters 
  * @param rgStock lets the rgStock handling the reciepts have those edits too
  * 
