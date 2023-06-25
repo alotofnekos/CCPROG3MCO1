@@ -111,6 +111,46 @@ public class RgStock{
         Item[cakeIndex].setDesc(value);
     }
 /**
+ * 
+ * 
+ */
+    public void addNewCake(int cakeIndex){ 
+        String strName;
+        String strDesc;
+        int intCalorie;
+        int intPrice;
+        int intQuantity;
+
+        System.out.print("Enter Name: ");
+        strName = strEdit.nextLine();
+        System.out.println("------------------------");
+
+        System.out.print("Enter Description: ");
+        strDesc = strEdit.nextLine();
+        System.out.println("------------------------");
+        
+        System.out.print("Enter Calorie Count: ");
+        intCalorie = intMenu.nextInt();
+        System.out.println("------------------------");
+        
+        System.out.print("Enter Price Count: ");
+        intPrice = intMenu.nextInt();
+        System.out.println("------------------------");
+        
+        System.out.print("Enter Quantity Count [Max 10]: ");
+        intQuantity = intMenu.nextInt();
+        if(intQuantity > 10){
+            intQuantity = 0;
+            System.out.println("Invalid Quantity. Setting Quantity to 0.");
+        }
+
+        System.out.println("------------------------");
+        System.out.println("Cake Registration Done");
+        System.out.println("------------------------");
+
+        Item[cakeIndex] = new RgItem(strName, intQuantity, intPrice, intCalorie, strDesc);
+    }
+/**
  * Function that lets user edit a cake's parameters 
  * @param rgStock lets the rgStock handling the reciepts have those edits too
  * 
