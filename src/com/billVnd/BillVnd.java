@@ -46,7 +46,7 @@ public class BillVnd {
             intChosen = sc.nextInt();
             switch(intChosen){
                 case 1:
-                    vndItemStock.editMenu();
+                    vndItemStock.editMenu(vndItemSold);
                     break;
                 case 2:
                     vndItemStock.addCake(vndItemSold);
