@@ -69,27 +69,27 @@ public class BillVnd {
     }
     public void editCake(int choice, int cakeIndex, int value){
         if(choice==3){
-            //edit Calorie
+            vndItemStock.editCalorie(cakeIndex, value);
         }
         else if(choice==4){
-            //edit Price
+            vndItemStock.editPrice(cakeIndex, value);
         }
         else if(choice ==5){
-            //Add inventory
+            vndItemStock.addInt(cakeIndex, value);
         } 
         else if(choice==6){
-            //Subtract inventory
+            vndItemStock.subInt(cakeIndex, value);
         }
         else{
-            //invalid
+            System.out.println("Invalid...");
         }
     }
     public void editCake(int choice, int cakeIndex, String value){
         if(choice==1){
-            //Edit name
+            vndItemStock.editName(cakeIndex, value);
         }
         else if(choice == 2){
-            //Edit Description
+            vndItemStock.editDesc(cakeIndex, value);
         }
     }
     public void collectProfit(){
