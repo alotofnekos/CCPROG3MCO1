@@ -2,7 +2,7 @@ package com.rgStock;
 import java.util.Scanner;
 import com.rgItem.RgItem;
 /**
- * The class RgStock holds and edits from a set of items using rgItem
+ * The class Rg stock
  */ 
 public class RgStock{
     private RgItem[] Item;
@@ -53,9 +53,10 @@ public class RgStock{
     }
 /**
  * Function that lets user edit a cake's parameters 
+ * @param rgStock lets the rgStock handling the reciepts have those edits too
  * 
  */
-    public void editMenu(){ 
+    public void editMenu(RgStock rgStock){ 
 
 
         int intChosen;
@@ -92,24 +93,28 @@ public class RgStock{
                         System.out.print("Enter new Name: ");
                         strLetter = strEdit.nextLine();
                         Item[intChosen].setName(strLetter);
+                        rgStock.Item[intCounter].setName(strLetter);
                         break;
                     case 2:
                         intMenu.nextLine();
                         System.out.print("Enter new Description: ");
                         strLetter = strEdit.nextLine();
                         Item[intChosen].setDesc(strLetter);
+                        rgStock.Item[intCounter].setDesc(strLetter);
                         break;
                     case 3:
                         intMenu.nextLine();    
                         System.out.print("Enter new Calorie: ");
                         intChange = intMenu.nextInt();
                         Item[intChosen].setCalorie(intChange);
+                        rgStock.Item[intCounter].setCalorie(intChange);
                         break;
                     case 4:
                         intMenu.nextLine();    
                         System.out.print("Enter new Price: ");
                         intChange = intMenu.nextInt();
                         Item[intChosen].setPrice(intChange);
+                        rgStock.Item[intCounter].setPrice(intChange);
                         break;
                     case 5:
                         intMenu.nextLine();    
@@ -137,6 +142,7 @@ public class RgStock{
                         intMenu.nextLine();
                         System.out.println("Cake Deleted...");
                         Item[intChosen].deleteCake();
+                        rgStock.Item[intCounter].deleteCake();
                         intBooleanEdit = 1;
                         break;
                     case 8:
