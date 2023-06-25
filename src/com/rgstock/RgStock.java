@@ -55,6 +55,13 @@ public class RgStock{
  * 
  * 
  */
+    public void deleteCake(int cakeIndex){
+        Item[cakeIndex].deleteCake();
+    }
+/**
+ * 
+ * 
+ */
     public void editCalorie(int cakeIndex, int value){
         Item[cakeIndex].setCalorie(value);
     }
