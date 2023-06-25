@@ -199,7 +199,6 @@ public class RgStock{
             System.out.println("Invalid Quantity. Setting Quantity to 0.");
         }
         Item[intCounter].setQty(intValue);
-        rgStock.Item[intCounter].setQty(intValue);
         System.out.println("------------------------");
         System.out.println("Cake Registration Done");
         System.out.println("------------------------");
