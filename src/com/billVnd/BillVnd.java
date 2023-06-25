@@ -62,7 +62,7 @@ public class BillVnd {
         }
     }
     public void addNewCake(int cakeIndex){
-        vndItemStock.addCake(cakeIndex);
+        vndItemStock.addNewCake(cakeIndex);
     }
     public void deleteACake(int cakeIndex){
         vndItemStock.deleteCake(cakeIndex);
