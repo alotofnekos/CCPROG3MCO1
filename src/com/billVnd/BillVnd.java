@@ -49,7 +49,7 @@ public class BillVnd {
                     vndItemStock.editMenu();
                     break;
                 case 2:
-                    vndItemStock.addCake();
+                    vndItemStock.addCake(vndItemSold);
                     break;
                 case 3:
                     System.out.println("Returning...");
@@ -60,6 +60,9 @@ public class BillVnd {
                     break;
             }
         }
+    }
+    public void addNewCake(){
+
     }
     public void collectProfit(){
         System.out.println("Total Profit obtained: "+vndProfit.getTotalAmount()+ ". Clearing wallet.");
