@@ -2,16 +2,15 @@ package com.rgStock;
 import java.util.Scanner;
 import com.rgItem.RgItem;
 /**
- * The class Rg stock
+ * The class RgStock holds and edits from a set of items using rgItem
  */ 
 public class RgStock{
     private RgItem[] Item;
     private Scanner intMenu = new Scanner(System.in);
     private Scanner strEdit = new Scanner(System.in);
 /**
- * Initialize
+ * This is a constructor that initializes everything except the quantity for the cakes
  *
- * @param Item  The Item Array. 
  */
     public RgStock() {
         Item = new RgItem[20]; // Initialize the Item array with 20 elements
@@ -31,15 +30,18 @@ public class RgStock{
             Item[i] = new RgItem(); // Initialize the remaining elements with default RgItem objects
         }
     }
-
+/**
+ * Sets a quantity of 10 for all cakes.
+ *   
+ */
     public void setStockDefaults(){
         for(int i = 0;i<Item.length;i++){
             Item[i].setQty(10);
         }
     }
 /**
- * Displays the menu.
- * 
+ * Displays the cake menu, to be shown when purchasing an item. An item with quantity - 0 will not be shown.
+ *   
  */
     public void displayMenu(){
         for(int i = 0;i<Item.length;i++){
@@ -50,11 +52,8 @@ public class RgStock{
         }        
     }
 /**
- * Edit menu
- *
- * @param Item  The Item Array. 
- * @param intMenu  the Integer Scanner. 
- * @param strEdit  the String Scanner. 
+ * Function that lets user edit a cake's parameters 
+ * 
  */
     public void editMenu(){ 
 
@@ -159,13 +158,11 @@ public class RgStock{
             }
     }
 /**
- * Add cake
+ * Adds a cake to a menu
+ * @param rgStock lets the rgStock handling the reciepts have an entry of it too.
  *
- * @param Item  The Item Array. 
- * @param intMenu  The Integer Scanner. 
- * @param strEdit  the String Scanner.
  */
-    public void addCake(){ 
+    public void addCake(RgStock rgStock){ 
         int intValue;
         int intCounter = countCakes();
         String strName;
@@ -174,21 +171,25 @@ public class RgStock{
         System.out.print("Enter Name: ");
         strName = strEdit.nextLine();
         Item[intCounter].setName(strName);
+        rgStock.Item[intCounter].setName(strName);
         System.out.println("------------------------");
 
         System.out.print("Enter Description: ");
         strDesc = strEdit.nextLine();
         Item[intCounter].setDesc(strDesc);
+        rgStock.Item[intCounter].setDesc(strDesc);
         System.out.println("------------------------");
         
         System.out.print("Enter Calorie Count: ");
         intValue = intMenu.nextInt();
         Item[intCounter].setCalorie(intValue);
+        rgStock.Item[intCounter].setCalorie(intValue);
         System.out.println("------------------------");
         
         System.out.print("Enter Price Count: ");
         intValue = intMenu.nextInt();
         Item[intCounter].setPrice(intValue);
+        rgStock.Item[intCounter].setPrice(intValue);
         System.out.println("------------------------");
         
         System.out.print("Enter Quantity Count [Max 10]: ");
@@ -198,15 +199,15 @@ public class RgStock{
             System.out.println("Invalid Quantity. Setting Quantity to 0.");
         }
         Item[intCounter].setQty(intValue);
+        rgStock.Item[intCounter].setQty(intValue);
         System.out.println("------------------------");
         System.out.println("Cake Registration Done");
         System.out.println("------------------------");
     }
 /**
  * Count cakes
- *
- * @param Item  The Item Array. 
- * @return int  Number of Cakes in Item.
+ * @return int  Number of named cakes [not necessarily on stock] in rgStock
+ * 
  */
 
         public int countCakes() {
@@ -223,8 +224,9 @@ public class RgStock{
 /**
  * Transfer a cake to another when its bought
  *
- * @param Item  The Item Array. 
- * @return int  Number of Cakes in Item.
+ * @param rgStock Where the cake is to be transferred. 
+ * @param cakeIndex The position of the cake in the Item[] array
+ *
  */
     public void transferCake(RgStock rgStock, int cakeIndex) {
         rgStock.Item[cakeIndex].changeQtyAdd(1);
