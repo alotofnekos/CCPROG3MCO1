@@ -11,7 +11,7 @@ public class BillVnd {
     private RgStock vndItemSold;
     private BillWallet userWallet;
     private BillWallet vndStock;
-    private BillWallet vndProfit;
+    private int profit=0;
     public BillVnd(){
         userWallet = new BillWallet();
         vndStock = new BillWallet();
@@ -30,52 +30,6 @@ public class BillVnd {
             vndStock.addBill(new Bill(vndBills[i], billValue));
         }
     }
-
-    /*public void billMaintenance(){
-        Scanner sc = new Scanner(System.in);
-        int[] vndBills = new int[vndStock.getBills().length];
-        for (int i = 0; i < vndBills.length; i++) {
-                int billValue = vndStock.getBills()[i].getValue();
-                System.out.print("Enter the number of " + billValue + " Peso bills to be restocked to the machine:");
-                vndBills[i] = sc.nextInt();
-                vndStock.addBill(new Bill(vndBills[i], billValue));
-                if (i + 1 < vndBills.length) {
-                    sc.nextLine();
-                }
-        }
-        //sc.close();
-    }
-    */
-    /* 
-    public void itemMaintenance(){
-        //vndItemSold.stockMenu();
-        Scanner sc = new Scanner(System.in);
-        int intChosen=0;
-        while(intChosen != 3){
-            System.out.println("[1] Edit Cake");
-            System.out.println("[2] Add Cake");
-            System.out.println("[3] Return");
-            System.out.println("------------------------");
-            System.out.print("Enter Choice: ");
-            intChosen = sc.nextInt();
-            switch(intChosen){
-                case 1:
-                    vndItemStock.editMenu(vndItemSold);
-                    break;
-                case 2:
-                    vndItemStock.addCake(vndItemSold);
-                    break;
-                case 3:
-                    System.out.println("Returning...");
-                    System.out.println("------------------------");
-                    break;
-                default:
-                    System.out.println("Invalid Input...");
-                    break;
-            }
-        }
-    }
-    */
     public void addNewCake(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity){
         vndItemStock.addNewCake(strName,strDesc, intCalorie,intPrice, intQuantity);
         vndItemSold.addNewCake(strName,strDesc, intCalorie,intPrice, 0);
@@ -111,8 +65,9 @@ public class BillVnd {
         }
     }
     public void collectProfit(){
-        System.out.println("Total Profit obtained: "+vndProfit.getTotalAmount()+ ". Clearing wallet.");
-        vndProfit.clearWallet();
+        System.out.println("Total Profit obtained: "+profit+ ". Clearing wallet.");
+        profit=0;
+        vndItemSold.setStock(0);
     }
     public void purchaseItem(int[] userBills, int cakeIndex) {
         boolean canGiveChange;
@@ -149,7 +104,8 @@ public class BillVnd {
             if (canGiveChange == false) {
                 if (userWallet.getTotalAmount() == price) {
                     vndStock.pay(userWallet.getTotalAmount(), price);
-                    userWallet.transferBills(vndStock);
+                    userWallet.clearWallet();
+                    profit =+ price;
                     vndItemStock.transferCake(vndItemSold, cakeIndex);
                 } else if (userWallet.getTotalAmount() > price) {
                     System.out.println("Please pay exact amount. No change available");
@@ -160,7 +116,8 @@ public class BillVnd {
                     System.out.println("Insufficient funds. Please add more bills");
                     userWallet.clearWallet();
                 } else if ((vndStock.pay(userWallet.getTotalAmount(), price) == true) && (userWallet.getTotalAmount() > price)) {
-                    userWallet.transferBills(vndProfit);
+                    userWallet.clearWallet();
+                    profit =+ price;
                     vndItemStock.transferCake(vndItemSold, cakeIndex);
                 } else {
                     System.out.println("Please pay exact amount. No change available");
@@ -172,6 +129,7 @@ public class BillVnd {
 
     public void receipt(){
         vndItemSold.getReceipt();
+        //clear the other thing
     }
     public void setDefaults(){
         //sets stock of ten for all bills
@@ -181,7 +139,7 @@ public class BillVnd {
                 vndStock.addBill(new Bill(defaultStock, billValue));
         }
         //set a preset stock for cakes
-        vndItemStock.setStockDefaults();
+        vndItemStock.setStock(10);
     }
     
 }
