@@ -19,7 +19,19 @@ public class BillVnd {
         vndItemSold = new RgStock();
         vndItemStock = new RgStock();
     }
-    public void billMaintenance(){
+    public void billMaintenance(int[] vndBills) {
+        if (vndBills.length != 6) {
+            System.out.println("Invalid bill quantities array length. Expected length: 6");
+            return;
+        }
+
+        for (int i = 0; i < vndBills.length; i++) {
+            int billValue = vndStock.getBills()[i].getValue();
+            vndStock.addBill(new Bill(vndBills[i], billValue));
+        }
+    }
+
+    /*public void billMaintenance(){
         Scanner sc = new Scanner(System.in);
         int[] vndBills = new int[vndStock.getBills().length];
         for (int i = 0; i < vndBills.length; i++) {
@@ -33,6 +45,8 @@ public class BillVnd {
         }
         //sc.close();
     }
+    */
+    /* 
     public void itemMaintenance(){
         //vndItemSold.stockMenu();
         Scanner sc = new Scanner(System.in);
@@ -61,15 +75,19 @@ public class BillVnd {
             }
         }
     }
-    public void addNewCake(int cakeIndex){
-        vndItemStock.addNewCake(cakeIndex);
+    */
+    public void addNewCake(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity){
+        vndItemStock.addNewCake(strName,strDesc, intCalorie,intPrice, intQuantity);
+        vndItemSold.addNewCake(strName,strDesc, intCalorie,intPrice, 0);
     }
     public void deleteACake(int cakeIndex){
         vndItemStock.deleteCake(cakeIndex);
+        vndItemSold.deleteCake(cakeIndex);
     }
     public void editCake(int choice, int cakeIndex, int value){
         if(choice==3){
             vndItemStock.editCalorie(cakeIndex, value);
+            vndItemSold.editCalorie(cakeIndex, value);
         }
         else if(choice==4){
             vndItemStock.editPrice(cakeIndex, value);
@@ -96,77 +114,62 @@ public class BillVnd {
         System.out.println("Total Profit obtained: "+vndProfit.getTotalAmount()+ ". Clearing wallet.");
         vndProfit.clearWallet();
     }
-    public void purchaseItem(){
-        Scanner sc = new Scanner(System.in);
+    public void purchaseItem(int[] userBills, int cakeIndex) {
         boolean canGiveChange;
-        int cakeIndex=-1;
         boolean isItemValid = false;
         boolean hasCakeInStock = vndItemStock.hasCakeInStock();
-        if(hasCakeInStock==false){
-            System.out.println("Cant buy items, no items in stock.");
-        }
-        else{
+        if (hasCakeInStock == false) {
+            System.out.println("Can't buy items, no items in stock.");
+        } else {
             System.out.println("Total amount of bills in Vending machine: " + vndStock.getTotalAmount());
-            if(vndStock.getTotalAmount()==0){
+            if (vndStock.getTotalAmount() == 0) {
                 System.out.println("The Vending Machine does not have money to process change right now");
                 canGiveChange = false;
-            }
-            else{
+            } else {
                 System.out.println("The Vending Machine can process change right now");
                 canGiveChange = true;
             }
             vndItemStock.displayMenu();
-            int[] userBills = new int[userWallet.getBills().length];
-            for (int i = 0; i < userBills.length; i++) {
-                int billValue = userWallet.getBills()[i].getValue();
-                System.out.print("Enter the number of " + billValue + " Peso bills to pay:");
-                userBills[i] = sc.nextInt();
-                userWallet.addBill(new Bill(userBills[i], billValue));
-                if(i-1>userBills.length){
-                    sc.nextLine();
-                }
+            if (userBills.length != 6) {
+                System.out.println("Invalid bill quantities array length. Expected length: 6");
+                return;
             }
-            System.out.println("Total amount inserted:" + userWallet.getTotalAmount());
-            while(isItemValid==false){
-                
-                System.out.print("Enter the number of the item you want to buy");
-                cakeIndex = sc.nextInt();
-                sc.nextLine();
+            for (int i = 0; i < userBills.length; i++) {
+                int billValue = vndStock.getBills()[i].getValue();
+                userWallet.addBill(new Bill(userBills[i], billValue));
+            }
+            System.out.println("Total amount inserted: " + userWallet.getTotalAmount());
+            while (isItemValid == false) {
                 isItemValid = vndItemStock.validItem(cakeIndex);
-                if(isItemValid==false){
+                if (isItemValid == false) {
                     System.out.println("Invalid item. Please try again");
                 }
             }
             int price = vndItemStock.getCakePrice(cakeIndex);
-            if(canGiveChange == false){
-                if(userWallet.getTotalAmount()==price){
-                    vndStock.pay(userWallet.getTotalAmount(),price);
+            if (canGiveChange == false) {
+                if (userWallet.getTotalAmount() == price) {
+                    vndStock.pay(userWallet.getTotalAmount(), price);
                     userWallet.transferBills(vndStock);
-                    vndItemStock.transferCake(vndItemSold,cakeIndex);
+                    vndItemStock.transferCake(vndItemSold, cakeIndex);
+                } else if (userWallet.getTotalAmount() > price) {
+                    System.out.println("Please pay exact amount. No change available");
+                    userWallet.clearWallet();
                 }
-                else if(userWallet.getTotalAmount()>price){
+            } else {
+                if (userWallet.getTotalAmount() < price) {
+                    System.out.println("Insufficient funds. Please add more bills");
+                    userWallet.clearWallet();
+                } else if ((vndStock.pay(userWallet.getTotalAmount(), price) == true) && (userWallet.getTotalAmount() > price)) {
+                    userWallet.transferBills(vndProfit);
+                    vndItemStock.transferCake(vndItemSold, cakeIndex);
+                } else {
                     System.out.println("Please pay exact amount. No change available");
                     userWallet.clearWallet();
                 }
             }
-            else{
-                if(userWallet.getTotalAmount()<price){
-                    System.out.println("Insufficient funds. Please add more bills");
-                    userWallet.clearWallet();
-                }
-                else if ((vndStock.pay(userWallet.getTotalAmount(),price)==true)&&(userWallet.getTotalAmount()>price)) {
-                    userWallet.transferBills(vndProfit);
-                    vndItemStock.transferCake(vndItemSold,cakeIndex);
-                } 
-
-                else{
-                    System.out.println("Please pay exact amount. No change available");
-                    userWallet.clearWallet();
-                }
-            }  
-        } 
-        //sc.close();     
+        }
     }
+
     public void receipt(){
         vndItemSold.getReceipt();
     }
