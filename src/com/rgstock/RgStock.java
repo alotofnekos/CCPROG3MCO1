@@ -31,12 +31,13 @@ public class RgStock{
         }
     }
 /**
- * Sets a quantity of 10 for all cakes.
- *   
+ * Sets a quantity of intQty for all cakes.
+ *  @param intQty the quantity of cakes to be set
+ * 
  */
-    public void setStockDefaults(){
+    public void setStock(int intQty){
         for(int i = 0;i<Item.length;i++){
-            Item[i].setQty(10);
+            Item[i].setQty(intQty);
         }
     }
 /**
