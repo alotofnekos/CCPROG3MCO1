@@ -46,7 +46,7 @@ public class RgStock{
     public void displayMenu(){
         for(int i = 0;i<Item.length;i++){
             if(validItem(i)){
-                System.out.println("Press " + i + " for this cake:");
+                //System.out.println("Press " + i + " for this cake:");
                 Item[i].displayCake();
             }
         }        
@@ -114,40 +114,8 @@ public class RgStock{
  * 
  * 
  */
-    public void addNewCake(int cakeIndex){ 
-        String strName;
-        String strDesc;
-        int intCalorie;
-        int intPrice;
-        int intQuantity;
-
-        System.out.print("Enter Name: ");
-        strName = strEdit.nextLine();
-        System.out.println("------------------------");
-
-        System.out.print("Enter Description: ");
-        strDesc = strEdit.nextLine();
-        System.out.println("------------------------");
-        
-        System.out.print("Enter Calorie Count: ");
-        intCalorie = intMenu.nextInt();
-        System.out.println("------------------------");
-        
-        System.out.print("Enter Price Count: ");
-        intPrice = intMenu.nextInt();
-        System.out.println("------------------------");
-        
-        System.out.print("Enter Quantity Count [Max 10]: ");
-        intQuantity = intMenu.nextInt();
-        if(intQuantity > 10){
-            intQuantity = 0;
-            System.out.println("Invalid Quantity. Setting Quantity to 0.");
-        }
-
-        System.out.println("------------------------");
-        System.out.println("Cake Registration Done");
-        System.out.println("------------------------");
-
+    public void addNewCake(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity){
+        int cakeIndex = countCakes();
         Item[cakeIndex] = new RgItem(strName, intQuantity, intPrice, intCalorie, strDesc);
     }
 /**
