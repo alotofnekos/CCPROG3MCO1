@@ -47,35 +47,38 @@ public class RgStock{
     public void displayMenu(){
         for(int i = 0;i<Item.length;i++){
             if(validItem(i)){
-                //System.out.println("Press " + i + " for this cake:");
                 Item[i].displayCake();
             }
         }        
     }
 /**
- * 
+ * Deletes a cake
+ * @param cakeIndex the index of the cake to be deleted
  * 
  */
     public void deleteCake(int cakeIndex){
         Item[cakeIndex].deleteCake();
     }
 /**
- * 
- * 
+ * Edits the calorie of the cake at cakeIndex with value
+ * @param cakeIndex the cakeIndex of the cake to be edited
+ * @param intCalorie the calorie amount
  */
-    public void editCalorie(int cakeIndex, int value){
-        Item[cakeIndex].setCalorie(value);
+    public void editCalorie(int cakeIndex, int intCalorie){
+        Item[cakeIndex].setCalorie(intCalorie);
     }
 /**
- * 
- * 
+ * Edits the calorie of the cake at cakeIndex with value
+ * @param cakeIndex the cakeIndex of the cake to be edited
+ * @param intPrice the new Price
  */
-    public void editPrice(int cakeIndex, int value){
-        Item[cakeIndex].setPrice(value);
+    public void editPrice(int cakeIndex, int intPrice){
+        Item[cakeIndex].setPrice(intPrice);
     }
 /**
- * 
- * 
+ * Adds an amount value to Cake at cakeIndex
+ * @param cakeIndex the cakeIndex of the cake to be edited
+ * @param value the amount to be added
  */
     public void addInt(int cakeIndex, int value){
         if(Item[cakeIndex].getQty() + value <= 10){
@@ -86,8 +89,9 @@ public class RgStock{
         }
     }
 /**
- * 
- * 
+ * Subtracts an amount value to Cake at cakeIndex
+ * @param cakeIndex the cakeIndex of the cake to be edited
+ * @param value the amount to be subtracted
  */
     public void subInt(int cakeIndex, int value){
         if(Item[cakeIndex].getQty() - value >= 0){
@@ -98,184 +102,33 @@ public class RgStock{
         }
     }
 /**
- * 
- * 
+ * Edits the name of the Cake at cakeIndex
+ * @param cakeIndex the cakeIndex of the cake to be edited
+ * @param strName the new name of the cake
  */
-    public void editName(int cakeIndex, String value){
-        Item[cakeIndex].setName(value);
+    public void editName(int cakeIndex, String strName){
+        Item[cakeIndex].setName(strName);
     }
 /**
- * 
- * 
+ * Edits the description of the Cake at cakeIndex
+ * @param cakeIndex the cakeIndex of the cake to be edited
+ * @param strDesc the new description of the cake
  */
     public void editDesc(int cakeIndex, String value){
         Item[cakeIndex].setDesc(value);
     }
 /**
- * 
+ * Adds a New Cake
+ * @param strName the name of the cake
+ * @param strDesc the description of the cake
+ * @param intCalorie the calorie amount of the cake
+ * @param intPrice the price of the cake
+ * @param intQuantity the amount of cakes to be added
  * 
  */
     public void addNewCake(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity){
         int cakeIndex = countCakes();
         Item[cakeIndex] = new RgItem(strName, intQuantity, intPrice, intCalorie, strDesc);
-    }
-/**
- * Function that lets user edit a cake's parameters 
- * @param rgStock lets the rgStock handling the reciepts have those edits too
- * 
- */
-    public void editMenu(RgStock rgStock){ 
-
-
-        int intChosen;
-        int intEditMenu;
-        int intChange;
-        int intCounter = countCakes();
-        int intBooleanEdit = 0;
-        String strLetter;
-
-        System.out.print("Choose a cake to edit [1 - " + intCounter + "]: ");
-        intChosen = intMenu.nextInt();
-        intMenu.nextLine();
-        System.out.println("------------------------");
-
-        if(this.validItem(intChosen-1)){
-            intChosen = intChosen - 1;
-                
-            while(intBooleanEdit == 0){
-                Item[intChosen].displayCake();
-                System.out.println("[1] Edit Name");
-                System.out.println("[2] Edit Description");
-                System.out.println("[3] Edit Calorie");
-                System.out.println("[4] Edit Price");
-                System.out.println("[5] Add Inventory");
-                System.out.println("[6] Subtract Inventory");
-                System.out.println("[7] Delete Cake");
-                System.out.println("[8] Return");
-                System.out.println("------------------------");
-                System.out.print("Enter Choice: ");
-                intEditMenu = intMenu.nextInt();
-                switch(intEditMenu) {
-                    case 1:
-                        intMenu.nextLine();
-                        System.out.print("Enter new Name: ");
-                        strLetter = strEdit.nextLine();
-                        Item[intChosen].setName(strLetter);
-                        rgStock.Item[intCounter].setName(strLetter);
-                        break;
-                    case 2:
-                        intMenu.nextLine();
-                        System.out.print("Enter new Description: ");
-                        strLetter = strEdit.nextLine();
-                        Item[intChosen].setDesc(strLetter);
-                        rgStock.Item[intCounter].setDesc(strLetter);
-                        break;
-                    case 3:
-                        intMenu.nextLine();    
-                        System.out.print("Enter new Calorie: ");
-                        intChange = intMenu.nextInt();
-                        Item[intChosen].setCalorie(intChange);
-                        rgStock.Item[intCounter].setCalorie(intChange);
-                        break;
-                    case 4:
-                        intMenu.nextLine();    
-                        System.out.print("Enter new Price: ");
-                        intChange = intMenu.nextInt();
-                        Item[intChosen].setPrice(intChange);
-                        rgStock.Item[intCounter].setPrice(intChange);
-                        break;
-                    case 5:
-                        intMenu.nextLine();    
-                        System.out.print("Enter Inventory to Add: ");
-                        intChange = intMenu.nextInt();
-                        if(Item[intChosen].getQty() + intChange <= 10){
-                            Item[intChosen].changeQtyAdd(intChange);
-                        }
-                        else{
-                            System.out.println("Invalid Number. Exceeds Total Capacity of 10");
-                        }
-                        break;
-                    case 6:
-                        intMenu.nextLine();    
-                        System.out.print("Enter Inventory to Subtract: ");
-                        intChange = intMenu.nextInt();
-                        if(Item[intChosen].getQty() - intChange >= 0){
-                            Item[intChosen].changeQtySub(intChange);
-                        }
-                        else{
-                            System.out.println("Invalid Number. Quantity Results to Less Than 0");
-                        }
-                        break;
-                    case 7:
-                        intMenu.nextLine();
-                        System.out.println("Cake Deleted...");
-                        Item[intChosen].deleteCake();
-                        rgStock.Item[intCounter].deleteCake();
-                        intBooleanEdit = 1;
-                        break;
-                    case 8:
-                        intMenu.nextLine();
-                        System.out.println("Returned...");
-                        intBooleanEdit = 1;
-                        break;
-                    default:
-                        intMenu.nextLine();
-                        System.out.println("Invalid Input...");
-                        break;
-                    }
-                    System.out.println("------------------------");
-                }
-            }
-            else{
-                System.out.println("Invalid Cake...");
-                System.out.println("------------------------");
-            }
-    }
-/**
- * Adds a cake to a menu
- * @param rgStock lets the rgStock handling the reciepts have an entry of it too.
- *
- */
-    public void addCake(RgStock rgStock){ 
-        int intValue;
-        int intCounter = countCakes();
-        String strName;
-        String strDesc;
-
-        System.out.print("Enter Name: ");
-        strName = strEdit.nextLine();
-        Item[intCounter].setName(strName);
-        rgStock.Item[intCounter].setName(strName);
-        System.out.println("------------------------");
-
-        System.out.print("Enter Description: ");
-        strDesc = strEdit.nextLine();
-        Item[intCounter].setDesc(strDesc);
-        rgStock.Item[intCounter].setDesc(strDesc);
-        System.out.println("------------------------");
-        
-        System.out.print("Enter Calorie Count: ");
-        intValue = intMenu.nextInt();
-        Item[intCounter].setCalorie(intValue);
-        rgStock.Item[intCounter].setCalorie(intValue);
-        System.out.println("------------------------");
-        
-        System.out.print("Enter Price Count: ");
-        intValue = intMenu.nextInt();
-        Item[intCounter].setPrice(intValue);
-        rgStock.Item[intCounter].setPrice(intValue);
-        System.out.println("------------------------");
-        
-        System.out.print("Enter Quantity Count [Max 10]: ");
-        intValue = intMenu.nextInt();
-        if(intValue > 10){
-            intValue = 0;
-            System.out.println("Invalid Quantity. Setting Quantity to 0.");
-        }
-        Item[intCounter].setQty(intValue);
-        System.out.println("------------------------");
-        System.out.println("Cake Registration Done");
-        System.out.println("------------------------");
     }
 /**
  * Count cakes
