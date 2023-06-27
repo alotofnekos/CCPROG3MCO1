@@ -11,7 +11,7 @@ public class RgItem{
     private String strDesc;
     private String strName;
 /**
- * This is a constructor. 
+ * This is a constructor for a known item
  *
  * @param strName  The String Name of the item. 
  * @param intQty  The Integer Quantity of the item. 
@@ -26,6 +26,9 @@ public class RgItem{
         this.intCalorie=intCalorie;
         this.strDesc=strDesc;
    }
+/**
+ * This is a constructor for an empty item 
+ */
     public RgItem(){ 
         intQty = 0;
         intPrice = 0;
