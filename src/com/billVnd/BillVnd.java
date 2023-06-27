@@ -1,23 +1,30 @@
 package com.billVnd;
 
-import java.util.Scanner;
-
 import com.bill.Bill;
 import com.billWallet.BillWallet;
 import com.rgStock.RgStock;
-
+/**
+ * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class
+ */ 
 public class BillVnd {
     private RgStock vndItemStock;
     private RgStock vndItemSold;
     private BillWallet userWallet;
     private BillWallet vndStock;
     private int profit=0;
+/**
+ * This is a constructor that initializes the RgStocks and BillWallets to be used throughout the program 
+ */
     public BillVnd(){
         userWallet = new BillWallet();
         vndStock = new BillWallet();
         vndItemSold = new RgStock();
         vndItemStock = new RgStock();
     }
+/**
+ * Adds bills to the vending machine's stock
+ * @param vndBills the array of bills corresponding to the number of [10, 20, 50, 100, 200, 500] peso bills
+ */
     public void billMaintenance(int[] vndBills) {
         if (vndBills.length != 6) {
             System.out.println("Invalid bill quantities array length. Expected length: 6");
@@ -29,14 +36,32 @@ public class BillVnd {
             vndStock.addBill(new Bill(vndBills[i], billValue));
         }
     }
+/**
+ * Adds a new cake to the vending machine's stock 
+ * @param strName the name of the cake
+ * @param strDesc the description of the cake
+ * @param intCalorie the calorie amount of the cake
+ * @param intPrice the price of the cake
+ * @param intQuantity the amount of cakes to be added
+ */
     public void addNewCake(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity){
         vndItemStock.addNewCake(strName,strDesc, intCalorie,intPrice, intQuantity);
         vndItemSold.addNewCake(strName,strDesc, intCalorie,intPrice, 0);
     }
+/**
+ * deletes the cake at cakeIndex
+ * @param cakeIndex the index of the cake to be deleted
+ */
     public void deleteACake(int cakeIndex){
         vndItemStock.deleteCake(cakeIndex);
         vndItemSold.deleteCake(cakeIndex);
     }
+/**
+ * edits the cake at cakeIndex, based on choice, with value
+ * @param choice tells which parameter to edit (3 for Calorie, 4 for Price, 5 for adding Stock, 6 for removing Stock)
+ * @param cakeIndex the index of the cake to be edited
+ * @param value the new value
+ */
     public void editCake(int choice, int cakeIndex, int value){
         if(choice==3){
             vndItemStock.editCalorie(cakeIndex, value);
@@ -44,6 +69,7 @@ public class BillVnd {
         }
         else if(choice==4){
             vndItemStock.editPrice(cakeIndex, value);
+            vndItemSold.editPrice(cakeIndex, value);
         }
         else if(choice ==5){
             vndItemStock.addInt(cakeIndex, value);
@@ -55,19 +81,35 @@ public class BillVnd {
             System.out.println("Invalid...");
         }
     }
+/**
+ * edits the cake at cakeIndex, based on choice, with value
+ * @param choice tells which parameter to edit (1 for name, 2 for description)
+ * @param cakeIndex the index of the cake to be edited
+ * @param value the new value
+ */
     public void editCake(int choice, int cakeIndex, String value){
         if(choice==1){
             vndItemStock.editName(cakeIndex, value);
+            vndItemSold.editName(cakeIndex, value);
         }
         else if(choice == 2){
             vndItemStock.editDesc(cakeIndex, value);
+            vndItemSold.editDesc(cakeIndex, value);
         }
     }
+/**
+ * Collects the current profit of the vending machine, and clears the reciept since profit has been obtained already.
+ */
     public void collectProfit(){
         System.out.println("Total Profit obtained: "+profit+ ". Clearing wallet.");
         profit=0;
         vndItemSold.setStock(0);
     }
+/**
+ * Lets the user purchase an item at cakeIndex with userBills. Gets the change too.
+ * @param userBills the array of bills corresponding to the number of [10, 20, 50, 100, 200, 500] peso bills
+ * @param cakeIndex the index of the item to be bought.
+ */
     public void purchaseItem(int[] userBills, int cakeIndex) {
         boolean canGiveChange;
         boolean isItemValid = false;
@@ -125,10 +167,15 @@ public class BillVnd {
             }
         }
     }
-
+/**
+ * Gets the list of items bought before a profit is collected
+ */
     public void receipt(){
         vndItemSold.getReceipt();
     }
+/**
+ * Sets the defaults (10 for every item and bill)
+ */
     public void setDefaults(){
         //sets stock of ten for all bills
         int defaultStock = 10;
@@ -137,7 +184,7 @@ public class BillVnd {
                 vndStock.addBill(new Bill(defaultStock, billValue));
         }
         //set a preset stock for cakes
-        vndItemStock.setStock(10);
+        vndItemStock.setStock(defaultStock);
     }
     
 }
