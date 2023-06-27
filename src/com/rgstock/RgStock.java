@@ -1,33 +1,30 @@
 package com.rgStock;
-import java.util.Scanner;
 import com.rgItem.RgItem;
 /**
  * The class Rg stock
  */ 
 public class RgStock{
-    private RgItem[] Item;
-    private Scanner intMenu = new Scanner(System.in);
-    private Scanner strEdit = new Scanner(System.in);
+    private RgItem[] item;
 /**
  * This is a constructor that initializes everything except the quantity for the cakes
  *
  */
     public RgStock() {
-        Item = new RgItem[20]; // Initialize the Item array with 20 elements
+        item = new RgItem[20]; // Initialize the item array with 20 elements
 
-        Item[0] = new RgItem("Angel's Apple Crumble", 0, 160, 156, "Treat yourself with our irresistible apple crumble! Indulge in layers of tender apples, delicately spiced with cinnamon, and crowned with a mouthwatering crumbly crust.");
-        Item[1] = new RgItem("Black Forest Cake", 0, 140, 282, "Savor the taste of the classic Black Forest Cake, where the tangy sweetness of cherries perfectly complements the rich chocolate layers, all brought together with light and fluffy cream.");
-        Item[2] = new RgItem("Premium Chocolate Cake", 0, 190, 389, "Treat yourself with this moist, rich, and bittersweet Chocolate cake, adorned with a lucious dark chocolate ganache.");
-        Item[3] = new RgItem("Strawberry Shortcake", 0, 250, 247, "Indulge in the freshness of Benguet's finest strawberries with our Strawberry Bliss Short Cake. Enjoy the perfect blend of delicate sponge cake, heavenly cream, and juicy strawberries, sourced directly from the strawberry capital of the Philippines.");
-        Item[4] = new RgItem("Lemon Blueberry Cake", 0, 240, 244, "Enjoy the vibrant combination of zesty lemon-infused cake, bursting blueberries, and the smooth cream cheese frosting that creates a perfect balance of flavors with this Lemon Blueberry cake.");
-        Item[5] = new RgItem("Chocolate Mousse Cake", 0, 220, 349, "Revel in joy with a decadent dessert featuring layers of moist chocolate cake and creamy chocolate mousse, altogether forming a rich and indulgent treat.");
-        Item[6] = new RgItem("Butterscotch Cake", 0, 280, 379, "A delectable dessert with a moist and fluffy base infused with the rich and caramel-like flavor of butterscotch, topped with creamy butterscotch frosting and caramel sauce.");
-        Item[7] = new RgItem("Mocha Delight Cake", 0, 210, 308, "Enjoy a heavenly dessert featuring layers of moist chocolate cake infused with the bold flavors of coffee and espresso, complemented by a velvety mocha frosting for a delightful and indulgent treat.");
-        Item[8] = new RgItem("Mango Surprise Cake", 0, 230, 228, "A tropical delight that combines layers of moist mango-infused cake with a luscious mango filling, providing a delightful surprise of fruity sweetness in every bite.");
-        Item[9] = new RgItem("Tristan's Carrot Cake", 0, 180, 266, "Treat yourself with a moist and flavorful dessert made with grated carrots, warm spices, and a rich cream cheese frosting, offering a delightful combination of sweet and spiced flavors.");
+        item[0] = new RgItem("Angel's Apple Crumble", 0, 160, 156, "Treat yourself with our irresistible apple crumble! Indulge in layers of tender apples, delicately spiced with cinnamon, and crowned with a mouthwatering crumbly crust.");
+        item[1] = new RgItem("Black Forest Cake", 0, 140, 282, "Savor the taste of the classic Black Forest Cake, where the tangy sweetness of cherries perfectly complements the rich chocolate layers, all brought together with light and fluffy cream.");
+        item[2] = new RgItem("Premium Chocolate Cake", 0, 190, 389, "Treat yourself with this moist, rich, and bittersweet Chocolate cake, adorned with a lucious dark chocolate ganache.");
+        item[3] = new RgItem("Strawberry Shortcake", 0, 250, 247, "Indulge in the freshness of Benguet's finest strawberries with our Strawberry Bliss Short Cake. Enjoy the perfect blend of delicate sponge cake, heavenly cream, and juicy strawberries, sourced directly from the strawberry capital of the Philippines.");
+        item[4] = new RgItem("Lemon Blueberry Cake", 0, 240, 244, "Enjoy the vibrant combination of zesty lemon-infused cake, bursting blueberries, and the smooth cream cheese frosting that creates a perfect balance of flavors with this Lemon Blueberry cake.");
+        item[5] = new RgItem("Chocolate Mousse Cake", 0, 220, 349, "Revel in joy with a decadent dessert featuring layers of moist chocolate cake and creamy chocolate mousse, altogether forming a rich and indulgent treat.");
+        item[6] = new RgItem("Butterscotch Cake", 0, 280, 379, "A delectable dessert with a moist and fluffy base infused with the rich and caramel-like flavor of butterscotch, topped with creamy butterscotch frosting and caramel sauce.");
+        item[7] = new RgItem("Mocha Delight Cake", 0, 210, 308, "Enjoy a heavenly dessert featuring layers of moist chocolate cake infused with the bold flavors of coffee and espresso, complemented by a velvety mocha frosting for a delightful and indulgent treat.");
+        item[8] = new RgItem("Mango Surprise Cake", 0, 230, 228, "A tropical delight that combines layers of moist mango-infused cake with a luscious mango filling, providing a delightful surprise of fruity sweetness in every bite.");
+        item[9] = new RgItem("Tristan's Carrot Cake", 0, 180, 266, "Treat yourself with a moist and flavorful dessert made with grated carrots, warm spices, and a rich cream cheese frosting, offering a delightful combination of sweet and spiced flavors.");
 
-        for (int i = 10; i < Item.length; i++) {
-            Item[i] = new RgItem(); // Initialize the remaining elements with default RgItem objects
+        for (int i = 10; i < item.length; i++) {
+            item[i] = new RgItem(); // Initialize the remaining elements with default RgItem objects
         }
     }
 /**
@@ -36,8 +33,8 @@ public class RgStock{
  * 
  */
     public void setStock(int intQty){
-        for(int i = 0;i<Item.length;i++){
-            Item[i].setQty(intQty);
+        for(int i = 0;i<item.length;i++){
+            item[i].setQty(intQty);
         }
     }
 /**
@@ -45,9 +42,9 @@ public class RgStock{
  *   
  */
     public void displayMenu(){
-        for(int i = 0;i<Item.length;i++){
+        for(int i = 0;i<item.length;i++){
             if(validItem(i)){
-                Item[i].displayCake();
+                item[i].displayCake();
             }
         }        
     }
@@ -57,7 +54,7 @@ public class RgStock{
  * 
  */
     public void deleteCake(int cakeIndex){
-        Item[cakeIndex].deleteCake();
+        item[cakeIndex].deleteCake();
     }
 /**
  * Edits the calorie of the cake at cakeIndex with value
@@ -65,7 +62,7 @@ public class RgStock{
  * @param intCalorie the calorie amount
  */
     public void editCalorie(int cakeIndex, int intCalorie){
-        Item[cakeIndex].setCalorie(intCalorie);
+        item[cakeIndex].setCalorie(intCalorie);
     }
 /**
  * Edits the calorie of the cake at cakeIndex with value
@@ -73,7 +70,7 @@ public class RgStock{
  * @param intPrice the new Price
  */
     public void editPrice(int cakeIndex, int intPrice){
-        Item[cakeIndex].setPrice(intPrice);
+        item[cakeIndex].setPrice(intPrice);
     }
 /**
  * Adds an amount value to Cake at cakeIndex
@@ -81,8 +78,8 @@ public class RgStock{
  * @param value the amount to be added
  */
     public void addInt(int cakeIndex, int value){
-        if(Item[cakeIndex].getQty() + value <= 10){
-            Item[cakeIndex].changeQtyAdd(value);
+        if(item[cakeIndex].getQty() + value <= 10){
+            item[cakeIndex].changeQtyAdd(value);
         }
         else{
             System.out.println("Invalid Number. Exceeds Total Capacity of 10");
@@ -94,8 +91,8 @@ public class RgStock{
  * @param value the amount to be subtracted
  */
     public void subInt(int cakeIndex, int value){
-        if(Item[cakeIndex].getQty() - value >= 0){
-            Item[cakeIndex].changeQtySub(value);
+        if(item[cakeIndex].getQty() - value >= 0){
+            item[cakeIndex].changeQtySub(value);
         }
         else{
             System.out.println("Invalid Number. Quantity Results to Less Than 0");
@@ -107,7 +104,7 @@ public class RgStock{
  * @param strName the new name of the cake
  */
     public void editName(int cakeIndex, String strName){
-        Item[cakeIndex].setName(strName);
+        item[cakeIndex].setName(strName);
     }
 /**
  * Edits the description of the Cake at cakeIndex
@@ -115,7 +112,7 @@ public class RgStock{
  * @param strDesc the new description of the cake
  */
     public void editDesc(int cakeIndex, String value){
-        Item[cakeIndex].setDesc(value);
+        item[cakeIndex].setDesc(value);
     }
 /**
  * Adds a New Cake
@@ -128,7 +125,7 @@ public class RgStock{
  */
     public void addNewCake(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity){
         int cakeIndex = countCakes();
-        Item[cakeIndex] = new RgItem(strName, intQuantity, intPrice, intCalorie, strDesc);
+        item[cakeIndex] = new RgItem(strName, intQuantity, intPrice, intCalorie, strDesc);
     }
 /**
  * Count cakes
@@ -141,7 +138,7 @@ public class RgStock{
             int intCounter = 0;
 
             for (intLoop = 0; intLoop < 20; intLoop++) {
-                if (!Item[intLoop].getName().equals(" ") ) {
+                if (!item[intLoop].getName().equals(" ") ) {
                     intCounter = intCounter + 1;
                 }
             }
@@ -151,21 +148,21 @@ public class RgStock{
  * Transfer a cake to another when its bought
  *
  * @param rgStock Where the cake is to be transferred. 
- * @param cakeIndex The position of the cake in the Item[] array
+ * @param cakeIndex The position of the cake in the item[] array
  *
  */
     public void transferCake(RgStock rgStock, int cakeIndex) {
-        rgStock.Item[cakeIndex].changeQtyAdd(1);
-        this.Item[cakeIndex].changeQtySub(1);
+        rgStock.item[cakeIndex].changeQtyAdd(1);
+        this.item[cakeIndex].changeQtySub(1);
     }
 
 /**
- * Check if the cake at Item[cakeIndex] is valid (exists and is not null)
- *  @param cakeIndex  The index of the cake in the Item array.
+ * Check if the cake at item[cakeIndex] is valid (exists and is not null)
+ *  @param cakeIndex  The index of the cake in the item array.
  *  @return boolean  Returns true if the cake is valid, false otherwise.
  */
     public boolean validItem(int cakeIndex) {
-        return (cakeIndex >= 0 && cakeIndex < Item.length && !Item[cakeIndex].getName().equals(" ") && Item[cakeIndex].getQty() > 0);
+        return (cakeIndex >= 0 && cakeIndex < item.length && !item[cakeIndex].getName().equals(" ") && item[cakeIndex].getQty() > 0);
     }
 
 /**
@@ -173,8 +170,8 @@ public class RgStock{
  * @return boolean true if any cake is in stock, false otherwise
  */
     public boolean hasCakeInStock() {
-        for (int i = 0; i < Item.length; i++) {
-            if (Item[i].getQty() > 0) {
+        for (int i = 0; i < item.length; i++) {
+            if (item[i].getQty() > 0) {
                 return true; // Found a cake with stock
             }
         }
@@ -186,9 +183,9 @@ public class RgStock{
  */
     public void getReceipt() {
         System.out.println("Name\t\t\t\tQty\tPrice");
-        for (int i = 0; i < Item.length; i++) {
+        for (int i = 0; i < item.length; i++) {
             if (validItem(i)) {
-                RgItem cake = Item[i];
+                RgItem cake = item[i];
                 int quantity = cake.getQty();
                 int totalPrice = cake.getPrice() * quantity;
                 System.out.println(cake.getName() + "\t\t" + quantity + "\t" + "P" + totalPrice);
@@ -199,10 +196,10 @@ public class RgStock{
 /**
  * Get the price of the cake at the given index.
  *
- * @param cakeIndex The index of the cake in the Item array.
+ * @param cakeIndex The index of the cake in the item array.
  * @return The price of the cake.
  */
     public int getCakePrice(int cakeIndex) {
-        return Item[cakeIndex].getPrice();
+        return item[cakeIndex].getPrice();
     }
 }
