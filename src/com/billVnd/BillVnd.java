@@ -15,7 +15,6 @@ public class BillVnd {
     public BillVnd(){
         userWallet = new BillWallet();
         vndStock = new BillWallet();
-        vndProfit = new BillWallet();
         vndItemSold = new RgStock();
         vndItemStock = new RgStock();
     }
@@ -129,7 +128,6 @@ public class BillVnd {
 
     public void receipt(){
         vndItemSold.getReceipt();
-        //clear the other thing
     }
     public void setDefaults(){
         //sets stock of ten for all bills
