@@ -33,6 +33,7 @@ public class BillVnd {
 
         for (int i = 0; i < vndBills.length; i++) {
             int billValue = vndStock.getBills()[i].getValue();
+            System.out.println(vndBills[i] + " " + billValue + " Pesos added to the vending machine through bill maintenance!");
             vndStock.addBill(new Bill(vndBills[i], billValue));
         }
     }
@@ -63,23 +64,31 @@ public class BillVnd {
  * @param value the new value
  */
     public void editCake(int choice, int cakeIndex, int value){
-        if(choice==3){
-            vndItemStock.editCalorie(cakeIndex, value);
-            vndItemSold.editCalorie(cakeIndex, value);
-        }
-        else if(choice==4){
-            vndItemStock.editPrice(cakeIndex, value);
-            vndItemSold.editPrice(cakeIndex, value);
-        }
-        else if(choice ==5){
-            vndItemStock.addInt(cakeIndex, value);
-        } 
-        else if(choice==6){
-            vndItemStock.subInt(cakeIndex, value);
+        if(profit!=0){
+            System.out.println("Get the profit first before editing the cake parameters. Operation aborted");
         }
         else{
-            System.out.println("Invalid...");
+            if(choice==3){
+                System.out.println("Calorie of" + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
+                vndItemStock.editCalorie(cakeIndex, value);
+                vndItemSold.editCalorie(cakeIndex, value);
+            }
+            else if(choice==4){
+                System.out.println("Price of " + vndItemStock.getCakeName(cakeIndex) +  " changed to " + value +"!");
+                vndItemStock.editPrice(cakeIndex, value);
+                vndItemSold.editPrice(cakeIndex, value);
+            }
+            else if(choice ==5){
+                vndItemStock.addInt(cakeIndex, value);
+            } 
+            else if(choice==6){
+                vndItemStock.subInt(cakeIndex, value);
+            }
+            else{
+                System.out.println("Invalid...");
+            }
         }
+
     }
 /**
  * edits the cake at cakeIndex, based on choice, with value
@@ -88,13 +97,20 @@ public class BillVnd {
  * @param value the new value
  */
     public void editCake(int choice, int cakeIndex, String value){
-        if(choice==1){
-            vndItemStock.editName(cakeIndex, value);
-            vndItemSold.editName(cakeIndex, value);
+        if(profit!=0){
+            System.out.println("Get the profit first before editing the cake parameters. Operation aborted");
         }
-        else if(choice == 2){
-            vndItemStock.editDesc(cakeIndex, value);
-            vndItemSold.editDesc(cakeIndex, value);
+        else{
+            if(choice==1){
+                System.out.println("Name of " + vndItemStock.getCakeName(cakeIndex) +" changed to " + value +"!");
+                vndItemStock.editName(cakeIndex, value);
+                vndItemSold.editName(cakeIndex, value);
+            }
+            else if(choice == 2){
+                System.out.println("Description of " +vndItemStock.getCakeName(cakeIndex) +" changed to " + value +"!");
+                vndItemStock.editDesc(cakeIndex, value);
+                vndItemSold.editDesc(cakeIndex, value);
+            }
         }
     }
 /**
@@ -104,6 +120,12 @@ public class BillVnd {
         System.out.println("Total Profit obtained: "+profit+ ". Clearing wallet.");
         profit=0;
         vndItemSold.setStock(0);
+    }
+/**
+ * Displays the menu
+ */
+    public void displayMenu(){
+        vndItemStock.displayMenu();
     }
 /**
  * Lets the user purchase an item at cakeIndex with userBills. Gets the change too.
@@ -125,7 +147,6 @@ public class BillVnd {
                 System.out.println("The Vending Machine can process change right now");
                 canGiveChange = true;
             }
-            vndItemStock.displayMenu();
             if (userBills.length != 6) {
                 System.out.println("Invalid bill quantities array length. Expected length: 6");
                 return;
@@ -179,12 +200,15 @@ public class BillVnd {
     public void setDefaults(){
         //sets stock of ten for all bills
         int defaultStock = 10;
+        System.out.println("Setting defaults...");
         for (int i = 0; i < vndStock.getBills().length; i++) {
                 int billValue = vndStock.getBills()[i].getValue();
+                System.out.println(defaultStock + " " + billValue + " Pesos added to the vending machine by setting defaults!");
                 vndStock.addBill(new Bill(defaultStock, billValue));
         }
         //set a preset stock for cakes
         vndItemStock.setStock(defaultStock);
+        System.out.println("Defaults set!");
     }
     
 }
