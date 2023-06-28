@@ -2,39 +2,51 @@ package com.vndtstscript;
 
 import com.billVnd.BillVnd;
 //for easier running. Updates every thing. Dont forget to remove before passing!
-import com.bill.Bill;
-import com.rgItem.RgItem;
-import com.rgStock.RgStock;
 
 public class VndTstScript {
     public static void main(String[] args) {
         BillVnd billVnd = new BillVnd();
+
+        // Test set Default
         billVnd.setDefaults();
         
+        System.out.println("\n------ Test Done ------\n");
+
         // Test bill maintenance
         int[] vndBills = {10, 10, 10, 10, 10, 10};
         billVnd.billMaintenance(vndBills);
 
-        // Test adding a new cake
+        System.out.println("\n------ Test Done ------\n");
+
+        // Test adding a new cake & displaying menu
         billVnd.addNewCake("Chocolate Cake", "Delicious chocolate cake", 200, 150, 5);
-        
-        // Displays menu
         billVnd.displayMenu();
-       
+
+        System.out.println("\n------ Test Done ------\n");
+
+        // Test deleting a cake
+        int cakeToDelete = 10;
+        billVnd.deleteACake(cakeToDelete);
+        billVnd.displayMenu();
+
+        System.out.println("\n------ Test Done ------\n");
+
         // Test purchasing an item
         int[] userBills = {1, 1, 1, 1, 0, 0};
         int cakeIndex = 0;
         billVnd.purchaseItem(userBills, cakeIndex);
 
+        System.out.println("\n------ Test Done ------\n");
+
         // Test collecting profit
         billVnd.collectProfit();
+
+        System.out.println("\n------ Test Done ------\n");
 
         // Test receipt
         billVnd.receipt();
 
-        // Test deleting a cake
-        int cakeToDelete = 0;
-        billVnd.deleteACake(cakeToDelete);
+        System.out.println("\n------ Test Done ------\n");
 
         // Test editing a cake's Name
         billVnd.editCake(1, 1, "Blackforest Cake");
@@ -51,28 +63,18 @@ public class VndTstScript {
         // Test editing a cake's Qty (Subtracting)
         billVnd.editCake(6, 1, 5);
 
-        // Check if the cake's parameters were indeed edited
         billVnd.displayMenu();
-        
+
+        System.out.println("\n------ Test Done ------\n");
+
         // Purchase another cake
         int[] userBills2 = {1, 2, 2, 1, 0, 0};
         cakeIndex = 1;
         billVnd.purchaseItem(userBills2, cakeIndex);
+        billVnd.collectProfit();
+        billVnd.receipt();
 
-        // Test editing a cake's Price
-        billVnd.receipt();
-        billVnd.collectProfit();
-        billVnd.editCake(4, 1, 200);
-        
-        // See if it went through
-        billVnd.displayMenu();
-        int[] userBills3 = {1, 2, 2, 1, 0, 0};
-        cakeIndex = 1;
-        billVnd.purchaseItem(userBills3, cakeIndex);
-        
-        // Check if the reciepts are correct.
-        billVnd.receipt();
-        billVnd.collectProfit();
+        System.out.println("\n------ Test Done ------\n");
 
     }
 }
