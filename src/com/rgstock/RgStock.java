@@ -33,8 +33,21 @@ public class RgStock{
  * 
  */
     public void setStock(int intQty){
-        for(int i = 0;i<item.length;i++){
-            item[i].setQty(intQty);
+        if(intQty!=0){
+            for(int i = 0;i<item.length;i++){
+                if(!item[i].getName().equals(" ")){
+                    System.out.println(intQty + " " + item[i].getName() + "s added!");
+                    item[i].setQty(intQty);
+                }
+                
+            }
+        }
+        else{
+            for(int i = 0;i<item.length;i++){
+                if(!item[i].getName().equals(" ")){
+                    item[i].setQty(intQty);
+                }
+            }            
         }
     }
 /**
@@ -44,6 +57,7 @@ public class RgStock{
     public void displayMenu(){
         for(int i = 0;i<item.length;i++){
             if(validItem(i)){
+                System.out.println("Cake number: "+i);
                 item[i].displayCake();
             }
         }        
@@ -80,6 +94,7 @@ public class RgStock{
     public void addInt(int cakeIndex, int value){
         if(item[cakeIndex].getQty() + value <= 10){
             item[cakeIndex].changeQtyAdd(value);
+            System.out.println("Stock of "+ item[cakeIndex].getName() +  "increased by " + value +"!");
         }
         else{
             System.out.println("Invalid Number. Exceeds Total Capacity of 10");
@@ -93,6 +108,7 @@ public class RgStock{
     public void subInt(int cakeIndex, int value){
         if(item[cakeIndex].getQty() - value >= 0){
             item[cakeIndex].changeQtySub(value);
+            System.out.println("Stock of "+ item[cakeIndex].getName() + " decreased by " + value +"!");
         }
         else{
             System.out.println("Invalid Number. Quantity Results to Less Than 0");
@@ -201,5 +217,13 @@ public class RgStock{
  */
     public int getCakePrice(int cakeIndex) {
         return item[cakeIndex].getPrice();
+    }
+/**
+ * Gets the name of the cake.
+ * @param cakeIndex the index of the cake to be named.
+ * 
+ */
+    public String getCakeName(int cakeIndex) {
+        return item[cakeIndex].getName();
     }
 }
