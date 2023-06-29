@@ -1,7 +1,6 @@
 package com.vndtstscript;
 
 import com.billVnd.BillVnd;
-//for easier running. Updates every thing. Dont forget to remove before passing!
 
 public class VndTstScript {
     public static void main(String[] args) {
@@ -15,6 +14,11 @@ public class VndTstScript {
         // Test bill maintenance
         int[] vndBills = {10, 10, 10, 10, 10, 10};
         billVnd.billMaintenance(vndBills);
+        
+        System.out.println("\n------ Test Done ------\n");
+        
+        //Test getBillAmt
+        System.out.println("The vending machine accepts " + billVnd.getBillAmt(0)+ ","+ billVnd.getBillAmt(1)+","+billVnd.getBillAmt(2)+","+billVnd.getBillAmt(3)+","+billVnd.getBillAmt(4)+","+billVnd.getBillAmt(5)+" Peso Bills!");
 
         System.out.println("\n------ Test Done ------\n");
 
