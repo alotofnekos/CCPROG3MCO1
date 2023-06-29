@@ -210,5 +210,14 @@ public class BillVnd {
         vndItemStock.setStock(defaultStock);
         System.out.println("Defaults set!");
     }
+/**
+ * Gets the value of a bill (eg 20 for a 20 peso bill)
+ * @param index The index of the bill in the wallet
+ * @return the value of the bill
+ */
+    public int getBillAmt(int index){
+        int billValue = vndStock.getBills()[index].getValue();
+        return billValue;
+    }
     
 }
