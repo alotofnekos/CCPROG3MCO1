@@ -1,13 +1,12 @@
-package com.rgStock;
-import com.rgItem.RgItem;
 
 /**
- * The class Rg stock
+ * The class RgStock handles everything pertaining to a set of items, including transferring, deleting, validating, and getting cakes. 
+ * Individual cakes may also be edited here, if supplied with the correct index.
  */ 
 public class RgStock{
     private RgItem[] item;
 /**
- * This is a constructor that initializes everything except the quantity for the cakes
+ * This is a constructor that initializes everything for the default cakes except the quantity for the cakes
  *
  */
     public RgStock() {
@@ -65,7 +64,7 @@ public class RgStock{
         }        
     }
 /**
- * Deletes a cake
+ * Deletes a cake.
  * @param cakeIndex the index of the cake to be deleted
  * 
  */
@@ -73,7 +72,7 @@ public class RgStock{
         item[cakeIndex].deleteCake();
     }
 /**
- * Edits the calorie of the cake at cakeIndex with value
+ * Edits the calorie of the cake at cakeIndex with value.
  * @param cakeIndex the cakeIndex of the cake to be edited
  * @param intCalorie the calorie amount
  */
@@ -81,7 +80,7 @@ public class RgStock{
         item[cakeIndex].setCalorie(intCalorie);
     }
 /**
- * Edits the calorie of the cake at cakeIndex with value
+ * Edits the price of the cake at cakeIndex with value.
  * @param cakeIndex the cakeIndex of the cake to be edited
  * @param intPrice the new Price
  */
@@ -89,7 +88,7 @@ public class RgStock{
         item[cakeIndex].setPrice(intPrice);
     }
 /**
- * Adds an amount value to Cake at cakeIndex
+ * Adds an amount value to Cake at cakeIndex.
  * @param cakeIndex the cakeIndex of the cake to be edited
  * @param value the amount to be added
  */
@@ -103,7 +102,7 @@ public class RgStock{
         }
     }
 /**
- * Subtracts an amount value to Cake at cakeIndex
+ * Subtracts an amount value to Cake at cakeIndex.
  * @param cakeIndex the cakeIndex of the cake to be edited
  * @param value the amount to be subtracted
  */
@@ -117,7 +116,7 @@ public class RgStock{
         }
     }
 /**
- * Edits the name of the Cake at cakeIndex
+ * Edits the name of the Cake at cakeIndex.
  * @param cakeIndex the cakeIndex of the cake to be edited
  * @param strName the new name of the cake
  */
@@ -125,7 +124,7 @@ public class RgStock{
         item[cakeIndex].setName(strName);
     }
 /**
- * Edits the description of the Cake at cakeIndex
+ * Edits the description of the Cake at cakeIndex.
  * @param cakeIndex the cakeIndex of the cake to be edited
  * @param strDesc the new description of the cake
  */
@@ -133,7 +132,7 @@ public class RgStock{
         item[cakeIndex].setDesc(value);
     }
 /**
- * Adds a New Cake
+ * Adds a New Cake.
  * @param strName the name of the cake
  * @param strDesc the description of the cake
  * @param intCalorie the calorie amount of the cake
@@ -146,7 +145,7 @@ public class RgStock{
         item[cakeIndex] = new RgItem(strName, intQuantity, intPrice, intCalorie, strDesc);
     }
 /**
- * Count cakes
+ * Count the number of named cakes. Cakes set by default are still counted, even though they are deleted.
  * @return int  Number of named cakes [not necessarily on stock] in rgStock
  * 
  */
@@ -158,11 +157,11 @@ public class RgStock{
                 if (!item[intLoop].getName().equals(" ")) {
                     intCounter = intCounter + 1;
                 }
-            }
-            return intCounter;
         }
+        return intCounter;
+    }
 /**
- * Transfer a cake to another when its bought
+ * Transfer a cake to another inventory when its bought
  *
  * @param rgStock Where the cake is to be transferred. 
  * @param cakeIndex The position of the cake in the item[] array
