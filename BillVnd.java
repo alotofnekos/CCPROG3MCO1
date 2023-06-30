@@ -1,10 +1,6 @@
-package com.billVnd;
-import com.billWallet.BillWallet;
-import com.rgStock.RgStock;
-
 
 /**
- * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class. It uses the classes BillWallet and RgStock.
+ * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class.
  */ 
 public class BillVnd {
     private RgStock vndItemStock;
@@ -13,7 +9,9 @@ public class BillVnd {
     private BillWallet vndStock;
     private int profit=0;
 /**
- * This is a constructor that initializes the RgStocks and BillWallets to be used throughout the program 
+ * This is a constructor that initializes the RgStocks and BillWallets to be used throughout the program. 
+ * vndStock is the stock of bills the vending machine can use to produce change, the userWallet is the stock of bills the user uses to pay the vending machine.
+ * vndItemStock is the stock of items the vending machine has, while the vndItemSold is the stock of items bought by the user, which gets cleared upon taking the profit. 
  */
     public BillVnd(){
         userWallet = new BillWallet();
@@ -38,7 +36,7 @@ public class BillVnd {
         }
     }
 /**
- * Adds a new cake to the vending machine's stock 
+ * Adds a new cake to the vending machine's stock. Reciept's copy also adds the new cake to prevent discrepancies, but the quantity is set to zero since its not bought.
  * @param strName the name of the cake
  * @param strDesc the description of the cake
  * @param intCalorie the calorie amount of the cake
@@ -50,7 +48,7 @@ public class BillVnd {
         vndItemSold.addNewCake(strName,strDesc, intCalorie,intPrice, 0);
     }
 /**
- * deletes the cake at cakeIndex
+ * Deletes the cake at cakeIndex. Reciept's copy also deletes the cake to prevent discrepancies.
  * @param cakeIndex the index of the cake to be deleted
  */
     public void deleteACake(int cakeIndex){
@@ -58,7 +56,7 @@ public class BillVnd {
         vndItemSold.deleteCake(cakeIndex);
     }
 /**
- * edits the cake at cakeIndex, based on choice, with value
+ * Edits the cake at cakeIndex, based on choice, with an integer value. Some features are also passed down to the reciept's copy of the inventory, unless it pertains about the quantity.
  * @param choice tells which parameter to edit (3 for Calorie, 4 for Price, 5 for adding Stock, 6 for removing Stock)
  * @param cakeIndex the index of the cake to be edited
  * @param value the new value
@@ -69,7 +67,7 @@ public class BillVnd {
         }
         else{
             if(choice==3){
-                System.out.println("Calorie of" + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
+                System.out.println("Calorie of " + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
                 vndItemStock.editCalorie(cakeIndex, value);
                 vndItemSold.editCalorie(cakeIndex, value);
             }
@@ -91,7 +89,7 @@ public class BillVnd {
 
     }
 /**
- * edits the cake at cakeIndex, based on choice, with value
+ * Edits the cake at cakeIndex, based on choice, with a String value. These features are also passed down to the reciept's copy of the inventory.
  * @param choice tells which parameter to edit (1 for name, 2 for description)
  * @param cakeIndex the index of the cake to be edited
  * @param value the new value
@@ -122,7 +120,7 @@ public class BillVnd {
         vndItemSold.setStock(0);
     }
 /**
- * Displays the menu
+ * Displays the menu, the list of items available to be bought at that moment.
  */
     public void displayMenu(){
         vndItemStock.displayMenu();
@@ -228,7 +226,7 @@ public class BillVnd {
         return vndItemStock.hasCakeInStock();
     }
 /**
- * Checks if a cake  is valid
+ * Checks if a cake is valid
  * @return true if cake is valid, false otherwise
  */
     public boolean validItem(int cakeIndex){
