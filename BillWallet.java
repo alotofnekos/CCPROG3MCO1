@@ -1,5 +1,3 @@
-package com.billWallet;
-import com.bill.Bill;
 
 /** 
  * This class BillWallet holds the Bills for the instance of the vending machine and the amount the user put into the machine. 
@@ -20,14 +18,14 @@ public class BillWallet {
         bills[5] = new Bill(0, 500); // 500 Peso
     }
 /** 
- * Gets the array of bills to be counted
+ * Gets the array of bills to be counted.
  * @return the array of bills
  */
     public Bill[] getBills() {
         return bills;
     }
 /** 
- * Adds a specified quantity of bills with a specific value an existing bill collection
+ * Adds a specified quantity of bills with a specific value an existing bill collection.
  * @param billToAdd the bills to add to the current bill
  * @return void
  */ 
@@ -41,7 +39,7 @@ public class BillWallet {
         }
     }   
 /** 
- * Gets the total amount of all the bills in a wallet
+ * Gets the total amount of all the bills in a wallet.
  * @return total amount of all the bills
  */ 
     public int getTotalAmount() {
@@ -50,17 +48,6 @@ public class BillWallet {
             total += bills[i].getQty() * bills[i].getValue();
         }
         return total;
-    }
-/** 
- * Transfers all the bills in a wallet to a different wallet
- * @param wallet the wallet to transfer the bills to
- * @return void
- */ 
-    public void transferBills(BillWallet wallet) {
-        for (int i = 0; i < bills.length; i++) {
-            wallet.addBill(bills[i]);
-            bills[i].setQty(0);
-        }
     }
 
 /** 
