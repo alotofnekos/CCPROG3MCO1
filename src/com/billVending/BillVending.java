@@ -1,6 +1,7 @@
 package com.billVending;
 
 import java.util.Scanner;
+import com.billVnd.BillVnd;
 
 public class BillVending {
     public static void main(String[] args) {
