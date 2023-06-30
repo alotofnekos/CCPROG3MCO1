@@ -45,11 +45,11 @@ public class BillVending {
                                 subChoice = 1;
                                 System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
                                 vndBills[loop] = scmain.nextInt();
-                                if(vndBills[loop] >= 0){
-                                    subChoice = 2;
+                                if(vndBills[loop] < 0){
+                                    System.out.println("Invalid number. Try again.");
                                 }
                                 else{
-                                    System.out.println("Invalid number. Try again.")
+                                    subChoice = 2;
                                 }
                             }
                         }
