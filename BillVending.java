@@ -41,15 +41,15 @@ public class BillVending {
                     if(subChoice==1){
                         
                         for(loop = 0; loop < 6; loop++){
+                            subChoice = 1;
                             while(subChoice == 1){
-                                subChoice = 1;
                                 System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
                                 vndBills[loop] = scmain.nextInt();
                                 if(vndBills[loop] < 0){
                                     System.out.println("Invalid number. Try again.");
                                 }
                                 else{
-                                    subChoice = 2;
+                                    subChoice=2;
                                 }
                             }
                         }
@@ -72,8 +72,8 @@ public class BillVending {
                         if(loop > 2 && loop<7){
                             System.out.print("Enter Value: ");
                             integer = scmain.nextInt();
-                            if(interger < 0){
-                                System.ouit.println("Invalid Number");
+                            if(integer < 0){
+                                System.out.println("Invalid Number");
                             }
                             else{
                                 vnd.editCake(loop, cakeIndex, integer);
