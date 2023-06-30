@@ -1,5 +1,6 @@
 package com.rgStock;
 import com.rgItem.RgItem;
+
 /**
  * The class Rg stock
  */ 
@@ -57,7 +58,8 @@ public class RgStock{
     public void displayMenu(){
         for(int i = 0;i<item.length;i++){
             if(validItem(i)){
-                System.out.println("Cake number: "+i);
+                int j = i+1;
+                System.out.println("Cake number: "+ j);
                 item[i].displayCake();
             }
         }        
@@ -151,10 +153,9 @@ public class RgStock{
 
         public int countCakes() {
             int intLoop;
-            int intCounter = 0;
-
-            for (intLoop = 0; intLoop < 20; intLoop++) {
-                if (!item[intLoop].getName().equals(" ") ) {
+            int intCounter = 9;
+            for (intLoop = 9; intLoop < 20; intLoop++) {
+                if (!item[intLoop].getName().equals(" ")) {
                     intCounter = intCounter + 1;
                 }
             }
