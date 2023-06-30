@@ -1,5 +1,6 @@
-package com.bill;
- /**
+
+
+/**
  * The class Bill defines the Bills to be used for making transactions to the vending machine
  */ 
 public class Bill {
