@@ -4,16 +4,20 @@ import java.util.Scanner;
 
 import com.billVnd.BillVnd;
 //for easier running. Updates every thing. Dont forget to remove before passing!
-import com.bill.Bill;
-import com.rgItem.RgItem;
-import com.rgStock.RgStock;
 
 public class BillVending {
     public static void main(String[] args) {
         Scanner scmain = new Scanner(System.in);
-        int choice = 0;
-        int subChoice=0;
+        Scanner str = new Scanner(System.in);
         BillVnd vnd = new BillVnd();
+        int cakeIndex;
+        int subChoice = 0;
+        int choice = 0;
+        int integer;
+        int loop;
+        String string;
+        int[] vndBills = {0, 0, 0, 0, 0, 0};
+
         while(choice!=3){
             subChoice=0;
             System.out.println("Press 1 to access maintenance features, 2 to test vending features, and 3 to exit");
@@ -25,10 +29,27 @@ public class BillVending {
                     subChoice=scmain.nextInt();
                     scmain.nextLine();
                     if(subChoice==1){
-                        vnd.billMaintenance();
+                        System.out.println("Enter bills in order of 10, 20, 50, 100, 200, 500");
+                        for(loop = 0; loop < 6; loop++){
+                            vndBills[loop] = scmain.nextInt();
+                        }
+                        vnd.billMaintenance(vndBills);
                     }
                     else if(subChoice==2){
-                        vnd.itemMaintenance();
+                        System.out.print("What do you want to edit?\nName [1]\nDescription [2]\nCalorie [3]\nPrice [4]\nAdd Stock [5]\nSubtract Stock [6]\nEnter Choice: ");
+                        loop = scmain.nextInt();
+                        System.out.print("Enter cake number you want this edit to occur\nEnter: ");
+                        cakeIndex = scmain.nextInt();
+                        if(loop > 2){
+                            System.out.print("Enter Value: ");
+                            integer = scmain.nextInt();
+                            vnd.editCake(loop, cakeIndex, integer);
+                        }
+                        else{
+                            System.out.print("Enter Value: ");
+                            string = str.nextLine();
+                            vnd.editCake(loop, cakeIndex, string);
+                        }
                     }
                     else if(subChoice==3){
                         vnd.setDefaults();
@@ -50,7 +71,14 @@ public class BillVending {
             }
             else if(choice==2){
                 do{
-                    vnd.purchaseItem();
+                    System.out.println("Purchase Item\nEnter bills in order of 10, 20, 50, 100, 200, 500");
+                    for(loop = 0; loop < 6; loop++){
+                        vndBills[loop] = scmain.nextInt();
+                    }
+                    System.out.print("Enter cake number you want to buy\nEnter: ");
+                    cakeIndex = scmain.nextInt();
+
+                    vnd.purchaseItem(vndBills, cakeIndex);
                     while(subChoice!=2){
                         System.out.println("Buy another item? Press 1 if Yes, 2 if No");
                         subChoice=scmain.nextInt();
