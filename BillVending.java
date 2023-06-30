@@ -41,8 +41,17 @@ public class BillVending {
                     if(subChoice==1){
                         
                         for(loop = 0; loop < 6; loop++){
-                            System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
-                            vndBills[loop] = scmain.nextInt();
+                            while(subChoice == 1){
+                                subChoice = 1;
+                                System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
+                                vndBills[loop] = scmain.nextInt();
+                                if(vndBills[loop] >= 0){
+                                    subChoice = 2;
+                                }
+                                else{
+                                    System.out.println("Invalid number. Try again.")
+                                }
+                            }
                         }
                         vnd.billMaintenance(vndBills);
                     }
@@ -63,7 +72,12 @@ public class BillVending {
                         if(loop > 2 && loop<7){
                             System.out.print("Enter Value: ");
                             integer = scmain.nextInt();
-                            vnd.editCake(loop, cakeIndex, integer);
+                            if(interger < 0){
+                                System.ouit.println("Invalid Number");
+                            }
+                            else{
+                                vnd.editCake(loop, cakeIndex, integer);
+                            }
                         }
                         else if(loop==7){
                             System.out.print("Enter Name: ");
