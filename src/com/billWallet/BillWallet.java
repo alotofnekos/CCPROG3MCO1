@@ -1,5 +1,6 @@
 package com.billWallet;
 import com.bill.Bill;
+
 /** 
  * This class BillWallet holds the Bills for the instance of the vending machine and the amount the user put into the machine. 
  */
@@ -55,7 +56,6 @@ public class BillWallet {
  * @param wallet the wallet to transfer the bills to
  * @return void
  */ 
-
     public void transferBills(BillWallet wallet) {
         for (int i = 0; i < bills.length; i++) {
             wallet.addBill(bills[i]);
@@ -82,7 +82,7 @@ public class BillWallet {
  */
     public boolean pay(int uCash, int price) {
         int remainingAmount = uCash - price;
-        for (int i = 0; i < bills.length; i++) {
+        for (int i = 5; i > 0; i--) {
             int billValue = bills[i].getValue();
             int billsToGive = remainingAmount / billValue;
             if (billsToGive <= bills[i].getQty()) {
@@ -92,14 +92,14 @@ public class BillWallet {
 
         if (remainingAmount == 0) {
             remainingAmount = uCash - price;
-            for (int i = 0; i < bills.length; i++) {
+
+            for (int i = 5; i > 0; i--) {
                 int billValue = bills[i].getValue();
                 int billsToGive = remainingAmount / billValue;
                 if (billsToGive <= bills[i].getQty()) {
                     remainingAmount -= billsToGive * billValue;
                     bills[i].setQty(bills[i].getQty() - billsToGive);
                     System.out.println("Given " + billsToGive + " " + billValue + " Peso coins/bills as change");
-                    
                 }
                 if(remainingAmount==0){
                     break;
