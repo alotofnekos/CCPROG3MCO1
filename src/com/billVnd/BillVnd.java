@@ -3,6 +3,7 @@ package com.billVnd;
 import com.bill.Bill;
 import com.billWallet.BillWallet;
 import com.rgStock.RgStock;
+
 /**
  * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class
  */ 
@@ -69,7 +70,7 @@ public class BillVnd {
         }
         else{
             if(choice==3){
-                System.out.println("Calorie of " + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
+                System.out.println("Calorie of" + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
                 vndItemStock.editCalorie(cakeIndex, value);
                 vndItemSold.editCalorie(cakeIndex, value);
             }
@@ -177,7 +178,7 @@ public class BillVnd {
                 if (userWallet.getTotalAmount() < price) {
                     System.out.println("Insufficient funds. Please add more bills");
                     userWallet.clearWallet();
-                } else if ((vndStock.pay(userWallet.getTotalAmount(), price) == true) && (userWallet.getTotalAmount() > price)) {
+                } else if ((vndStock.pay(userWallet.getTotalAmount(), price) == true) && (userWallet.getTotalAmount() >= price)) {
                     userWallet.clearWallet();
                     profit += price;
                     System.out.println("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex)+".");
