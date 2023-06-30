@@ -50,20 +50,26 @@ public class BillVending {
                         vnd.billMaintenance(vndBills);
                     }
                     else if(subChoice==2){
-                        System.out.print("What do you want to edit?\nName [1]\nDescription [2]\nCalorie [3]\nPrice [4]\nAdd Stock [5]\nSubtract Stock [6]\nEnter Choice: ");
+                        System.out.print("What do you want to edit?\nName [1]\nDescription [2]\nCalorie [3]\nPrice [4]\nAdd Stock [5]\nSubtract Stock [6]\nAdd Cake [7\\nEnter Choice: ");
                         loop = scmain.nextInt();
                         vnd.displayMenu();
                         System.out.print("Enter cake number you want this edit to occur\nEnter: ");
                         cakeIndex = (scmain.nextInt() - 1);
-                        if(loop > 2){
+                        if(loop > 2 && loop < 7){
                             System.out.print("Enter Value: ");
                             integer = scmain.nextInt();
                             vnd.editCake(loop, cakeIndex, integer);
                         }
-                        else{
+                        else if(loop > 0 && loop < 3){
                             System.out.print("Enter Value: ");
                             string = str.nextLine();
                             vnd.editCake(loop, cakeIndex, string);
+                        }
+                        else if(loop == 7){
+                        
+                        }
+                        else if(loop == 8){
+                        
                         }
                     }
                     else if(subChoice==3){
