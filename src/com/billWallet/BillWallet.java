@@ -93,7 +93,7 @@ public class BillWallet {
         if (remainingAmount == 0) {
             remainingAmount = uCash - price;
 
-            for (int i = 5; i > -1 i--) {
+            for (int i = 5; i > -1; i--) {
                 int billValue = bills[i].getValue();
                 int billsToGive = remainingAmount / billValue;
                 if (billsToGive <= bills[i].getQty()) {
