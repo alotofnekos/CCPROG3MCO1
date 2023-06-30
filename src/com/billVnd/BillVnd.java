@@ -179,7 +179,8 @@ public class BillVnd {
                     userWallet.clearWallet();
                 } else if ((vndStock.pay(userWallet.getTotalAmount(), price) == true) && (userWallet.getTotalAmount() > price)) {
                     userWallet.clearWallet();
-                    profit =+ price;
+                    profit += price;
+                    System.out.println("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex)+".");
                     vndItemStock.transferCake(vndItemSold, cakeIndex);
                 } else {
                     System.out.println("Please pay exact amount. No change available");
