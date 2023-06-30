@@ -3,8 +3,6 @@ package com.billVending;
 import java.util.Scanner;
 
 import com.billVnd.BillVnd;
-//for easier running. Updates every thing. Dont forget to remove before passing!
-
 public class BillVending {
     public static void main(String[] args) {
         Scanner scmain = new Scanner(System.in);
@@ -88,22 +86,29 @@ public class BillVending {
             }
             else if(choice==2){
                 do{
+                    
                     System.out.println("Purchase Item");
                     if(vnd.hasStock()==true){
-                        vnd.displayMenu();
-                        for(loop = 0; loop < 6; loop++){
-                            System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
-                            vndBills[loop] = scmain.nextInt();
-                        }
-                        System.out.print("Enter cake number you want to buy\nEnter: ");
-                        cakeIndex = scmain.nextInt();
-
-                        vnd.purchaseItem(vndBills, cakeIndex);
                         while(subChoice!=2){
-                            System.out.println("Buy another item? Press 1 if Yes, 2 if No");
-                            subChoice=scmain.nextInt();
-                            scmain.nextLine();
-                            
+                            vnd.displayMenu();
+                            for(loop = 0; loop < 6; loop++){
+                                System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
+                                vndBills[loop] = scmain.nextInt();
+                            }
+                            cakeIndex=-1;
+                            while(vnd.validItem(cakeIndex)==false){
+                                System.out.print("Enter cake number you want to buy\nEnter: ");
+                                cakeIndex = scmain.nextInt();
+                                if(vnd.validItem(cakeIndex)==false){
+                                    System.out.println("Cake is invalid or out of stock. Please try again.");
+                                }
+                            }
+                            vnd.purchaseItem(vndBills, cakeIndex);
+                            while(subChoice != 2 && subChoice != 1){
+                                System.out.println("Buy another item? Press 1 if Yes, 2 if No");
+                                subChoice=scmain.nextInt();
+                                scmain.nextLine();
+                            }
                         }
                         System.out.println("Returning to the main menu...");
                     }
@@ -125,4 +130,3 @@ public class BillVending {
         scmain.close();
     }
 }
-
