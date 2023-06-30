@@ -92,8 +92,6 @@ public class BillWallet {
 
         if (remainingAmount == 0) {
             remainingAmount = uCash - price;
-
-            System.out.println("Payment successful. Dispensing item.");
             for (int i = 0; i < bills.length; i++) {
                 int billValue = bills[i].getValue();
                 int billsToGive = remainingAmount / billValue;
