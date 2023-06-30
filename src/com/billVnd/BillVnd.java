@@ -139,7 +139,6 @@ public class BillVnd {
         if (hasCakeInStock == false) {
             System.out.println("Can't buy items, no items in stock.");
         } else {
-            System.out.println("Total amount of bills in Vending machine: " + vndStock.getTotalAmount());
             if (vndStock.getTotalAmount() == 0) {
                 System.out.println("The Vending Machine does not have money to process change right now");
                 canGiveChange = false;
@@ -156,18 +155,19 @@ public class BillVnd {
                 userWallet.addBill(new Bill(userBills[i], billValue));
             }
             System.out.println("Total amount inserted: " + userWallet.getTotalAmount());
-            while (isItemValid == false) {
-                isItemValid = vndItemStock.validItem(cakeIndex);
-                if (isItemValid == false) {
-                    System.out.println("Invalid item. Please try again");
-                }
+            isItemValid = vndItemStock.validItem(cakeIndex);
+            if (isItemValid == false) {
+                System.out.println("Item is out of stock. Please try again");
+                userWallet.clearWallet();
+                return;
             }
             int price = vndItemStock.getCakePrice(cakeIndex);
             if (canGiveChange == false) {
                 if (userWallet.getTotalAmount() == price) {
                     vndStock.pay(userWallet.getTotalAmount(), price);
                     userWallet.clearWallet();
-                    profit =+ price;
+                    profit += price;
+                    System.out.println("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex)+".");
                     vndItemStock.transferCake(vndItemSold, cakeIndex);
                 } else if (userWallet.getTotalAmount() > price) {
                     System.out.println("Please pay exact amount. No change available");
@@ -218,6 +218,20 @@ public class BillVnd {
     public int getBillAmt(int index){
         int billValue = vndStock.getBills()[index].getValue();
         return billValue;
+    }
+/**
+ * Checks if a cake stock exists
+ * @return true if there's a cake with a stock, false otherwise
+ */
+    public boolean hasStock() {
+        return vndItemStock.hasCakeInStock();
+    }
+/**
+ * Checks if a cake  is valid
+ * @return true if cake is valid, false otherwise
+ */
+    public boolean validItem(int cakeIndex){
+        return vndItemStock.validItem(cakeIndex);
     }
     
 }
