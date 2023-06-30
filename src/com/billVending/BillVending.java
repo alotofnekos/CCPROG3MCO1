@@ -2,7 +2,6 @@ package com.billVending;
 
 import java.util.Scanner;
 
-import com.billVnd.BillVnd;
 public class BillVending {
     public static void main(String[] args) {
         Scanner scmain = new Scanner(System.in);
@@ -90,6 +89,7 @@ public class BillVending {
                     System.out.println("Purchase Item");
                     if(vnd.hasStock()==true){
                         while(subChoice!=2){
+                            subChoice=0;
                             vnd.displayMenu();
                             for(loop = 0; loop < 6; loop++){
                                 System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
@@ -99,6 +99,7 @@ public class BillVending {
                             while(vnd.validItem(cakeIndex)==false){
                                 System.out.print("Enter cake number you want to buy\nEnter: ");
                                 cakeIndex = scmain.nextInt();
+                                scmain.nextLine();
                                 if(vnd.validItem(cakeIndex)==false){
                                     System.out.println("Cake is invalid or out of stock. Please try again.");
                                 }
