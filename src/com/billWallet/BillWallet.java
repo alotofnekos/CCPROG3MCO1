@@ -99,7 +99,9 @@ public class BillWallet {
                 if (billsToGive <= bills[i].getQty()) {
                     remainingAmount -= billsToGive * billValue;
                     bills[i].setQty(bills[i].getQty() - billsToGive);
-                    System.out.println("Given " + billsToGive + " " + billValue + " Peso coins/bills as change");
+                    if(billsToGive>=1){
+                        System.out.println("Given " + billsToGive + " " + billValue + " Peso coins/bills as change");
+                    }
                 }
                 if(remainingAmount==0){
                     break;
