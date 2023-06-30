@@ -11,6 +11,7 @@ public class BillVending {
         int initialize =0;
         int integer;
         int loop;
+        int billFlag=0;
         String string;
         int[] vndBills = {0, 0, 0, 0, 0, 0};
         while (initialize != 2 && initialize != 1) {
@@ -128,8 +129,17 @@ public class BillVending {
                             subChoice=0;
                             vnd.displayMenu();
                             for(loop = 0; loop < 6; loop++){
-                                System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
-                                vndBills[loop] = scmain.nextInt();
+                                billFlag = 1;
+                                while(billFlag == 1){
+                                    System.out.print("Enter the number of "+ vnd.getBillAmt(loop)+ " Peso bills to add: ");
+                                    vndBills[loop] = scmain.nextInt();
+                                    if(vndBills[loop] < 0){
+                                        System.out.println("Invalid number. Try again.");
+                                    }
+                                    else{
+                                        billFlag=2;
+                                    }
+                                }
                             }
                             cakeIndex=-1;
                             while(vnd.validItem(cakeIndex)==false){
