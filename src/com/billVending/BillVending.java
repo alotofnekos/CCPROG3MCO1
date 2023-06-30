@@ -41,12 +41,12 @@ public class BillVending {
                         System.out.print("Enter cake number you want this edit to occur\nEnter: ");
                         cakeIndex = scmain.nextInt();
                         if(loop > 2){
-                            System.out.print("Enter Value: ");
+                            System.out.print("Enter New Value: ");
                             integer = scmain.nextInt();
                             vnd.editCake(loop, cakeIndex, integer);
                         }
                         else{
-                            System.out.print("Enter Value: ");
+                            System.out.print("Enter New Value: ");
                             string = str.nextLine();
                             vnd.editCake(loop, cakeIndex, string);
                         }
