@@ -1,7 +1,4 @@
-package com.billVending;
-
 import java.util.Scanner;
-import com.billVnd.BillVnd;
 
 public class BillVending {
     public static void main(String[] args) {
@@ -55,8 +52,13 @@ public class BillVending {
                         vnd.displayMenu();
                         cakeIndex=-1;
                         if(loop!=7){
-                            System.out.print("Enter cake number you want this edit to occur\nEnter: ");
-                            cakeIndex = (scmain.nextInt() - 1);
+                            while(vnd.validItem(cakeIndex)==false){
+                                System.out.print("Enter cake number you want this edit to occur\nEnter: ");
+                                cakeIndex = (scmain.nextInt() - 1);
+                                if(vnd.validItem(cakeIndex)==false){
+                                    System.out.println("Invalid cake. Please try again");
+                                }
+                            }
                         }
                         if(loop > 2 && loop<7){
                             System.out.print("Enter Value: ");
@@ -76,10 +78,7 @@ public class BillVending {
                             int qty = scmain.nextInt();
                             vnd.addNewCake(name,desc,cal,price,qty);
                         }
-                        else if(loop==8){
-                            if(vnd.validItem(cakeIndex)==false){
-                                    System.out.println("Invalid cake. Please try again");
-                            }  
+                        else if(loop==8){ 
                             vnd.deleteACake(cakeIndex);
                         }
                         else{
