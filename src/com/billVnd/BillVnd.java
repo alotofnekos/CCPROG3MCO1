@@ -1,12 +1,10 @@
 package com.billVnd;
-
-import com.bill.Bill;
 import com.billWallet.BillWallet;
 import com.rgStock.RgStock;
 
 
 /**
- * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class
+ * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class. It uses the classes BillWallet and RgStock.
  */ 
 public class BillVnd {
     private RgStock vndItemStock;
