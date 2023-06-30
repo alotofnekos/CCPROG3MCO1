@@ -69,7 +69,7 @@ public class BillVnd {
         }
         else{
             if(choice==3){
-                System.out.println("Calorie of" + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
+                System.out.println("Calorie of " + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
                 vndItemStock.editCalorie(cakeIndex, value);
                 vndItemSold.editCalorie(cakeIndex, value);
             }
