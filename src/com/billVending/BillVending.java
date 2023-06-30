@@ -67,7 +67,6 @@ public class BillVending {
                         System.out.println("Invalid choice. Please try again");
                     }
                 }
-                
             }
             else if(choice==2){
                 do{
