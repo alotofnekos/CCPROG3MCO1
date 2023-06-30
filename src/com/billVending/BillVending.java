@@ -54,7 +54,7 @@ public class BillVending {
                         loop = scmain.nextInt();
                         vnd.displayMenu();
                         System.out.print("Enter cake number you want this edit to occur\nEnter: ");
-                        cakeIndex = scmain.nextInt();
+                        cakeIndex = (scmain.nextInt() - 1);
                         if(loop > 2){
                             System.out.print("Enter Value: ");
                             integer = scmain.nextInt();
@@ -99,7 +99,7 @@ public class BillVending {
                             cakeIndex=-1;
                             while(vnd.validItem(cakeIndex)==false){
                                 System.out.print("Enter cake number you want to buy\nEnter: ");
-                                cakeIndex = scmain.nextInt();
+                                cakeIndex = (scmain.nextInt() - 1);
                                 scmain.nextLine();
                                 if(vnd.validItem(cakeIndex)==false){
                                     System.out.println("Cake is invalid or out of stock. Please try again.");
