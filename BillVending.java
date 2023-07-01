@@ -60,9 +60,13 @@ public class BillVending {
 
                         System.out.print("What do you want to edit?\nName [1]\nDescription [2]\nCalorie [3]\nPrice [4]\nAdd Stock [5]\nSubtract Stock [6]\nAdd New Cake [7]\nDelete Cake [8]\nExit edit menu [9]\nEnter Choice:");
                         loop = scmain.nextInt();
-                        vnd.displayMenu();
                         cakeIndex=-1;
-                        if(loop!=7){
+                        if(loop<1||loop>9){
+                            System.out.println("Invalid choice.");
+                            loop=9;
+                        }
+                        else if(loop!=7&&loop!=9){
+                            vnd.displayMenu();
                             if(vnd.hasStock()==false){
                                 System.out.println("No cake available to be edited. Set Defaults first!");
                                 loop=9;
@@ -105,9 +109,6 @@ public class BillVending {
                         }
                         else if(loop==9){
                             System.out.println("Returning to item maintenance...");
-                        }
-                        else if(loop<1||loop>9){
-                            System.out.println("Invalid choice, returning to item maintenance...");
                         }
                         else{
                             System.out.print("Enter Value: ");
