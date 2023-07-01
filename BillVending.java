@@ -57,16 +57,23 @@ public class BillVending {
                         vnd.billMaintenance(vndBills);
                     }
                     else if(subChoice==2){
-                        System.out.print("What do you want to edit?\nName [1]\nDescription [2]\nCalorie [3]\nPrice [4]\nAdd Stock [5]\nSubtract Stock [6]\nAdd New Cake [7]\nDelete Cake [8]\nEnter Choice:");
+
+                        System.out.print("What do you want to edit?\nName [1]\nDescription [2]\nCalorie [3]\nPrice [4]\nAdd Stock [5]\nSubtract Stock [6]\nAdd New Cake [7]\nDelete Cake [8]\nExit edit menu [9]\nEnter Choice:");
                         loop = scmain.nextInt();
                         vnd.displayMenu();
                         cakeIndex=-1;
                         if(loop!=7){
-                            while(vnd.validItem(cakeIndex)==false){
-                                System.out.print("Enter cake number you want this edit to occur\nEnter: ");
-                                cakeIndex = (scmain.nextInt() - 1);
-                                if(vnd.validItem(cakeIndex)==false){
-                                    System.out.println("Invalid cake. Please try again");
+                            if(vnd.hasStock()==false){
+                                System.out.println("No cake available to be edited. Set Defaults first!");
+                                loop=9;
+                            }
+                            else{
+                                while(vnd.validItem(cakeIndex)==false){
+                                    System.out.print("Enter cake number you want this edit to occur\nEnter: ");
+                                    cakeIndex = (scmain.nextInt() - 1);
+                                    if(vnd.validItem(cakeIndex)==false){
+                                        System.out.println("Invalid cake. Please try again");
+                                    }
                                 }
                             }
                         }
@@ -95,6 +102,12 @@ public class BillVending {
                         }
                         else if(loop==8){ 
                             vnd.deleteACake(cakeIndex);
+                        }
+                        else if(loop==9){
+                            System.out.println("Returning to item maintenance...");
+                        }
+                        else if(loop<1||loop>9){
+                            System.out.println("Invalid choice, returning to item maintenance...");
                         }
                         else{
                             System.out.print("Enter Value: ");
