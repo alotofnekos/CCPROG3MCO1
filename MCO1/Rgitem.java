@@ -1,7 +1,8 @@
 
 
  /**
- * The class  Rg item defines the regular items to be sold in the vending machine
+ * The class  RgItem defines the regular items to be sold in the vending machine.
+ * These include the name, description, quantity, calorie amount, and price of a cake. These features may also be displayed and edited accordingly, and a full summary can be obtained with display cake.  
  */ 
 public class RgItem{
     
@@ -27,7 +28,7 @@ public class RgItem{
         this.strDesc=strDesc;
    }
 /**
- * This is a constructor for an empty item 
+ * This is a constructor for an empty item, which can be filled up if addCake() function is used.
  */
     public RgItem(){ 
         intQty = 0;
@@ -37,7 +38,7 @@ public class RgItem{
         strName = " ";
     }
 /**
- * Sets the name.
+ * Sets the name of the item.
  *
  * @param strName  The String Name of the item.  
  */
@@ -45,7 +46,7 @@ public class RgItem{
         this.strName = strName;
     }
 /**
- * Sets the description.
+ * Sets the description of the item.
  *
  * @param strDesc  The String Description of the item.  
  */
@@ -53,7 +54,7 @@ public class RgItem{
         this.strDesc = strDesc;
     }
 /**
- * Sets the calorie.
+ * Sets the calorie of the item.
  *
  * @param intCalorie  The Integer Calorie of the item.  
  */
@@ -61,7 +62,7 @@ public class RgItem{
         this.intCalorie = intCalorie;
     }
 /**
- * Sets the price.
+ * Sets the price of the item.
  *
  * @param intPrice  The Integer Price of the item.  
  */
@@ -69,7 +70,7 @@ public class RgItem{
         this.intPrice = intPrice;
     }
 /**
- * Sets the quantity.
+ * Sets the quantity of the item.
  *
  * @param intQty  The Integer Quantity of the item.  
  */
@@ -77,7 +78,7 @@ public class RgItem{
         this.intQty = intQty;
     }
 /**
- * Gets the name.
+ * Gets the name of the item.
  *
  * @return  The String Name of the item. 
  */
@@ -85,7 +86,7 @@ public class RgItem{
         return strName;
     }
 /**
- * Gets the description.
+ * Gets the description of the item.
  *
  * @return  The String Description of the item. 
  */
@@ -93,7 +94,7 @@ public class RgItem{
         return strDesc;
     }
 /**
- * Gets the calorie.
+ * Gets the calorie of the item.
  *
  * @return  The Integer Calorie of the item. 
  */
@@ -101,7 +102,7 @@ public class RgItem{
         return intCalorie;
     }
 /**
- * Gets the price.
+ * Gets the price of the item.
  *
  * @return  The Integer Price of the item. 
  */
@@ -109,7 +110,7 @@ public class RgItem{
         return intPrice;
     }
 /**
- * Gets the quantity.
+ * Gets the quantity of the item.
  *
  * @return  The Integer Quantity of the item. 
  */
@@ -117,7 +118,7 @@ public class RgItem{
         return intQty;
     }
 /**
- * Changes the quantity through subtraction.
+ * Changes the quantity of the item through subtraction.
  *
  * @param intQty  The Integer quantity to be subtracted. 
  */
@@ -125,7 +126,7 @@ public class RgItem{
         this.intQty = this.intQty - intQty;
     }
 /**
- * Changes the quantity through addition.
+ * Changes the quantity of the item through addition.
  *
  * @param intQty  The Integer quantity to be added.
  */
@@ -143,7 +144,7 @@ public class RgItem{
         strName = " ";
     }
 /**
- * Displays the  cake.
+ * Displays the cake.
  */
     public void displayCake(){ 
         System.out.println("Cake Name: " + strName);
