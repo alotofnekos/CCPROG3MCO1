@@ -5,7 +5,7 @@
 public class BillWallet {
     private Bill[] bills;
 /** 
- * It is a constructor. It initializes the array of bills to be 
+ * It is a constructor that initializes the array of bills for a certain wallet.
  */
     public BillWallet() {
         bills = new Bill[6]; 
@@ -27,7 +27,6 @@ public class BillWallet {
 /** 
  * Adds a specified quantity of bills with a specific value an existing bill collection.
  * @param billToAdd the bills to add to the current bill
- * @return void
  */ 
     public void addBill(Bill billToAdd) {
         int value = billToAdd.getValue();
@@ -51,8 +50,7 @@ public class BillWallet {
     }
 
 /** 
- * clears the Wallet by setting the quantity of bills stored in the wallet to zero
- * @return void
+ * clears the Wallet by setting the quantity of bills stored in the wallet to zero.
  */ 
     public void clearWallet() {
         for (int i = 0; i < bills.length; i++) {
@@ -61,7 +59,7 @@ public class BillWallet {
     }
 /** 
  *
- * Provides change based on the user's cash and price of the item to be bought
+ * Provides change based on the user's cash and price of the item to be bought.
  *
  * @param uCash the total amount of bills provided.
  * @param price the price of the item.
