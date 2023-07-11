@@ -1,14 +1,14 @@
 
 
 /**
- * The class Bill defines the Bills to be used for making transactions to the vending machine
+ * The class Bill defines the Bills to be used for making transactions to the vending machine.
  */ 
 public class Bill {
     private int intQty;
     private int intValue;
  /** 
  *
- * This is a constructor. 
+ * This is a constructor that makes an instance of a bill with a quantity and value.
  *
  * @param intQty  the quantity of the bill to be stocked
  * @param intValue  the value of each individual bill (eg.&nbsp; 10 5 peso coins will be simulated as Bill(10,5))
@@ -19,7 +19,7 @@ public class Bill {
     }
 /** 
  *
- * Gets the quantity of bills in stock
+ * Gets the quantity of bills in stock.
  *
  * @return the quantity of bills in stock
  */
@@ -28,7 +28,7 @@ public class Bill {
     }
 /** 
  *
- * Sets the quantity of bills in stock
+ * Sets the quantity of bills in stock.
  *
  * @param intQty  the quantity of bills in stock 
  */
@@ -37,7 +37,7 @@ public class Bill {
     }
 /** 
  *
- * Gets the value of the bill
+ * Gets the value of the bill.
  *
  * @return the value of the bill
  */
