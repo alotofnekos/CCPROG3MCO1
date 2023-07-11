@@ -28,7 +28,7 @@ public class RgStock{
         }
     }
 /**
- * Sets a quantity of intQty for all cakes.
+ * Sets a quantity of intQty for all named cakes. If intQty = 0 the output text is muted as its for clearing the receipt [shouldn't be told to the end user]. 
  *  @param intQty the quantity of cakes to be set
  * 
  */
@@ -95,7 +95,7 @@ public class RgStock{
     public void addInt(int cakeIndex, int value){
         if(item[cakeIndex].getQty() + value <= 10){
             item[cakeIndex].changeQtyAdd(value);
-            System.out.println("Stock of "+ item[cakeIndex].getName() +  "increased by " + value +"!");
+            System.out.println("Stock of "+ item[cakeIndex].getName() +  " increased by " + value +"!");
         }
         else{
             System.out.println("Invalid Number. Exceeds Total Capacity of 10");
@@ -126,7 +126,7 @@ public class RgStock{
 /**
  * Edits the description of the Cake at cakeIndex.
  * @param cakeIndex the cakeIndex of the cake to be edited
- * @param strDesc the new description of the cake
+ * @param value the new description of the cake
  */
     public void editDesc(int cakeIndex, String value){
         item[cakeIndex].setDesc(value);
@@ -145,7 +145,7 @@ public class RgStock{
         item[cakeIndex] = new RgItem(strName, intQuantity, intPrice, intCalorie, strDesc);
     }
 /**
- * Count the number of named cakes. Cakes set by default are still counted, even though they are deleted.
+ * Provides the index number of named cakes. Cakes set by default are still counted, even though they are deleted.
  * @return int  Number of named cakes [not necessarily on stock] in rgStock
  * 
  */
@@ -173,7 +173,7 @@ public class RgStock{
     }
 
 /**
- * Check if the cake at item[cakeIndex] is valid (exists and is not null)
+ * Check if the cake at item[cakeIndex] is valid (exists and is not out of stock)
  *  @param cakeIndex  The index of the cake in the item array.
  *  @return boolean  Returns true if the cake is valid, false otherwise.
  */
@@ -221,7 +221,7 @@ public class RgStock{
 /**
  * Gets the name of the cake.
  * @param cakeIndex the index of the cake to be named.
- * 
+ * @return the name of the cake
  */
     public String getCakeName(int cakeIndex) {
         return item[cakeIndex].getName();
