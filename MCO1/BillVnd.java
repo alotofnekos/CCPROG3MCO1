@@ -1,6 +1,6 @@
 
 /**
- * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class.
+ * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class
  */ 
 public class BillVnd {
     private RgStock vndItemStock;
@@ -227,6 +227,7 @@ public class BillVnd {
     }
 /**
  * Checks if a cake is valid
+ * @param cakeIndex the index of the cake to be checked.
  * @return true if cake is valid, false otherwise
  */
     public boolean validItem(int cakeIndex){
