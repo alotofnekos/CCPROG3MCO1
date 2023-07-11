@@ -1,6 +1,15 @@
 import java.util.Scanner;
-
+/**
+ * Driver class of the vending machine. 
+ * Utilizes BillVnd.
+ *
+ */
 public class BillVending {
+/**
+ * Driver class of the vending machine.
+ * Utilizes BillVnd.
+ * @param args for the main function.
+ */
     public static void main(String[] args) {
         Scanner scmain = new Scanner(System.in);
         Scanner str = new Scanner(System.in);
