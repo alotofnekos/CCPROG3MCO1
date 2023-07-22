@@ -8,7 +8,7 @@ public class SpcItem extends RgItem {
     public SpcItem(String name, int quantity, int price, int calorie, String description, String strTag) {
         super(name, quantity, price, calorie, description);
         incompatibleCakes = new ArrayList<>();
-        this.strTag=strTag;
+        this.strTag = strTag;
     }
 
     public SpcItem(String name, int quantity, int price, int calorie, String description, String strTag, SpcItem[] inheritsFrom) {
@@ -23,16 +23,27 @@ public class SpcItem extends RgItem {
             }
         }
     }
-    public SpcItem(){
+
+    public SpcItem() {
         incompatibleCakes = new ArrayList<>();
         this.strTag = " ";
     }
+
     public void addIncompatibleCake(String cakeName) {
         incompatibleCakes.add(cakeName);
     }
 
     public boolean isCompatible(String cakeName) {
-        return !incompatibleCakes.contains(cakeName);
+        for (int i = 0; i < incompatibleCakes.size(); i++) {
+            System.out.println(cakeName + " vs " + incompatibleCakes.get(i));
+            if (cakeName.equals(incompatibleCakes.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public List<String> getIncompatibleCakes() {
+        return incompatibleCakes;
     }
 
     public boolean hasTag(String tagName) {
