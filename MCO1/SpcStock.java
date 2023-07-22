@@ -29,7 +29,7 @@ public class SpcStock extends RgStock {
         SpcItem[9] = new SpcItem("Upgrade to Chocolate a la Mode", 0, 60, 136, "Ice Cream, Chocolate, and Cake? What a sweet combination! Inherits restrictions from Ice Cream and Chocolate.", "Ice Cream Chocolate Package", new SpcItem[]{SpcItem[6], SpcItem[7]});
         SpcItem[10] = new SpcItem("Upgrade to Fruit a la Mode", 0, 60, 90, "Ice Cream, Fruit, and Cake? What a refreshing combination! Inherits restrictions from Ice Cream and Fruits.", "Ice Cream Fruit Package", new SpcItem[]{SpcItem[5], SpcItem[7]});
         for (int i = 11; i < SpcItem.length; i++) {
-            SpcItem[i] = new SpcItem(); // Initialize the remaining elements with default RgItem objects
+            SpcItem[i] = new SpcItem(); // Initialize the remaining elements with default SpcItem objects
         }
     }
 
@@ -38,7 +38,7 @@ public class SpcStock extends RgStock {
     }
     @Override
     public void setStock(int intQty) {
-        super.setStock(intQty); // Call the setStock method from the parent class to handle RgItem array
+        super.setStock(intQty); 
 
         if (intQty != 0) {
             for (int i = 0; i < SpcItem.length; i++) {
