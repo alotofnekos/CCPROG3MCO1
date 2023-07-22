@@ -10,6 +10,23 @@ public class SpcItem extends RgItem {
         incompatibleCakes = new ArrayList<>();
         this.strTag=strTag;
     }
+
+    public SpcItem(String name, int quantity, int price, int calorie, String description, String strTag, SpcItem[] inheritsFrom) {
+        super(name, quantity, price, calorie, description);
+        incompatibleCakes = new ArrayList<>();
+        this.strTag = strTag;
+
+        // Inherit restrictions from the specified SpcItem objects
+        for (SpcItem item : inheritsFrom) {
+            if (item != null) {
+                incompatibleCakes.addAll(item.incompatibleCakes);
+            }
+        }
+    }
+    public SpcItem(){
+        incompatibleCakes = new ArrayList<>();
+        this.strTag = " ";
+    }
     public void addIncompatibleCake(String cakeName) {
         incompatibleCakes.add(cakeName);
     }
@@ -19,6 +36,6 @@ public class SpcItem extends RgItem {
     }
 
     public boolean hasTag(String tagName) {
-        return tag.equals(tagName);
+        return strTag.equals(tagName);
     }
 }
