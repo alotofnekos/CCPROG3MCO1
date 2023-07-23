@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpcItem extends RgItem {
-    private List<String> incompatibleCakes;
+    private ArrayList<String> incompatibleCakes;
     private String strTag;
 
     public SpcItem(String name, int quantity, int price, int calorie, String description, String strTag) {
@@ -35,14 +35,14 @@ public class SpcItem extends RgItem {
 
     public boolean isCompatible(String cakeName) {
         for (int i = 0; i < incompatibleCakes.size(); i++) {
-            System.out.println(cakeName + " vs " + incompatibleCakes.get(i));
             if (cakeName.equals(incompatibleCakes.get(i))) {
                 return false;
             }
         }
         return true;
     }
-    public List<String> getIncompatibleCakes() {
+
+    public  ArrayList<String> getIncompatibleCakes() {
         return incompatibleCakes;
     }
 
