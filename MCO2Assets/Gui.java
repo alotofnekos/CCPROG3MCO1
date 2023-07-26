@@ -6,24 +6,28 @@ import java.awt.event.ActionListener;
 public class Gui extends JFrame implements ActionListener{
     private JFrame frame;
     private JMenuBar menu;
-    private JPanel vendingP[];
-
-    private JButton vendingB[];
-    private JButton maintenance[];
-    private JButton buy;
-    private JButton insert;
-    private JButton edit;
-    private JButton coin;
-
+    
     private JMenu maintMenu;
     private JMenuItem initializeMachine;
     private JMenuItem itemMaintenance;
+
+    private JLabel maintenanceL[];
+    private JPanel maintenanceP[];
+    private JButton maintenanceB[];
+
+    private JPanel vendingP[];
+    private JButton vendingB[];
+
+    private JButton buy;
+    private JButton insert;
+    private JButton coin[];
+
+    private JButton edit;
     
     private int width;
     private int length;
-    
-    //Remove in the future
     private int loop;
+    
     //XY position of buttons
     int x=30;
     int y=50;
@@ -34,13 +38,18 @@ public class Gui extends JFrame implements ActionListener{
         frame = new JFrame();
         width = 1000;
         length = 800;
+
         menu = new JMenuBar(); 
         maintMenu = new JMenu("Admin");
+
         initializeMachine = new JMenuItem("Initialize Machine");
-        itemMaintenance = new JMenuItem("Item Maintenance");
-        buy = new JButton("Buy Cake");
         insert = new JButton("Insert Money");
-        maintenance = new JButton[6];
+        buy = new JButton("Buy Cake");
+        
+        itemMaintenance = new JMenuItem("Item Maintenance");
+        maintenanceL = new JLabel[5];
+        maintenanceB = new JButton[5];
+        maintenanceP = new JPanel[5];
 
         //Removable when MCO1 implementation is done
         vendingB = new JButton[20];
@@ -110,7 +119,7 @@ public class Gui extends JFrame implements ActionListener{
 
     public void maintButtons() {
         //Suppose Implement RgVending
-        for(loop=0;loop<6;loop++){
+        for(loop=0;loop<5;loop++){
             itemMaintenance(loop);
             y+=100;
         }
@@ -118,12 +127,36 @@ public class Gui extends JFrame implements ActionListener{
     }
 
     public void itemMaintenance(int Count) {
-        maintenance[Count] = new JButton((Count+1)+".");
-        maintenance[Count].setBounds(x, y, 75, 50);
-        maintenance[Count].addActionListener(this);
-        maintenance[Count].setVisible(false);
-        frame.add(maintenance[Count]);
+        maintenanceB[Count] = new JButton((Count+1)+".");
+        maintenanceB[Count].setBounds(x, y, 75, 50);
+        maintenanceB[Count].addActionListener(this);
+        maintenanceB[Count].setVisible(false);
+        
+        maintenanceP[Count] = new JPanel();
+        maintenanceP[Count].setBounds(x+100, y, 200, 50);
+        maintenanceP[Count].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        maintenanceP[Count].setVisible(false);
+
+        if(Count == 0)
+            maintenanceL[Count] = new JLabel("Coin Maintenance");
+        else if(Count == 1)
+            maintenanceL[Count] = new JLabel("Item Maintenance");
+        else if(Count == 2)
+            maintenanceL[Count] = new JLabel("Set Defaults");
+        else if(Count == 3)
+            maintenanceL[Count] = new JLabel("Collect Payments");
+        else
+            maintenanceL[Count] = new JLabel("Items Bought");
+
+        maintenanceL[Count].setVisible(true);
+        maintenanceP[Count].add(maintenanceL[Count]);
+        frame.add(maintenanceP[Count]);
+        frame.add(maintenanceB[Count]);
     }
+
+
+
+
 
     //Button for Primary Users
     public void userOptions() {
@@ -140,55 +173,39 @@ public class Gui extends JFrame implements ActionListener{
         frame.add(insert);
     }
 
-    public void editItemMenu() {
-        edit.setBounds(750,600,200,50);
-
-        edit.addActionListener(this);
-
-        frame.add(edit);
-    }
-
     public void itemToggle() {
         if(menuInt == 0){
+            buy.setVisible(true);
+            insert.setVisible(true);
             for(loop=0;loop<20;loop++){
                 vendingB[loop].setVisible(true);
+                if(loop < 5){
+                    maintenanceB[loop].setVisible(false);
+                    maintenanceP[loop].setVisible(false);
+                }
             }
         }
         else if(menuInt == 1){
-            for(loop=0;loop<20;loop++){
-                vendingB[loop].setVisible(false);
-            }
-        }
-    }
-
-    public void maintToggle() {
-        for(loop=0;loop<6;loop++){
-            maintenance[loop].setVisible(true);
-        }
-    }
-
-    public void userOptionsToggle() {
-        if(menuInt == 0) {
-            buy.setVisible(true);
-            insert.setVisible(true);
-        }
-        else if(menuInt == 1) {
             buy.setVisible(false);
             insert.setVisible(false);
+            for(loop=0;loop<20;loop++){
+                vendingB[loop].setVisible(false);
+                if(loop < 5){
+                    maintenanceB[loop].setVisible(true);
+                    maintenanceP[loop].setVisible(true);
+                }
+            }
         }
     }
 
     public void vendingMachinePanel() {
         frame.getContentPane().setBackground(Color.RED);
         itemToggle();
-        userOptionsToggle();
     }
     
     public void maintenanceMenu() {
         frame.getContentPane().setBackground(Color.BLUE);
         itemToggle();
-        maintToggle();
-        userOptionsToggle();
     }
 
     @Override
@@ -213,7 +230,6 @@ public class Gui extends JFrame implements ActionListener{
             }
             else if(click.getSource() == vendingB[loop] && menuInt == 1) {
                 vendingP[loop].setVisible(true);
-                editItemMenu();
             }
         }
     }
