@@ -86,8 +86,6 @@ public class Gui extends JFrame implements ActionListener{
     }
 
     public void itemButtons() {
-        //Change value to No. of items in vending
-        //Suppose Implement RgItem
         for(loop=0;loop<20;loop++){
             itemButton(loop, x, y);
             itemDetailPanel(loop);
@@ -178,6 +176,7 @@ public class Gui extends JFrame implements ActionListener{
         x=30;
     }
 
+    //ADD COINS INTO THE MACHINE
     public void coinButtons(int Count) {
         coin[Count] = new JButton("+");
         coin[Count].setBounds(x + 25, 450, 50, 50);
@@ -234,18 +233,23 @@ public class Gui extends JFrame implements ActionListener{
             menuInt = 0;
             vendingMachinePanel();
         }
-        if(click.getSource() == itemMaintenance) {
+        else if(click.getSource() == itemMaintenance) {
             menuInt = 1;
             maintenanceMenu();
         }
-        if(click.getSource() == buy) {
+        //FOR BUYING ITEM
+        else if(click.getSource() == buy) {
             
         }
         for(loop=0;loop<20;loop++) {
-            if(click.getSource() == vendingB[loop] && menuInt == 0) {
+            //FOR ADDING COINS TO WALLET
+            if((click.getSource() == coin[loop]) && (menuInt == 0) && (loop < 6)) {
+
+            }
+            else if((click.getSource() == vendingB[loop]) && (menuInt == 0)) {
                 vendingP[loop].setVisible(true);
             }
-            else if(click.getSource() == vendingB[loop] && menuInt == 1) {
+            else if((click.getSource() == vendingB[loop]) && (menuInt == 1)) {
                 vendingP[loop].setVisible(true);
             }
         }
