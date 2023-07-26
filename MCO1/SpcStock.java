@@ -37,7 +37,7 @@ public class SpcStock {
         spitem[8] = new SpcItem("Upgrade to B-Day Cake", 0, 40, 74, "Greet your loved ones with a Happy Birthday with this package! Includes a dedication topper and a candle.", "birthday package");
         spitem[9] = new SpcItem("Upgrade to Chocolate a la Mode", 0, 60, 136, "Ice Cream, Chocolate, and Cake? What a sweet combination! Inherits restrictions from Ice Cream and Chocolate.", "Ice Cream Chocolate Package", new SpcItem[]{spitem[6], spitem[7]});
         spitem[10] = new SpcItem("Upgrade to Fruit a la Mode", 0, 60, 90, "Ice Cream, Fruit, and Cake? What a refreshing combination! Inherits restrictions from Ice Cream and Fruits.", "Ice Cream Fruit Package", new SpcItem[]{spitem[5], spitem[7]});
-        for (int i = 2; i < spitem.length; i++) {
+        for (int i = 11; i < spitem.length; i++) {
             spitem[i] = new SpcItem(); // Initialize the remaining elements with default SpcItem objects
         }
     }
