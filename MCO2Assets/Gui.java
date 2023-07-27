@@ -235,13 +235,13 @@ public class Gui extends JFrame implements ActionListener{
 
     public void vendingMachinePanel() {
         frame.setTitle("Cake Vending Machine");
-        frame.getContentPane().setBackground(new Color(231,139,255);
+        frame.getContentPane().setBackground(new Color(150,39,0));
         itemToggle();
     }
     
     public void maintenanceMenu() {
         frame.setTitle("Maintenance Menu");
-        frame.getContentPane().setBackground(Color.BLUE);
+        frame.getContentPane().setBackground(new Color(38,46,90));
         itemToggle();
     }
 
