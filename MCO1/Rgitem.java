@@ -147,7 +147,7 @@ public class RgItem{
  * Displays the cake.
  */
     public void displayCake(){ 
-        System.out.println("Cake Name: " + strName);
+        System.out.println("Item Name: " + strName);
         System.out.println("Description: " + strDesc);
         System.out.println("Calorie Count: " + intCalorie);
         System.out.println("Price: " + intPrice);
