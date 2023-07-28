@@ -18,7 +18,8 @@ public class Gui extends JFrame implements ActionListener{
     private JPanel mainMainP;
 
     private JPanel vendingP[];
-    private JButton vendingB[];
+    // Initialize the arrays
+    private JButton[] buttons;
 
     private JButton buy;
     private JPanel wallet;
@@ -32,14 +33,14 @@ public class Gui extends JFrame implements ActionListener{
     
     //XY position of buttons
     int x=30;
-    int y=50;
+    int y=100;
     //Menu indicator
     int menuInt;
 
     public Gui(){
         frame = new JFrame();
-        width = 1000;
-        length = 800;
+        width = 1100;
+        length = 650;
 
         menu = new JMenuBar(); 
         maintMenu = new JMenu("Admin");
@@ -57,8 +58,8 @@ public class Gui extends JFrame implements ActionListener{
         mainMainP = new JPanel();
 
         //Removable when MCO1 implementation is done
-        vendingB = new JButton[20];
-        vendingP = new JPanel[20];
+        buttons = new JButton[36];
+        vendingP = new JPanel[36];
     }
 
     public void Display() {
@@ -77,6 +78,8 @@ public class Gui extends JFrame implements ActionListener{
         frame.setSize(width, length);
         frame.setJMenuBar(menu);
         frame.setVisible(true);
+        Font customFont = new Font("Arial", Font.PLAIN, 10); // You can adjust the size (10 in this case)
+        setCustomButtonFont(customFont); // Call the method to set the custom font for buttons
     }
 
 
@@ -93,29 +96,45 @@ public class Gui extends JFrame implements ActionListener{
         for(loop=0;loop<20;loop++){
             itemButton(loop, x, y);
             itemDetailPanel(loop);
-            x+=100;
-            if(x==530){
+            x+=70;
+            if((loop + 1) % 10 == 0){
                 x=30;
-                y+=100;
+                y+=130;
             }
         }
         x=30;
-        y=50;
+        y=370;
+        for(loop=20;loop<36;loop++){
+            itemButton(loop, x, y);
+            itemDetailPanel(loop);
+            x+=70;
+            if((loop-19) % 8 == 0){
+                x=30;
+                y+=130;
+            }
+        }
     }
-
+    private void setCustomButtonFont(Font font) {
+        for (JButton button : buttons) {
+            button.setFont(font);
+        }
+        for (JButton button : maintenanceB) {
+            button.setFont(font);
+        }
+        // Add any other buttons here...
+    }
     //BUTTON ALLOCATION FOR CAKES
     public void itemButton(int Count, int x, int y) {
-        vendingB[Count] = new JButton((Count+1)+".");
-        vendingB[Count].setBounds(x, y, 75, 50);
-        vendingB[Count].addActionListener(this);
-        vendingB[Count].setVisible(false);
-        frame.add(vendingB[Count]);
+        buttons[Count] = new JButton((Count+1)+"");
+        buttons[Count].setBounds(x, y, 45, 30);
+        buttons[Count].addActionListener(this);
+        buttons[Count].setVisible(false);
+        frame.add(buttons[Count]);
     }
-
     //PANEL FOR CAKE DATA
     public void itemDetailPanel(int Count) {
         vendingP[Count] = new JPanel();
-        vendingP[Count].setBounds(550,50,400,500);
+        vendingP[Count].setBounds(725, 30, 350, 250);
         vendingP[Count].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         vendingP[Count].setVisible(false);
         frame.add(vendingP[Count]);
@@ -133,7 +152,7 @@ public class Gui extends JFrame implements ActionListener{
 
     //MAINTENANCE MENU PANELS, LABELS, BUTTONS
     public void maintenanceMenuAssets(int Count) {
-        maintenanceB[Count] = new JButton((Count+1)+".");
+        maintenanceB[Count] = new JButton(Count+1+"");
         maintenanceB[Count].setBounds(x, y, 75, 50);
         maintenanceB[Count].addActionListener(this);
         maintenanceB[Count].setVisible(false);
@@ -161,7 +180,7 @@ public class Gui extends JFrame implements ActionListener{
     }
 
     public void maintenanceDataPanel() {
-        mainMainP.setBounds(400, 50, 550, 600);
+        mainMainP.setBounds(750, 50, 250, 300);
         mainMainP.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         mainMainP.setVisible(false);
         frame.add(mainMainP);
@@ -170,27 +189,27 @@ public class Gui extends JFrame implements ActionListener{
     //BUTTONS IN VENDING MACHINE
     public void userOptions() {
         //BUY ITEM
-        buy.setBounds(650, 600, 200, 50);
+        buy.setBounds(600, 300, 200, 50);
         buy.addActionListener(this);
         buy.setVisible(false);
         frame.add(buy);
 
-        wallet.setBounds(30, 450, 475, 175);
+        wallet.setBounds(850, 300, 200, 50);
         wallet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         wallet.setVisible(false);
         frame.add(wallet);
-        
+        x=840;
         for(loop=0;loop<6;loop++) {
             coinButtons(loop);
-            x+=75;
+            x+=40;
         }
-        x=30;
+        
     }
 
     //ADD COINS INTO THE MACHINE
     public void coinButtons(int Count) {
         coin[Count] = new JButton("+");
-        coin[Count].setBounds(x + 25, 650, 50, 50);
+        coin[Count].setBounds(x + 10, 380, 20, 50);
         coin[Count].addActionListener(this);
         coin[Count].setVisible(false);
         coin[Count].repaint();
@@ -203,9 +222,9 @@ public class Gui extends JFrame implements ActionListener{
             buy.setVisible(true);
             wallet.setVisible(true);
             mainMainP.setVisible(false);
-            for(loop=0;loop<20;loop++){
+            for(loop=0;loop<buttons.length;loop++){
                 vendingP[loop].setVisible(false);
-                vendingB[loop].setVisible(true);
+                buttons[loop].setVisible(true);
                 if(loop < 6){
                     coin[loop].setVisible(true);
                 }
@@ -219,9 +238,9 @@ public class Gui extends JFrame implements ActionListener{
             buy.setVisible(false);
             wallet.setVisible(false);
             mainMainP.setVisible(true);
-            for(loop=0;loop<20;loop++){
+            for(loop=0;loop<buttons.length;loop++){
                 vendingP[loop].setVisible(false);
-                vendingB[loop].setVisible(false);
+                buttons[loop].setVisible(false);
                 if(loop < 6){
                     coin[loop].setVisible(false);
                 }
@@ -275,7 +294,7 @@ public class Gui extends JFrame implements ActionListener{
         }
         //LOOP FOR MULTI BUTTON PROMPTS
         for(loop=0;loop<20;loop++) {
-            if((click.getSource() == vendingB[loop]) && (menuInt == 0)) {
+            if((click.getSource() == buttons[loop]) && (menuInt == 0)) {
                 vendingP[loop].setVisible(true);
             }
         }
