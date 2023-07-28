@@ -22,6 +22,7 @@ public class Gui extends JFrame implements ActionListener{
     private JButton[] buttons;
 
     private JButton buy;
+    private JButton buySpc;
     private JPanel wallet;
     private JButton coin[];
 
@@ -49,7 +50,7 @@ public class Gui extends JFrame implements ActionListener{
         wallet = new JPanel();
         coin = new JButton[6];
         buy = new JButton("Buy Cake");
-        
+        buySpc = new JButton("Buy Cake");
         itemMaintenance = new JMenuItem("Item Maintenance");
         maintenanceL = new JLabel[5];
         maintenanceB = new JButton[5];
@@ -91,7 +92,6 @@ public class Gui extends JFrame implements ActionListener{
         maintMenu.add(initializeMachine);
         maintMenu.add(itemMaintenance);
     }
-
     public void itemButtons() {
         for(loop=0;loop<20;loop++){
             itemButton(loop, x, y);
@@ -121,6 +121,9 @@ public class Gui extends JFrame implements ActionListener{
         for (JButton button : maintenanceB) {
             button.setFont(font);
         }
+        for (JButton button : coin){
+            button.setFont(font);
+        }
         // Add any other buttons here...
     }
     //BUTTON ALLOCATION FOR CAKES
@@ -136,7 +139,7 @@ public class Gui extends JFrame implements ActionListener{
         vendingP[Count] = new JPanel();
         vendingP[Count].setBounds(725, 30, 350, 250);
         vendingP[Count].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        vendingP[Count].setVisible(false);
+        vendingP[Count].setVisible(true);
         frame.add(vendingP[Count]);
     }
 
@@ -198,10 +201,15 @@ public class Gui extends JFrame implements ActionListener{
         wallet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         wallet.setVisible(false);
         frame.add(wallet);
-        x=840;
+        x=900;
+        y=380;
         for(loop=0;loop<6;loop++) {
+            if(loop==3){
+                x=900;
+                y=y+75;
+            }
             coinButtons(loop);
-            x+=40;
+            x+=50;
         }
         
     }
@@ -209,7 +217,7 @@ public class Gui extends JFrame implements ActionListener{
     //ADD COINS INTO THE MACHINE
     public void coinButtons(int Count) {
         coin[Count] = new JButton("+");
-        coin[Count].setBounds(x + 10, 380, 20, 50);
+        coin[Count].setBounds(x + 10, y, 40, 50);
         coin[Count].addActionListener(this);
         coin[Count].setVisible(false);
         coin[Count].repaint();
