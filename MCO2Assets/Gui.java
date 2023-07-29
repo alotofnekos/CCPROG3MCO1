@@ -44,7 +44,7 @@ public class Gui extends JFrame implements ActionListener {
 
     //NOT FOR GUI
     int[] vndBills = {0, 0, 0, 0, 0, 0};
-    SpcVnd vnd = new SpcVnd();
+    RgVnd vnd = new RgVnd();
 
     public Gui() {
         width = 1100;
@@ -67,10 +67,10 @@ public class Gui extends JFrame implements ActionListener {
         itemNames.add("Item 1");
         itemNames.add("Item 2");
       
-        itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\Mochadelight2.jpg");
-        itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\LemonBlueberryCake2.jpg");
-        itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\PremiumChocolateCake2.jpg");
-        itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\ChocolateMousse2.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\AppleCrumble2.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\BlackForestCake1.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\PremiumChocolateCake3.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\Strawberry Shortcake2.jpg");
         
         Arrays.fill(buttons, new JButton());
         Arrays.fill(vendingP, new JPanel());
@@ -114,11 +114,11 @@ public class Gui extends JFrame implements ActionListener {
             if (itemIndex < itemNames.size() && itemIndex < itemImageFileNames.size()) {
                 itemName = itemNames.get(itemIndex);
                 imageFileName = itemImageFileNames.get(itemIndex);
-                imageIcon = loadImageIcon(imageFileName);
+                imageIcon = loadImageIcon(imageFileName,50,50);
             } else {
                 itemName = "Default";
                 imageFileName = "C:\\\\\\\\Users\\\\\\\\Angel\\\\\\\\Downloads\\\\\\\\CCPROG3MCO1\\\\\\\\MCO2Assets\\\\\\\\AppleCrumble2.jpg"; // Replace with the correct path to your default image
-                imageIcon = loadImageIcon(imageFileName);
+                imageIcon = loadImageIcon(imageFileName,50,50);
             }
             setupItemButton(itemIndex, xPos, yPos, itemName, imageIcon);
             if (itemIndex < itemImageFileNames.size()) {
@@ -171,26 +171,43 @@ public class Gui extends JFrame implements ActionListener {
         add(vendingP[itemIndex]);
         add(buttons[itemIndex]);
     }
-
-
-    public void setupItemDetailPanel(int itemIndex) {
-        vendingP[itemIndex] = new JPanel();
-        vendingP[itemIndex].setBounds(725, 30, 350, 250);
-        vendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        vendingP[itemIndex].setLayout(new BorderLayout());
-
-        ImageIcon itemImageIcon = loadImageIcon(itemImageFileNames.get(itemIndex));
-        JLabel itemImageLabel = new JLabel(itemImageIcon);
-        itemImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        vendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
-
-        vendingP[itemIndex].setVisible(true);
-        add(vendingP[itemIndex]);
-    }
+    
+        public void setupItemDetailPanel(int itemIndex) {
+            vendingP[itemIndex] = new JPanel();
+            vendingP[itemIndex].setBounds(725, 30, 350, 250);
+            vendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            vendingP[itemIndex].setLayout(new BorderLayout());
+    
+            // Load the image and create a JLabel as before
+            ImageIcon itemImageIcon = loadImageIcon(itemImageFileNames.get(itemIndex), 125, 125);
+            JLabel itemImageLabel = new JLabel(itemImageIcon);
+            itemImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            vendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
+    
+            // Create a JTextArea to display the item information
+            JTextArea itemInfoTextArea = new JTextArea();
+            itemInfoTextArea.setEditable(false);
+            itemInfoTextArea.setLineWrap(true);
+            itemInfoTextArea.setWrapStyleWord(true);
+    
+            // Get the item information using getItemInfoString() method
+            String itemInfo = vnd.getCakeDetails(itemIndex);
+    
+            // Set the item information as the text of the JTextArea
+            itemInfoTextArea.setText(itemInfo);
+    
+            // Add the JTextArea to the SOUTH of the vendingP panel
+            vendingP[itemIndex].add(itemInfoTextArea, BorderLayout.SOUTH);
+    
+            vendingP[itemIndex].setVisible(true);
+            add(vendingP[itemIndex]);
+        }
+    
+    
 
    
     // It resizes the image and handles the default cake image if the specified image is not found
-    private ImageIcon loadImageIcon(String imageFileName) {
+    private ImageIcon loadImageIcon(String imageFileName,int width,int height) {
         // Load the original image
         BufferedImage originalImage;
         ImageIcon imageIcon = null;
@@ -198,8 +215,8 @@ public class Gui extends JFrame implements ActionListener {
         try {
             originalImage = ImageIO.read(new File(imageFileName));
             // Resize the image to the desired width and height
-            int desiredWidth = 50; // Set the desired width here
-            int desiredHeight = 50; // Set the desired height here
+            int desiredWidth = width; // Set the desired width here
+            int desiredHeight = height; // Set the desired height here
             Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
             // Create the ImageIcon from the resized image
             imageIcon = new ImageIcon(resizedImage);
