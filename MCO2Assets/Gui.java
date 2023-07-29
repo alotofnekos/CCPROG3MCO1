@@ -189,8 +189,8 @@ public class Gui extends JFrame implements ActionListener {
         try {
             originalImage = ImageIO.read(new File(imageFileName));
             // Resize the image to the desired width and height
-            int desiredWidth = 50; // Set the desired width here
-            int desiredHeight = 50; // Set the desired height here
+            int desiredWidth = 50; 
+            int desiredHeight = 50; 
             Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
             // Create the ImageIcon from the resized image
             imageIcon = new ImageIcon(resizedImage);
