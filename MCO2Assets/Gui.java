@@ -35,6 +35,7 @@ public class Gui extends JFrame implements ActionListener {
     private JButton[] maintenanceB;
     private JPanel mainMainP;
     private JPanel wallet;
+    private JLabel walletLabel;
     // XY position of buttons
     int xPos = 20;
     int yPos = 30;
@@ -136,8 +137,6 @@ public class Gui extends JFrame implements ActionListener {
     }
     
     
-    
-
     private void setCustomButtonFont(Font font) {
         for (JButton button : buttons) {
             if (button != null) {
@@ -279,19 +278,17 @@ public class Gui extends JFrame implements ActionListener {
         wallet.setBounds(900, 295, 175, 50);
         wallet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         wallet.setVisible(false);
+        walletLabel = new JLabel("0 Pesos");
+        wallet.add(walletLabel);
         add(wallet);
 
         xPos = 900;
         yPos = 380;
-        setupCoinButtons();
-
-    }
-
-    public void setupCoinButtons() {;
         coin.setBounds(xPos + 10, yPos, 150, 50);
         coin.addActionListener(this);
         coin.setVisible(false);
         add(coin);
+
     }
 
     public void itemToggle() {
@@ -379,6 +376,7 @@ public class Gui extends JFrame implements ActionListener {
                     vndBills[5] = parseFieldValue(field6);
                     int total = vnd.addUserBill(vndBills);
                     JOptionPane.showMessageDialog(null, "Total amount inserted: " + total);
+                    walletLabel.setText(total + " Pesos");
         } else {
             System.out.println("Cancelled");
         }
