@@ -1,6 +1,6 @@
 
 /**
- * The class RgVnd recieves all the regular vending machine operations and sends it to the appropriate class
+ * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class
  */ 
 public class RgVnd {
     private RgStock vndItemStock;
@@ -18,6 +18,10 @@ public class RgVnd {
         vndStock = new BillWallet();
         vndItemSold = new RgStock();
         vndItemStock = new RgStock();
+    }
+
+    public void clearUserWallet(){
+        userWallet.clearWallet();        
     }
 /**
  * Adds bills to the vending machine's stock
