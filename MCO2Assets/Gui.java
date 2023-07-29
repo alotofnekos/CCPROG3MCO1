@@ -63,15 +63,24 @@ public class Gui extends JFrame implements ActionListener {
         maintenanceL = new JLabel[5];
         mainMainP = new JPanel();
         wallet = new JPanel();
-       
-        itemNames.add("Item 1");
-        itemNames.add("Item 2");
+        vnd.setDefaults();
+        int i=0;
+        while(vnd.validItem(i)){
+            itemNames.add("Cake#"+(i+1));
+            i++;
+        }
+        
       
         itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\AppleCrumble2.jpg");
         itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\BlackForestCake1.jpg");
         itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\PremiumChocolateCake3.jpg");
         itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\Strawberry Shortcake2.jpg");
-        
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\LemonBlueberryCake.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\ChocolateMousse2.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\butterscotch2.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\Mochadelight2.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\mangocake.jpg");
+        itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\carrotcake.jpg");
         Arrays.fill(buttons, new JButton());
         Arrays.fill(vendingP, new JPanel());
     }
@@ -117,7 +126,7 @@ public class Gui extends JFrame implements ActionListener {
                 imageIcon = loadImageIcon(imageFileName,50,50);
             } else {
                 itemName = "Default";
-                imageFileName = "C:\\\\\\\\Users\\\\\\\\Angel\\\\\\\\Downloads\\\\\\\\CCPROG3MCO1\\\\\\\\MCO2Assets\\\\\\\\AppleCrumble2.jpg"; // Replace with the correct path to your default image
+                imageFileName = "C:\\\\\\\\Users\\\\\\\\Angel\\\\\\\\Downloads\\\\\\\\CCPROG3MCO1\\\\\\\\MCO2Assets\\\\\\\\genericcake.jpg"; // Replace with the correct path to your default image
                 imageIcon = loadImageIcon(imageFileName,50,50);
             }
             setupItemButton(itemIndex, xPos, yPos, itemName, imageIcon);
@@ -223,7 +232,7 @@ public class Gui extends JFrame implements ActionListener {
         } catch (Exception ex) {
             // If the image file is not found or any other exception occurs, load the default cake image
             ex.printStackTrace();
-            imageIcon = new ImageIcon("C:\\\\\\\\Users\\\\\\\\Angel\\\\\\\\Downloads\\\\\\\\CCPROG3MCO1\\\\\\\\MCO2Assets\\\\\\\\AppleCrumble2.jpg"); // Replace "default_cake.jpg" with your default cake image filename
+            imageIcon = new ImageIcon("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\genericcake.jpg"); 
         }
 
         return imageIcon;
