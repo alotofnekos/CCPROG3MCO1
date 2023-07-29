@@ -2,89 +2,91 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Gui extends JFrame implements ActionListener{
-    private JFrame frame;
+public class Gui extends JFrame implements ActionListener {
     private JMenuBar menu;
-    
     private JMenu maintMenu;
     private JMenuItem initializeMachine;
     private JMenuItem itemMaintenance;
 
-    private JLabel maintenanceL[];
-    private JPanel maintenanceP[];
-    private JButton maintenanceB[];
-
-    private JPanel mainMainP;
-
-    private JPanel vendingP[];
-    // Initialize the arrays
+    // Arrays
     private JButton[] buttons;
-
+    private JPanel[] vendingP;
     private JButton buy;
-    private JButton buySpc;
-    private JPanel wallet;
-    private JButton coin[];
+    private JButton[] coin;
 
-    private JButton edit;
-    
+    // Other variables
     private int width;
     private int length;
-    private int loop;
-    
-    //XY position of buttons
-    int x=30;
-    int y=100;
-    //Menu indicator
+    private ArrayList<String> itemNames = new ArrayList<>();
+    private ArrayList<String> itemImageFileNames = new ArrayList<>();
+    private JLabel[] maintenanceL;
+    private JPanel[] maintenanceP;
+    private JButton[] maintenanceB;
+    private JPanel mainMainP;
+    private JPanel wallet;
+    // XY position of buttons
+    int xPos = 20;
+    int yPos = 30;
+    // Menu indicator
     int menuInt;
 
-    public Gui(){
-        frame = new JFrame();
+    public Gui() {
         width = 1100;
-        length = 650;
-
-        menu = new JMenuBar(); 
+        length = 600;
+        menu = new JMenuBar();
         maintMenu = new JMenu("Admin");
-
         initializeMachine = new JMenuItem("Initialize Machine");
-        wallet = new JPanel();
-        coin = new JButton[6];
-        buy = new JButton("Buy Cake");
-        buySpc = new JButton("Buy Cake");
         itemMaintenance = new JMenuItem("Item Maintenance");
-        maintenanceL = new JLabel[5];
-        maintenanceB = new JButton[5];
-        maintenanceP = new JPanel[5];
-
-        mainMainP = new JPanel();
-
-        //Removable when MCO1 implementation is done
+        buy = new JButton("Buy Cake");
+        coin = new JButton[6];
         buttons = new JButton[36];
         vendingP = new JPanel[36];
+        maintenanceB = new JButton[5];
+        maintenanceP = new JPanel[5];
+        maintenanceL = new JLabel[5];
+        mainMainP = new JPanel();
+        wallet = new JPanel();
+        // Add sample item names and image file names here
+        itemNames.add("Item 1");
+        itemNames.add("Item 2");
+        // Add more item names here
+        itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\Mochadelight2.jpg");
+        itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\LemonBlueberryCake2.jpg");
+        itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\PremiumChocolateCake2.jpg");
+        itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\ChocolateMousse2.jpg");
+        // Add more image file names here
+        Arrays.fill(buttons, new JButton());
+        Arrays.fill(vendingP, new JPanel());
     }
+    
 
     public void Display() {
-        itemButtons();
-        maintButtons();
-        maintenanceDataPanel();
-        userOptions();
-        menuCreation();
-        mainFrame();
+        initializeItemButtons(); // Call the itemButtons method to set up item buttons
+        initializeMaintenanceButtons();
+        initializeMaintenanceDataPanel();
+        initializeUserOptions();
+        createMenu();
+        setupMainFrame();
     }
 
-    public void mainFrame() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
-        frame.setResizable(false);
-        frame.setSize(width, length);
-        frame.setJMenuBar(menu);
-        frame.setVisible(true);
-        Font customFont = new Font("Arial", Font.PLAIN, 10); // You can adjust the size (10 in this case)
-        setCustomButtonFont(customFont); // Call the method to set the custom font for buttons
+    public void setupMainFrame() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setResizable(false);
+        setSize(width, length);
+        setJMenuBar(menu);
+        setVisible(true);
+        Font customFont = new Font("Arial", Font.PLAIN, 10);
+        setCustomButtonFont(customFont);
     }
 
-
-    public void menuCreation() {
+    public void createMenu() {
         initializeMachine.addActionListener(this);
         itemMaintenance.addActionListener(this);
 
@@ -92,224 +94,276 @@ public class Gui extends JFrame implements ActionListener{
         maintMenu.add(initializeMachine);
         maintMenu.add(itemMaintenance);
     }
-    public void itemButtons() {
-        for(loop=0;loop<20;loop++){
-            itemButton(loop, x, y);
-            itemDetailPanel(loop);
-            x+=70;
-            if((loop + 1) % 10 == 0){
-                x=30;
-                y+=130;
+
+    public void initializeItemButtons() {
+        String itemName;
+        String imageFileName;
+        ImageIcon imageIcon;
+        for (int itemIndex = 0; itemIndex < 36; itemIndex++) {
+            if (itemIndex < itemNames.size() && itemIndex < itemImageFileNames.size()) {
+                itemName = itemNames.get(itemIndex);
+                imageFileName = itemImageFileNames.get(itemIndex);
+                imageIcon = loadImageIcon(imageFileName);
+            } else {
+                itemName = "Default";
+                imageFileName = "C:\\\\\\\\Users\\\\\\\\Angel\\\\\\\\Downloads\\\\\\\\CCPROG3MCO1\\\\\\\\MCO2Assets\\\\\\\\AppleCrumble2.jpg"; // Replace with the correct path to your default image
+                imageIcon = loadImageIcon(imageFileName);
             }
-        }
-        x=30;
-        y=370;
-        for(loop=20;loop<36;loop++){
-            itemButton(loop, x, y);
-            itemDetailPanel(loop);
-            x+=70;
-            if((loop-19) % 8 == 0){
-                x=30;
-                y+=130;
+            setupItemButton(itemIndex, xPos, yPos, itemName, imageIcon);
+            if (itemIndex < itemImageFileNames.size()) {
+                setupItemDetailPanel(itemIndex);
+            }
+            xPos += 70;
+            if (itemIndex<=20 && (itemIndex + 1) % 10 == 0) {
+                xPos = 20;
+                yPos += 120;
+            }
+            if(itemIndex > 20&& (itemIndex-19) % 8 == 0){
+                xPos=20;
+                yPos+=120;
             }
         }
     }
+    
+    
+    
+
     private void setCustomButtonFont(Font font) {
         for (JButton button : buttons) {
-            button.setFont(font);
+            if (button != null) {
+                button.setFont(font);
+            }
         }
-        for (JButton button : maintenanceB) {
-            button.setFont(font);
+        // Add other buttons here if needed
+    }
+
+    // Setup individual item buttons
+    public void setupItemButton(int itemIndex, int x, int y, String itemName, ImageIcon imageIcon) {
+        buttons[itemIndex] = new JButton(itemName);
+        buttons[itemIndex].setBounds(x, y, 70, 75);
+        buttons[itemIndex].addActionListener(this);
+        buttons[itemIndex].setVisible(false);
+
+        vendingP[itemIndex] = new JPanel(); // Initialize the vendingP array element here
+        vendingP[itemIndex].setBounds(725, 30, 350, 250);
+        vendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        vendingP[itemIndex].setLayout(new BorderLayout());
+
+        JLabel itemImageLabel = new JLabel(imageIcon);
+        JLabel textLabel = new JLabel(itemName);
+        itemImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        vendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
+        vendingP[itemIndex].add(textLabel, BorderLayout.SOUTH); // Add the textLabel to the SOUTH
+        buttons[itemIndex].setMargin(new Insets(5, 5, 5, 5));
+        buttons[itemIndex].setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); // Set the layout to FlowLayout
+        buttons[itemIndex].add(itemImageLabel, BorderLayout.NORTH);
+        buttons[itemIndex].add(textLabel, BorderLayout.SOUTH);
+        vendingP[itemIndex].setVisible(false);
+        add(vendingP[itemIndex]);
+        add(buttons[itemIndex]);
+    }
+
+
+    public void setupItemDetailPanel(int itemIndex) {
+        vendingP[itemIndex] = new JPanel();
+        vendingP[itemIndex].setBounds(725, 30, 350, 250);
+        vendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        vendingP[itemIndex].setLayout(new BorderLayout());
+
+        ImageIcon itemImageIcon = loadImageIcon(itemImageFileNames.get(itemIndex));
+        JLabel itemImageLabel = new JLabel(itemImageIcon);
+        itemImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        vendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
+
+        vendingP[itemIndex].setVisible(true);
+        add(vendingP[itemIndex]);
+    }
+
+    // This method is similar to your existing loadImageIcon method
+    // It resizes the image and handles the default cake image if the specified image is not found
+    private ImageIcon loadImageIcon(String imageFileName) {
+        // Load the original image
+        BufferedImage originalImage;
+        ImageIcon imageIcon = null;
+
+        try {
+            originalImage = ImageIO.read(new File(imageFileName));
+            // Resize the image to the desired width and height
+            int desiredWidth = 50; // Set the desired width here
+            int desiredHeight = 50; // Set the desired height here
+            Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
+            // Create the ImageIcon from the resized image
+            imageIcon = new ImageIcon(resizedImage);
+        } catch (Exception ex) {
+            // If the image file is not found or any other exception occurs, load the default cake image
+            ex.printStackTrace();
+            imageIcon = new ImageIcon("C:\\\\\\\\Users\\\\\\\\Angel\\\\\\\\Downloads\\\\\\\\CCPROG3MCO1\\\\\\\\MCO2Assets\\\\\\\\AppleCrumble2.jpg"); // Replace "default_cake.jpg" with your default cake image filename
         }
-        for (JButton button : coin){
-            button.setFont(font);
+
+        return imageIcon;
+    }
+
+    // Setup maintenance buttons
+    public void initializeMaintenanceButtons() {
+        yPos = 50;
+        for (int i = 0; i < 5; i++) {
+            setupMaintenanceMenuAssets(i);
+            yPos += 100;
         }
-        // Add any other buttons here...
-    }
-    //BUTTON ALLOCATION FOR CAKES
-    public void itemButton(int Count, int x, int y) {
-        buttons[Count] = new JButton((Count+1)+"");
-        buttons[Count].setBounds(x, y, 45, 30);
-        buttons[Count].addActionListener(this);
-        buttons[Count].setVisible(false);
-        frame.add(buttons[Count]);
-    }
-    //PANEL FOR CAKE DATA
-    public void itemDetailPanel(int Count) {
-        vendingP[Count] = new JPanel();
-        vendingP[Count].setBounds(725, 30, 350, 250);
-        vendingP[Count].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        vendingP[Count].setVisible(true);
-        frame.add(vendingP[Count]);
+        yPos = 50;
     }
 
-    //MAINTENACE BUTTONS LOOP
-    public void maintButtons() {
-        //Suppose Implement RgVending
-        for(loop=0;loop<5;loop++){
-            maintenanceMenuAssets(loop);
-            y+=100;
+    // Setup individual maintenance buttons
+    public void setupMaintenanceMenuAssets(int index) {
+        maintenanceB[index] = new JButton(index + 1 + "");
+        maintenanceB[index].setBounds(xPos, yPos, 75, 50);
+        maintenanceB[index].addActionListener(this);
+        maintenanceB[index].setVisible(false);
+
+        maintenanceP[index] = new JPanel();
+        maintenanceP[index].setBounds(xPos + 100, yPos, 200, 50);
+        maintenanceP[index].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        maintenanceP[index].setVisible(false);
+
+        String maintenanceLabel = getMaintenanceLabel(index);
+        maintenanceL[index] = new JLabel(maintenanceLabel);
+        maintenanceL[index].setVisible(true);
+        maintenanceP[index].add(maintenanceL[index]);
+        add(maintenanceP[index]);
+        add(maintenanceB[index]);
+    }
+
+    private String getMaintenanceLabel(int index) {
+        switch (index) {
+            case 0:
+                return "Coin Maintenance";
+            case 1:
+                return "Item Maintenance";
+            case 2:
+                return "Set Defaults";
+            case 3:
+                return "Collect Payments";
+            case 4:
+                return "Items Bought";
+            default:
+                return "Maintenance " + (index + 1);
         }
-        y=50;
     }
 
-    //MAINTENANCE MENU PANELS, LABELS, BUTTONS
-    public void maintenanceMenuAssets(int Count) {
-        maintenanceB[Count] = new JButton(Count+1+"");
-        maintenanceB[Count].setBounds(x, y, 75, 50);
-        maintenanceB[Count].addActionListener(this);
-        maintenanceB[Count].setVisible(false);
-        
-        maintenanceP[Count] = new JPanel();
-        maintenanceP[Count].setBounds(x+100, y, 200, 50);
-        maintenanceP[Count].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        maintenanceP[Count].setVisible(false);
-
-        if(Count == 0)
-            maintenanceL[Count] = new JLabel("Coin Maintenance");
-        else if(Count == 1)
-            maintenanceL[Count] = new JLabel("Item Maintenance");
-        else if(Count == 2)
-            maintenanceL[Count] = new JLabel("Set Defaults");
-        else if(Count == 3)
-            maintenanceL[Count] = new JLabel("Collect Payments");
-        else
-            maintenanceL[Count] = new JLabel("Items Bought");
-
-        maintenanceL[Count].setVisible(true);
-        maintenanceP[Count].add(maintenanceL[Count]);
-        frame.add(maintenanceP[Count]);
-        frame.add(maintenanceB[Count]);
-    }
-
-    public void maintenanceDataPanel() {
+    public void initializeMaintenanceDataPanel() {
         mainMainP.setBounds(750, 50, 250, 300);
         mainMainP.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         mainMainP.setVisible(false);
-        frame.add(mainMainP);
+        add(mainMainP);
     }
 
-    //BUTTONS IN VENDING MACHINE
-    public void userOptions() {
-        //BUY ITEM
+    public void initializeUserOptions() {
         buy.setBounds(600, 300, 200, 50);
         buy.addActionListener(this);
         buy.setVisible(false);
-        frame.add(buy);
+        add(buy);
 
         wallet.setBounds(850, 300, 200, 50);
         wallet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         wallet.setVisible(false);
-        frame.add(wallet);
-        x=900;
-        y=380;
-        for(loop=0;loop<6;loop++) {
-            if(loop==3){
-                x=900;
-                y=y+75;
+        add(wallet);
+
+        xPos = 900;
+        yPos = 380;
+        for (int i = 0; i < 6; i++) {
+            if (i == 3) {
+                xPos = 900;
+                yPos += 75;
             }
-            coinButtons(loop);
-            x+=50;
+            setupCoinButtons(i);
+            xPos += 50;
         }
-        
     }
 
-    //ADD COINS INTO THE MACHINE
-    public void coinButtons(int Count) {
-        coin[Count] = new JButton("+");
-        coin[Count].setBounds(x + 10, y, 40, 50);
-        coin[Count].addActionListener(this);
-        coin[Count].setVisible(false);
-        coin[Count].repaint();
-        frame.add(coin[Count]);
+    public void setupCoinButtons(int index) {
+        coin[index] = new JButton("+");
+        coin[index].setBounds(xPos + 10, yPos, 40, 50);
+        coin[index].addActionListener(this);
+        coin[index].setVisible(false);
+        add(coin[index]);
     }
 
-    //SHOW OR HIDE NEEDED ASSETS FOR VENDING OR MAINTENANCE
     public void itemToggle() {
-        if(menuInt == 0){
+        if (menuInt == 0) {
             buy.setVisible(true);
             wallet.setVisible(true);
             mainMainP.setVisible(false);
-            for(loop=0;loop<buttons.length;loop++){
-                vendingP[loop].setVisible(false);
-                buttons[loop].setVisible(true);
-                if(loop < 6){
-                    coin[loop].setVisible(true);
+            for (int i = 0; i < buttons.length; i++) {
+                vendingP[i].setVisible(false);
+                buttons[i].setVisible(true);
+                if (i < 6) {
+                    coin[i].setVisible(true);
                 }
-                if(loop < 5){
-                    maintenanceB[loop].setVisible(false);
-                    maintenanceP[loop].setVisible(false);
+                if (i < 5) {
+                    maintenanceB[i].setVisible(false);
+                    maintenanceP[i].setVisible(false);
                 }
             }
-        }
-        else if(menuInt == 1){
+        } else if (menuInt == 1) {
             buy.setVisible(false);
             wallet.setVisible(false);
             mainMainP.setVisible(true);
-            for(loop=0;loop<buttons.length;loop++){
-                vendingP[loop].setVisible(false);
-                buttons[loop].setVisible(false);
-                if(loop < 6){
-                    coin[loop].setVisible(false);
+            for (int i = 0; i < buttons.length; i++) {
+                vendingP[i].setVisible(false);
+                buttons[i].setVisible(false);
+                if (i < 6) {
+                    coin[i].setVisible(false);
                 }
-                if(loop < 5){
-                    maintenanceB[loop].setVisible(true);
-                    maintenanceP[loop].setVisible(true);
+                if (i < 5) {
+                    maintenanceB[i].setVisible(true);
+                    maintenanceP[i].setVisible(true);
                 }
             }
         }
     }
 
     public void vendingMachinePanel() {
-        frame.setTitle("Cake Vending Machine");
-        frame.getContentPane().setBackground(new Color(150,39,0));
+        setTitle("Cake Vending Machine");
+        getContentPane().setBackground(new Color(150, 39, 0));
         itemToggle();
     }
-    
+
     public void maintenanceMenu() {
-        frame.setTitle("Maintenance Menu");
-        frame.getContentPane().setBackground(new Color(38,46,90));
+        setTitle("Maintenance Menu");
+        getContentPane().setBackground(new Color(38, 46, 90));
         itemToggle();
     }
 
     @Override
     public void actionPerformed(ActionEvent click) {
-        if(click.getSource() == initializeMachine) {
+        if (click.getSource() == initializeMachine) {
             menuInt = 0;
             vendingMachinePanel();
-        }
-        else if(click.getSource() == itemMaintenance) {
+        } else if (click.getSource() == itemMaintenance) {
             menuInt = 1;
             maintenanceMenu();
-        }
-        else if(click.getSource() == buy) {
-            
-        }
-        else if(click.getSource() == maintenanceB[0]) {
-            
-        }
-        else if(click.getSource() == maintenanceB[1]) {
-
-        }
-        else if(click.getSource() == maintenanceB[2]) {
-
-        }
-        else if(click.getSource() == maintenanceB[3]) {
-
-        }
-        else if(click.getSource() == maintenanceB[4]) {
-
-        }
-        //LOOP FOR MULTI BUTTON PROMPTS
-        for(loop=0;loop<20;loop++) {
-            if((click.getSource() == buttons[loop]) && (menuInt == 0)) {
-                vendingP[loop].setVisible(true);
+        } else if (click.getSource() == buy) {
+            // Handle buy action
+        } else if (click.getSource() == maintenanceB[0]) {
+            // Handle maintenance action 1
+        } else if (click.getSource() == maintenanceB[1]) {
+            // Handle maintenance action 2
+        } else if (click.getSource() == maintenanceB[2]) {
+            // Handle maintenance action 3
+        } else if (click.getSource() == maintenanceB[3]) {
+            // Handle maintenance action 4
+        } else if (click.getSource() == maintenanceB[4]) {
+            // Handle maintenance action 5
+        } else {
+            for (int i = 0; i < buttons.length; i++) {
+                if (click.getSource() == buttons[i] && menuInt == 0) {
+                    vendingP[i].setVisible(true);
+                }
             }
-        }
-        for(loop=0;loop<6;loop++) {
-            //FOR ADDING COINS TO WALLET
-            if((click.getSource() == coin[loop]) && (menuInt == 0)) {
-                
+            for (int i = 0; i < 6; i++) {
+                if (click.getSource() == coin[i] && menuInt == 0) {
+                    // Handle adding coins to the wallet
+                }
             }
         }
     }
