@@ -1,8 +1,8 @@
 
 /**
- * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class
+ * The class RgVnd recieves all the regular vending machine operations and sends it to the appropriate class
  */ 
-public class BillVnd {
+public class RgVnd {
     private RgStock vndItemStock;
     private RgStock vndItemSold;
     private BillWallet userWallet;
@@ -13,7 +13,7 @@ public class BillVnd {
  * vndStock is the stock of bills the vending machine can use to produce change, the userWallet is the stock of bills the user uses to pay the vending machine.
  * vndItemStock is the stock of items the vending machine has, while the vndItemSold is the stock of items bought by the user, which gets cleared upon taking the profit. 
  */
-    public BillVnd(){
+    public RgVnd(){
         userWallet = new BillWallet();
         vndStock = new BillWallet();
         vndItemSold = new RgStock();
@@ -34,6 +34,23 @@ public class BillVnd {
             System.out.println(vndBills[i] + " " + billValue + " Pesos added to the vending machine through bill maintenance!");
             vndStock.addBill(new Bill(vndBills[i], billValue));
         }
+    }
+/**
+ * Adds bills to the vending machine's stock
+ * @param usrBills the array of bills corresponding to the number of [10, 20, 50, 100, 200, 500] peso bills
+ */
+    public int addUserBill(int[] vndBills) {
+        if (vndBills.length != 6) {
+            System.out.println("Invalid bill quantities array length. Expected length: 6");
+            return 0;
+        }
+
+        for (int i = 0; i < vndBills.length; i++) {
+            int billValue = userWallet.getBills()[i].getValue();
+            System.out.println(vndBills[i] + " " + billValue + " Pesos added to the vending machine from User's Wallet!");
+            userWallet.addBill(new Bill(vndBills[i], billValue));
+        }
+        return userWallet.getTotalAmount();
     }
 /**
  * Adds a new cake to the vending machine's stock. Reciept's copy also adds the new cake to prevent discrepancies, but the quantity is set to zero since its not bought.
