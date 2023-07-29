@@ -69,7 +69,7 @@ public class Gui extends JFrame implements ActionListener {
     
 
     public void Display() {
-        initializeItemButtons(); // Call the itemButtons method to set up item buttons
+        initializeItemButtons(); 
         initializeMaintenanceButtons();
         initializeMaintenanceDataPanel();
         initializeUserOptions();
@@ -136,7 +136,6 @@ public class Gui extends JFrame implements ActionListener {
                 button.setFont(font);
             }
         }
-        // Add other buttons here if needed
     }
 
     // Setup individual item buttons
@@ -180,8 +179,7 @@ public class Gui extends JFrame implements ActionListener {
         vendingP[itemIndex].setVisible(true);
         add(vendingP[itemIndex]);
     }
-
-    // This method is similar to your existing loadImageIcon method
+    
     // It resizes the image and handles the default cake image if the specified image is not found
     private ImageIcon loadImageIcon(String imageFileName) {
         // Load the original image
