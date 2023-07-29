@@ -1,9 +1,13 @@
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.NumberFormat;
+
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +23,7 @@ public class Gui extends JFrame implements ActionListener {
     private JPanel[] vendingP;
     private JButton buy;
     private JButton selectCake;
-    private JButton[] coin;
+    private JButton coin;
 
     // Other variables
     private int width;
@@ -46,7 +50,7 @@ public class Gui extends JFrame implements ActionListener {
         itemMaintenance = new JMenuItem("Item Maintenance");
         buy = new JButton("Buy");
         selectCake = new JButton("Select Cake");
-        coin = new JButton[6];
+        coin = new JButton("Insert Coins & Bills!");
         buttons = new JButton[36];
         vendingP = new JPanel[36];
         maintenanceB = new JButton[5];
@@ -54,22 +58,22 @@ public class Gui extends JFrame implements ActionListener {
         maintenanceL = new JLabel[5];
         mainMainP = new JPanel();
         wallet = new JPanel();
-        // Add sample item names and image file names here
+       
         itemNames.add("Item 1");
         itemNames.add("Item 2");
-        // Add more item names here
+      
         itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\Mochadelight2.jpg");
         itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\LemonBlueberryCake2.jpg");
         itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\PremiumChocolateCake2.jpg");
         itemImageFileNames.add("C:\\\\Users\\\\Angel\\\\Downloads\\\\CCPROG3MCO1\\\\MCO2Assets\\\\ChocolateMousse2.jpg");
-        // Add more image file names here
+        
         Arrays.fill(buttons, new JButton());
         Arrays.fill(vendingP, new JPanel());
     }
     
 
     public void Display() {
-        initializeItemButtons(); 
+        initializeItemButtons(); // Call the itemButtons method to set up item buttons
         initializeMaintenanceButtons();
         initializeMaintenanceDataPanel();
         initializeUserOptions();
@@ -136,6 +140,7 @@ public class Gui extends JFrame implements ActionListener {
                 button.setFont(font);
             }
         }
+        
     }
 
     // Setup individual item buttons
@@ -154,7 +159,7 @@ public class Gui extends JFrame implements ActionListener {
         JLabel textLabel = new JLabel(itemName);
         itemImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         vendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
-        vendingP[itemIndex].add(textLabel, BorderLayout.SOUTH); // Add the textLabel to the SOUTH
+        vendingP[itemIndex].add(textLabel, BorderLayout.SOUTH); 
         buttons[itemIndex].setMargin(new Insets(5, 5, 5, 5));
         buttons[itemIndex].setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); // Set the layout to FlowLayout
         buttons[itemIndex].add(itemImageLabel, BorderLayout.NORTH);
@@ -179,7 +184,8 @@ public class Gui extends JFrame implements ActionListener {
         vendingP[itemIndex].setVisible(true);
         add(vendingP[itemIndex]);
     }
-    
+
+   
     // It resizes the image and handles the default cake image if the specified image is not found
     private ImageIcon loadImageIcon(String imageFileName) {
         // Load the original image
@@ -189,8 +195,8 @@ public class Gui extends JFrame implements ActionListener {
         try {
             originalImage = ImageIO.read(new File(imageFileName));
             // Resize the image to the desired width and height
-            int desiredWidth = 50; 
-            int desiredHeight = 50; 
+            int desiredWidth = 50;
+            int desiredHeight = 50;
             Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
             // Create the ImageIcon from the resized image
             imageIcon = new ImageIcon(resizedImage);
@@ -273,22 +279,15 @@ public class Gui extends JFrame implements ActionListener {
 
         xPos = 900;
         yPos = 380;
-        for (int i = 0; i < 6; i++) {
-            if (i == 3) {
-                xPos = 900;
-                yPos += 75;
-            }
-            setupCoinButtons(i);
-            xPos += 50;
-        }
+        setupCoinButtons();
+
     }
 
-    public void setupCoinButtons(int index) {
-        coin[index] = new JButton("+");
-        coin[index].setBounds(xPos + 10, yPos, 40, 50);
-        coin[index].addActionListener(this);
-        coin[index].setVisible(false);
-        add(coin[index]);
+    public void setupCoinButtons() {;
+        coin.setBounds(xPos + 10, yPos, 150, 50);
+        coin.addActionListener(this);
+        coin.setVisible(false);
+        add(coin);
     }
 
     public void itemToggle() {
@@ -300,9 +299,8 @@ public class Gui extends JFrame implements ActionListener {
             for (int i = 0; i < buttons.length; i++) {
                 vendingP[i].setVisible(false);
                 buttons[i].setVisible(true);
-                if (i < 6) {
-                    coin[i].setVisible(true);
-                }
+                coin.setVisible(true);
+    
                 if (i < 5) {
                     maintenanceB[i].setVisible(false);
                     maintenanceP[i].setVisible(false);
@@ -316,9 +314,8 @@ public class Gui extends JFrame implements ActionListener {
             for (int i = 0; i < buttons.length; i++) {
                 vendingP[i].setVisible(false);
                 buttons[i].setVisible(false);
-                if (i < 6) {
-                    coin[i].setVisible(false);
-                }
+                coin.setVisible(false);
+                
                 if (i < 5) {
                     maintenanceB[i].setVisible(true);
                     maintenanceP[i].setVisible(true);
@@ -338,7 +335,46 @@ public class Gui extends JFrame implements ActionListener {
         getContentPane().setBackground(new Color(38, 46, 90));
         itemToggle();
     }
+    public void setUserWallet() {
+        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(integerFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false); // Only allow valid integers
 
+        JFormattedTextField field1 = new JFormattedTextField(formatter);
+        JFormattedTextField field2 = new JFormattedTextField(formatter);
+        JFormattedTextField field3 = new JFormattedTextField(formatter);
+        JFormattedTextField field4 = new JFormattedTextField(formatter);
+        JFormattedTextField field5 = new JFormattedTextField(formatter);
+        JFormattedTextField field6 = new JFormattedTextField(formatter);
+
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        panel.add(new JLabel("10 Peso Coins to be added:"));
+        panel.add(field1);
+        panel.add(new JLabel("20 Peso Coins to be added:"));
+        panel.add(field2);
+        panel.add(new JLabel("50 Peso Coins to be added:"));
+        panel.add(field3);
+        panel.add(new JLabel("100 Peso Coins to be added:"));
+        panel.add(field4);
+        panel.add(new JLabel("200 Peso Coins to be added:"));
+        panel.add(field5);
+        panel.add(new JLabel("500 Peso Coins to be added:"));
+        panel.add(field6);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Test",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            System.out.println(" 10 peso: " + field1.getText()
+                    + " 20 peso: " + field2.getText()
+                    + " 50 peso: " + field3.getText()
+                    + " 100 peso: " + field4.getText()
+                    + " 200 peso: " + field5.getText()
+                    + " 500 peso: " + field6.getText());
+        } else {
+            System.out.println("Cancelled");
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent click) {
         if (click.getSource() == initializeMachine) {
@@ -368,11 +404,10 @@ public class Gui extends JFrame implements ActionListener {
                     vendingP[i].setVisible(true);
                 }
             }
-            for (int i = 0; i < 6; i++) {
-                if (click.getSource() == coin[i] && menuInt == 0) {
+                if (click.getSource() == coin && menuInt == 0) {
                     // Handle adding coins to the wallet
+                    setUserWallet();
                 }
-            }
         }
     }
 }
