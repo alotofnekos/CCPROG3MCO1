@@ -18,6 +18,7 @@ public class Gui extends JFrame implements ActionListener {
     private JButton[] buttons;
     private JPanel[] vendingP;
     private JButton buy;
+    private JButton selectCake;
     private JButton[] coin;
 
     // Other variables
@@ -43,7 +44,8 @@ public class Gui extends JFrame implements ActionListener {
         maintMenu = new JMenu("Admin");
         initializeMachine = new JMenuItem("Initialize Machine");
         itemMaintenance = new JMenuItem("Item Maintenance");
-        buy = new JButton("Buy Cake");
+        buy = new JButton("Buy");
+        selectCake = new JButton("Select Cake");
         coin = new JButton[6];
         buttons = new JButton[36];
         vendingP = new JPanel[36];
@@ -82,7 +84,7 @@ public class Gui extends JFrame implements ActionListener {
         setSize(width, length);
         setJMenuBar(menu);
         setVisible(true);
-        Font customFont = new Font("Arial", Font.PLAIN, 10);
+        Font customFont = new Font("Arial", Font.PLAIN, 8);
         setCustomButtonFont(customFont);
     }
 
@@ -258,12 +260,15 @@ public class Gui extends JFrame implements ActionListener {
     }
 
     public void initializeUserOptions() {
-        buy.setBounds(600, 300, 200, 50);
+        selectCake.setBounds(600, 295, 125, 50);
+        selectCake.addActionListener(this);
+        selectCake.setVisible(false);
+        add(selectCake);
+        buy.setBounds(750, 295, 125, 50);
         buy.addActionListener(this);
         buy.setVisible(false);
         add(buy);
-
-        wallet.setBounds(850, 300, 200, 50);
+        wallet.setBounds(900, 295, 175, 50);
         wallet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         wallet.setVisible(false);
         add(wallet);
@@ -290,6 +295,7 @@ public class Gui extends JFrame implements ActionListener {
 
     public void itemToggle() {
         if (menuInt == 0) {
+            selectCake.setVisible(true);
             buy.setVisible(true);
             wallet.setVisible(true);
             mainMainP.setVisible(false);
@@ -305,6 +311,7 @@ public class Gui extends JFrame implements ActionListener {
                 }
             }
         } else if (menuInt == 1) {
+            selectCake.setVisible(false);
             buy.setVisible(false);
             wallet.setVisible(false);
             mainMainP.setVisible(true);
@@ -357,6 +364,9 @@ public class Gui extends JFrame implements ActionListener {
         } else {
             for (int i = 0; i < buttons.length; i++) {
                 if (click.getSource() == buttons[i] && menuInt == 0) {
+                    for(int j=0;j<buttons.length;j++){
+                        vendingP[j].setVisible(false);
+                    }
                     vendingP[i].setVisible(true);
                 }
             }
