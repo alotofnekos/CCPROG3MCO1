@@ -145,13 +145,15 @@ public class RgItem{
     }
 /**
  * Displays the cake.
+ * 
+ * @return the Display name of the cake
  */
-    public void displayCake(){ 
-        System.out.println("Item Name: " + strName);
-        System.out.println("Description: " + strDesc);
-        System.out.println("Calorie Count: " + intCalorie);
-        System.out.println("Price: " + intPrice);
-        System.out.println("Available Quantity: " + intQty);
-        System.out.println("------------------------");
-    }
+public String displayItem() {
+    return  "Name: " + strName
+            + "\nDescription: " + strDesc
+            + "\nCalorie Count: " + intCalorie
+            + "\nPrice: " + intPrice
+            + "\nAvailable Quantity: " + intQty;
+}
+
 }
