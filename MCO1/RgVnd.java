@@ -147,8 +147,8 @@ public class RgVnd {
 /**
  * Displays the menu, the list of items available to be bought at that moment.
  */
-    public void displayMenu(){
-        vndItemStock.displayMenu();
+    public String getCakeName(int index){
+        return vndItemStock.getCakeName(index);
     }
 /**
  * Lets the user purchase an item at cakeIndex with userBills. Gets the change too.
