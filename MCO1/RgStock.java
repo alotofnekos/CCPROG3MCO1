@@ -59,9 +59,26 @@ public class RgStock{
             if(validItem(i)){
                 int j = i+1;
                 System.out.println("Cake number: "+ j);
-                item[i].displayCake();
+                item[i].displayItem();
             }
         }        
+    }
+/**
+ * Displays Cake menu
+ * @param cakeIndex
+ */
+    public String displayDetails(int cakeIndex){
+        if(!item[cakeIndex].getName().equals(" ")){
+            return item[cakeIndex].displayItem();
+        }
+        else{
+            return  "Name: " 
+            + "\nDescription: " 
+            + "\nCalorie Count: " 
+            + "\nPrice: " 
+            + "\nAvailable Quantity: ";
+        }
+        
     }
 /**
  * Deletes a cake.
@@ -198,7 +215,7 @@ public class RgStock{
  * Display the receipt showing the cake name, quantity, and total price for each cake.
  */
     public void getReceipt() {
-        System.out.println("Name\t\t\t\tQty\tPrice");
+        System.out.println("Cake Name\t\t\tQty\tPrice");
         for (int i = 0; i < item.length; i++) {
             if (validItem(i)) {
                 RgItem cake = item[i];
