@@ -285,11 +285,55 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
-    public void initializeMaintenanceDataPanel() {
-        mainMainP.setBounds(750, 50, 250, 300);
+        public void initializeMaintenanceDataPanel() {
+        mainMainP.setBounds(400, 50, 600, 450);
         mainMainP.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        mainMainP.setLayout(new GridLayout(0,1,1,0));
         mainMainP.setVisible(false);
         add(mainMainP);
+    }
+
+    public void coinMaintenance() {
+        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(integerFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false); // Only allow valid integers
+
+        JFormattedTextField field1 = new JFormattedTextField(formatter);
+        JFormattedTextField field2 = new JFormattedTextField(formatter);
+        JFormattedTextField field3 = new JFormattedTextField(formatter);
+        JFormattedTextField field4 = new JFormattedTextField(formatter);
+        JFormattedTextField field5 = new JFormattedTextField(formatter);
+        JFormattedTextField field6 = new JFormattedTextField(formatter);
+
+        mainMainP.add(new JLabel("10 Peso Coins to be added:"));
+        mainMainP.add(field1);
+        mainMainP.add(new JLabel("20 Peso Coins to be added:"));
+        mainMainP.add(field2);
+        mainMainP.add(new JLabel("50 Peso Coins to be added:"));
+        mainMainP.add(field3);
+        mainMainP.add(new JLabel("100 Peso Coins to be added:"));
+        mainMainP.add(field4);
+        mainMainP.add(new JLabel("200 Peso Coins to be added:"));
+        mainMainP.add(field5);
+        mainMainP.add(new JLabel("500 Peso Coins to be added:"));
+        mainMainP.add(field6);
+    }
+
+    public void itemMaintenance() {
+        
+    }
+
+    public void defaultMaintenance() {
+        
+    }
+
+    public void collectPayments() {
+        
+    }
+
+    public void itemBought() {
+        
     }
 
     public void initializeUserOptions() {
