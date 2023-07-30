@@ -353,33 +353,21 @@ public void coinMaintenance() {
         formatter.setAllowsInvalid(false); // Only allow valid integers
 
         JFormattedTextField inde = new JFormattedTextField(formatter);
-        JFormattedTextField name = new JFormattedTextField();
-        JFormattedTextField desc = new JFormattedTextField();
-        JFormattedTextField calo = new JFormattedTextField();
-        JFormattedTextField pric = new JFormattedTextField();
-        JFormattedTextField quaP = new JFormattedTextField(formatter);
-        JFormattedTextField quaM = new JFormattedTextField(formatter);
+        JFormattedTextField chan = new JFormattedTextField(formatter);
+        JFormattedTextField vari = new JFormattedTextField();
         JButton editConfirmItem = new JButton("Confirm Changes");
         editConfirmItem.addActionListener(this);
 
         mainMainP[1].add(new JLabel("Enter Cake Number:"));
         mainMainP[1].add(inde);
-        mainMainP[1].add(new JLabel("Enter New Cake Name:"));
-        mainMainP[1].add(name);
-        mainMainP[1].add(new JLabel("Enter New Description:"));
-        mainMainP[1].add(desc);
-        mainMainP[1].add(new JLabel("Enter New Calorie Count:"));
-        mainMainP[1].add(calo);
-        mainMainP[1].add(new JLabel("Enter New Price:"));
-        mainMainP[1].add(pric);
-        mainMainP[1].add(new JLabel("Enter Stock To Add:"));
-        mainMainP[1].add(quaP);
-        mainMainP[1].add(new JLabel("Enter Stock To Remove:"));
-        mainMainP[1].add(quaM);
+        mainMainP[1].add(new JLabel("Enter Number To Edit [1]Name | [2]Description | [3]Calories | [4]Price | [5]Add Stock | [6]Subtract Stock"));
+        mainMainP[1].add(chan);
+        mainMainP[1].add(new JLabel("Enter New Value:"));
+        mainMainP[1].add(vari);
         mainMainP[1].add(editConfirmItem);
         mainMainP[1].setVisible(false);
 
-        // Edit item values
+        // Edit item values in the action listener implement rgVnd editItem with inde,chan,vari
     }
 
     public void defaultMaintenance() {
@@ -609,3 +597,5 @@ public void coinMaintenance() {
         }
     }
 }
+
+
