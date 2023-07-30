@@ -63,10 +63,12 @@ public class BillWallet {
  *
  * @param uCash the total amount of bills provided.
  * @param price the price of the item.
- * @return true if the change was given, false if change was not given.
+ * @return String change, the results of the transaction
+
  */
-    public boolean pay(int uCash, int price) {
+    public String pay(int uCash, int price) {
         int remainingAmount = uCash - price;
+        String change="";
         for (int i = 5; i > -1; i--) {
             int billValue = bills[i].getValue();
             int billsToGive = remainingAmount / billValue;
@@ -77,7 +79,6 @@ public class BillWallet {
 
         if (remainingAmount == 0) {
             remainingAmount = uCash - price;
-
             for (int i = 5; i > -1; i--) {
                 int billValue = bills[i].getValue();
                 int billsToGive = remainingAmount / billValue;
@@ -85,17 +86,17 @@ public class BillWallet {
                     remainingAmount -= billsToGive * billValue;
                     bills[i].setQty(bills[i].getQty() - billsToGive);
                     if(billsToGive>=1){
-                        System.out.println("Given " + billsToGive + " " + billValue + " Peso coins/bills as change");
+                        change= change.concat("Given " + billsToGive + " " + billValue + " Peso coins/bills as change \n");
                     }
                 }
                 if(remainingAmount==0){
                     break;
                 }
             }
-            return true;
+            return change;
         } else {
-            System.out.println("Insufficient bills. Payment failed.");
-            return false;
+            change=change.concat("Insufficient bills. Payment failed.");
+            return change;
         }
     }
 }
