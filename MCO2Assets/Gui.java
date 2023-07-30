@@ -36,15 +36,18 @@ public class Gui extends JFrame implements ActionListener {
     private JPanel[] mainMainP;
     private JPanel wallet;
     private JLabel walletLabel;
+    private JTextArea[] itemInfoTextArea;
     // XY position of buttons
-    int xPos = 20;
-    int yPos = 30;
+    private int xPos = 20;
+    private int yPos = 30;
     // Menu indicator
     int menuInt;
 
     //NOT FOR GUI
-    int[] vndBills = {0, 0, 0, 0, 0, 0};
-    RgVnd vnd = new RgVnd();
+    private int[] vndBills = {0, 0, 0, 0, 0, 0};
+    private RgVnd vnd = new RgVnd();
+    private int selectedCake =-1;
+    private int total =0;
 
     public Gui() {
         width = 1100;
@@ -62,6 +65,7 @@ public class Gui extends JFrame implements ActionListener {
         maintenanceP = new JPanel[5];
         maintenanceL = new JLabel[5];
         mainMainP = new JPanel[5];
+        itemInfoTextArea = new JTextArea[36]; 
         for (int i = 0; i < 5; i++) {
             mainMainP[i] = new JPanel(); 
         }
@@ -200,19 +204,19 @@ public class Gui extends JFrame implements ActionListener {
             vendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
     
             // Create a JTextArea to display the item information
-            JTextArea itemInfoTextArea = new JTextArea();
-            itemInfoTextArea.setEditable(false);
-            itemInfoTextArea.setLineWrap(true);
-            itemInfoTextArea.setWrapStyleWord(true);
+            itemInfoTextArea[itemIndex] = new JTextArea();
+            itemInfoTextArea[itemIndex] .setEditable(false);
+            itemInfoTextArea[itemIndex] .setLineWrap(true);
+            itemInfoTextArea[itemIndex] .setWrapStyleWord(true);
     
             // Get the item information using getItemInfoString() method
             String itemInfo = vnd.getCakeDetails(itemIndex);
     
             // Set the item information as the text of the JTextArea
-            itemInfoTextArea.setText(itemInfo);
+            itemInfoTextArea[itemIndex] .setText(itemInfo);
     
             // Add the JTextArea to the SOUTH of the vendingP panel
-            vendingP[itemIndex].add(itemInfoTextArea, BorderLayout.SOUTH);
+            vendingP[itemIndex].add(itemInfoTextArea[itemIndex], BorderLayout.SOUTH);
     
             vendingP[itemIndex].setVisible(true);
             add(vendingP[itemIndex]);
@@ -472,7 +476,7 @@ public void coinMaintenance() {
                     vndBills[3] = parseFieldValue(field4);
                     vndBills[4] = parseFieldValue(field5);
                     vndBills[5] = parseFieldValue(field6);
-                    int total = vnd.addUserBill(vndBills);
+                    total = vnd.addUserBill(vndBills);
                     JOptionPane.showMessageDialog(null, "Total amount inserted: " + total);
                     walletLabel.setText(total + " Pesos");
         } else {
@@ -493,6 +497,20 @@ public void coinMaintenance() {
             return 0; 
         }
     }
+    public void buy() {
+        String result = vnd.purchaseItem(total, selectedCake);
+    
+        if (result.contains("Payment successful")) {
+            JOptionPane.showMessageDialog(null,result, "Purchase successful!", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, result,"Purchase failed!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        total = 0;
+        itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
+        selectedCake = -1;
+        walletLabel.setText(total + " Pesos");
+         
+    }
     @Override
     public void actionPerformed(ActionEvent click) {
         if (click.getSource() == initializeMachine) {
@@ -503,6 +521,7 @@ public void coinMaintenance() {
             maintenanceMenu();
         } else if (click.getSource() == buy) {
             // Handle buy action
+            buy();
         } else if (click.getSource() == maintenanceB[0]) {
             // Handle maintenance action 1
         } else if (click.getSource() == maintenanceB[1]) {
@@ -520,6 +539,7 @@ public void coinMaintenance() {
                         vendingP[j].setVisible(false);
                     }
                     vendingP[i].setVisible(true);
+                    selectedCake = i;
                 }
             }
                 if (click.getSource() == coin && menuInt == 0) {
