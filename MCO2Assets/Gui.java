@@ -62,6 +62,9 @@ public class Gui extends JFrame implements ActionListener {
         maintenanceP = new JPanel[5];
         maintenanceL = new JLabel[5];
         mainMainP = new JPanel[5];
+        for (int i = 0; i < 5; i++) {
+            mainMainP[i] = new JPanel(); 
+        }
         wallet = new JPanel();
         vnd.setDefaults();
         int i=0;
@@ -391,7 +394,7 @@ public void coinMaintenance() {
             selectCake.setVisible(true);
             buy.setVisible(true);
             wallet.setVisible(true);
-            mainMainP.setVisible(false);
+            mainMainP[0].setVisible(false);
             for (int i = 0; i < buttons.length; i++) {
                 vendingP[i].setVisible(false);
                 buttons[i].setVisible(true);
@@ -406,7 +409,7 @@ public void coinMaintenance() {
             selectCake.setVisible(false);
             buy.setVisible(false);
             wallet.setVisible(false);
-            mainMainP.setVisible(true);
+            mainMainP[0].setVisible(true);
             for (int i = 0; i < buttons.length; i++) {
                 vendingP[i].setVisible(false);
                 buttons[i].setVisible(false);
