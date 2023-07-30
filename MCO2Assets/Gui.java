@@ -37,9 +37,16 @@ public class Gui extends JFrame implements ActionListener {
     private JPanel wallet;
     private JLabel walletLabel;
     private JTextArea[] itemInfoTextArea;
+
+    // Maintenance Variable
+    private String indexBought[];
+    private JTextArea[] indexBoughtInfo;
+    private int bought;
+
     // XY position of buttons
     private int xPos = 20;
     private int yPos = 30;
+    
     // Menu indicator
     int menuInt;
 
@@ -65,6 +72,9 @@ public class Gui extends JFrame implements ActionListener {
         maintenanceP = new JPanel[5];
         maintenanceL = new JLabel[5];
         mainMainP = new JPanel[5];
+        indexBought = new String[100];
+        indexBoughtInfo = new JTextArea[100]; 
+        bought = 0;
         itemInfoTextArea = new JTextArea[36]; 
         for (int i = 0; i < 5; i++) {
             mainMainP[i] = new JPanel(); 
@@ -99,6 +109,7 @@ public class Gui extends JFrame implements ActionListener {
         //Maintenance Panels
         coinMaintenance();
         itemMaintenance();
+        defaultMaintenance();
 
         initializeUserOptions();
         createMenu();
@@ -191,35 +202,35 @@ public class Gui extends JFrame implements ActionListener {
         add(buttons[itemIndex]);
     }
     
-        public void setupItemDetailPanel(int itemIndex) {
-            vendingP[itemIndex] = new JPanel();
-            vendingP[itemIndex].setBounds(725, 30, 350, 250);
-            vendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-            vendingP[itemIndex].setLayout(new BorderLayout());
+    public void setupItemDetailPanel(int itemIndex) {
+        vendingP[itemIndex] = new JPanel();
+        vendingP[itemIndex].setBounds(725, 30, 350, 250);
+        vendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        vendingP[itemIndex].setLayout(new BorderLayout());
     
-            // Load the image and create a JLabel as before
-            ImageIcon itemImageIcon = loadImageIcon(itemImageFileNames.get(itemIndex), 125, 125);
-            JLabel itemImageLabel = new JLabel(itemImageIcon);
-            itemImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            vendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
+        // Load the image and create a JLabel as before
+        ImageIcon itemImageIcon = loadImageIcon(itemImageFileNames.get(itemIndex), 125, 125);
+        JLabel itemImageLabel = new JLabel(itemImageIcon);
+        itemImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        vendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
     
-            // Create a JTextArea to display the item information
-            itemInfoTextArea[itemIndex] = new JTextArea();
-            itemInfoTextArea[itemIndex] .setEditable(false);
-            itemInfoTextArea[itemIndex] .setLineWrap(true);
-            itemInfoTextArea[itemIndex] .setWrapStyleWord(true);
+        // Create a JTextArea to display the item information
+        itemInfoTextArea[itemIndex] = new JTextArea();
+        itemInfoTextArea[itemIndex].setEditable(false);
+        itemInfoTextArea[itemIndex].setLineWrap(true);
+        itemInfoTextArea[itemIndex].setWrapStyleWord(true);
     
-            // Get the item information using getItemInfoString() method
-            String itemInfo = vnd.getCakeDetails(itemIndex);
+        // Get the item information using getItemInfoString() method
+        String itemInfo = vnd.getCakeDetails(itemIndex);
     
-            // Set the item information as the text of the JTextArea
-            itemInfoTextArea[itemIndex] .setText(itemInfo);
+        // Set the item information as the text of the JTextArea
+        itemInfoTextArea[itemIndex].setText(itemInfo);
     
-            // Add the JTextArea to the SOUTH of the vendingP panel
-            vendingP[itemIndex].add(itemInfoTextArea[itemIndex], BorderLayout.SOUTH);
+        // Add the JTextArea to the SOUTH of the vendingP panel
+        vendingP[itemIndex].add(itemInfoTextArea[itemIndex], BorderLayout.SOUTH);
     
-            vendingP[itemIndex].setVisible(true);
-            add(vendingP[itemIndex]);
+        vendingP[itemIndex].setVisible(false);
+        add(vendingP[itemIndex]);
         }
     
     
@@ -277,6 +288,7 @@ public class Gui extends JFrame implements ActionListener {
         add(maintenanceP[index]);
         add(maintenanceB[index]);
 
+        mainMainP[index] = new JPanel();
         mainMainP[index].setBounds(400, 50, 600, 450);
         mainMainP[index].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         mainMainP[index].setLayout(new GridLayout(0,1,1,0));
@@ -313,6 +325,8 @@ public void coinMaintenance() {
         JFormattedTextField field4 = new JFormattedTextField(formatter);
         JFormattedTextField field5 = new JFormattedTextField(formatter);
         JFormattedTextField field6 = new JFormattedTextField(formatter);
+        JButton editConfirmCoin = new JButton("Confirm Changes");
+        editConfirmCoin.addActionListener(this);
 
         mainMainP[0].add(new JLabel("10 Peso Coins to be added:"));
         mainMainP[0].add(field1);
@@ -326,6 +340,10 @@ public void coinMaintenance() {
         mainMainP[0].add(field5);
         mainMainP[0].add(new JLabel("500 Peso Coins to be added:"));
         mainMainP[0].add(field6);
+        mainMainP[0].add(editConfirmCoin);
+        mainMainP[0].setVisible(false);
+
+        // Implement values to machine stock
     }
     
     public void itemMaintenance() {
@@ -334,14 +352,19 @@ public void coinMaintenance() {
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false); // Only allow valid integers
 
+        JFormattedTextField inde = new JFormattedTextField(formatter);
         JFormattedTextField name = new JFormattedTextField();
         JFormattedTextField desc = new JFormattedTextField();
         JFormattedTextField calo = new JFormattedTextField();
         JFormattedTextField pric = new JFormattedTextField();
         JFormattedTextField quaP = new JFormattedTextField(formatter);
         JFormattedTextField quaM = new JFormattedTextField(formatter);
+        JButton editConfirmItem = new JButton("Confirm Changes");
+        editConfirmItem.addActionListener(this);
 
-        mainMainP[1].add(new JLabel("Enter New Name:"));
+        mainMainP[1].add(new JLabel("Enter Cake Number:"));
+        mainMainP[1].add(inde);
+        mainMainP[1].add(new JLabel("Enter New Cake Name:"));
         mainMainP[1].add(name);
         mainMainP[1].add(new JLabel("Enter New Description:"));
         mainMainP[1].add(desc);
@@ -353,19 +376,40 @@ public void coinMaintenance() {
         mainMainP[1].add(quaP);
         mainMainP[1].add(new JLabel("Enter Stock To Remove:"));
         mainMainP[1].add(quaM);
+        mainMainP[1].add(editConfirmItem);
+        mainMainP[1].setVisible(false);
+
+        // Edit item values
     }
 
     public void defaultMaintenance() {
-        mainMainP[2].add(new JLabel("Defaults Settings Restored"));
-        //Set Default
+        vnd.setDefaults();
+        mainMainP[2].add(new JLabel("Defaults Settings Restored"), CENTER_ALIGNMENT);
+        mainMainP[2].setVisible(false);
     }
 
     public void collectPayments() {
-        
+        // Find wat to only get PRICEE
+        for(int i = 0; i < bought; i++) {
+            indexBoughtInfo[bought].setText(indexBought[bought]);
+            mainMainP[3].add(indexBoughtInfo[bought]);
+        }
+        mainMainP[3].setVisible(false);
     }
 
     public void itemBought() {
-        
+        // Find way to only get NAME
+        for(int i = 0; i < bought; i++) {
+            indexBoughtInfo[bought].setText(indexBought[bought]);
+            mainMainP[4].add(indexBoughtInfo[bought]);
+        }
+        mainMainP[4].setVisible(false);
+    }
+
+    public void recordPurchase(int itemIndex) {
+        String itemInfo = vnd.getCakeDetails(itemIndex);
+        indexBought[bought] = itemInfo;
+        bought++;
     }
 
     public void initializeUserOptions() {
@@ -393,51 +437,64 @@ public void coinMaintenance() {
 
     }
 
-    public void itemToggle() {
+    public void visible() {
         if (menuInt == 0) {
             selectCake.setVisible(true);
             buy.setVisible(true);
             wallet.setVisible(true);
-            mainMainP[0].setVisible(false);
-            for (int i = 0; i < buttons.length; i++) {
-                vendingP[i].setVisible(false);
+            for (int i = 0; i < buttons.length; i++) {;
                 buttons[i].setVisible(true);
                 coin.setVisible(true);
-    
-                if (i < 5) {
-                    maintenanceB[i].setVisible(false);
-                    maintenanceP[i].setVisible(false);
-                }
             }
         } else if (menuInt == 1) {
-            selectCake.setVisible(false);
-            buy.setVisible(false);
-            wallet.setVisible(false);
-            mainMainP[0].setVisible(true);
-            for (int i = 0; i < buttons.length; i++) {
-                vendingP[i].setVisible(false);
-                buttons[i].setVisible(false);
-                coin.setVisible(false);
-                
-                if (i < 5) {
-                    maintenanceB[i].setVisible(true);
-                    maintenanceP[i].setVisible(true);
-                }
+            for (int i = 0; i < 5; i++) {
+                maintenanceB[i].setVisible(true);
+                maintenanceP[i].setVisible(true);
+            }
+        }
+    }
+    
+    public void inVisible() {
+        selectCake.setVisible(false);
+        buy.setVisible(false);
+        wallet.setVisible(false);
+
+        for(int i = 0; i < buttons.length; i++) {
+            vendingP[i].setVisible(false);
+            buttons[i].setVisible(false);
+            coin.setVisible(false);
+
+            if (i < 5) {
+                mainMainP[i].setVisible(false);
+                maintenanceB[i].setVisible(false);
+                maintenanceP[i].setVisible(false);
             }
         }
     }
 
+    public void maintenanceMenuToggle(int Chosen) {
+        for(int i = 0; i < 5; i++){
+            mainMainP[i].setVisible(false);
+        }
+        mainMainP[Chosen].setVisible(true);
+    }
+
     public void vendingMachinePanel() {
+        menuInt = 0;
         setTitle("Cake Vending Machine");
         getContentPane().setBackground(new Color(150, 39, 0));
-        itemToggle();
+        inVisible();
+        visible();
     }
 
     public void maintenanceMenu() {
+        menuInt = 1;
         setTitle("Maintenance Menu");
         getContentPane().setBackground(new Color(38, 46, 90));
-        itemToggle();
+        inVisible();
+        visible();
     }
+
     public void setUserWallet() {
         
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
@@ -497,6 +554,7 @@ public void coinMaintenance() {
             return 0; 
         }
     }
+    
     public void buy() {
         String result = vnd.purchaseItem(total, selectedCake);
     
@@ -511,29 +569,31 @@ public void coinMaintenance() {
         walletLabel.setText(total + " Pesos");
          
     }
+    
     @Override
     public void actionPerformed(ActionEvent click) {
+        //Measure for when no item selected
+        int i=-1;
+
         if (click.getSource() == initializeMachine) {
-            menuInt = 0;
             vendingMachinePanel();
         } else if (click.getSource() == itemMaintenance) {
-            menuInt = 1;
             maintenanceMenu();
-        } else if (click.getSource() == buy) {
-            // Handle buy action
+        } else if (click.getSource() == buy && i != -1) {
             buy();
+            recordPurchase(i);
         } else if (click.getSource() == maintenanceB[0]) {
-            // Handle maintenance action 1
+            maintenanceMenuToggle(0);
         } else if (click.getSource() == maintenanceB[1]) {
-            // Handle maintenance action 2
+            maintenanceMenuToggle(1);
         } else if (click.getSource() == maintenanceB[2]) {
-            // Handle maintenance action 3
+            maintenanceMenuToggle(2);
         } else if (click.getSource() == maintenanceB[3]) {
-            // Handle maintenance action 4
+            maintenanceMenuToggle(3);
         } else if (click.getSource() == maintenanceB[4]) {
-            // Handle maintenance action 5
+            maintenanceMenuToggle(4);
         } else {
-            for (int i = 0; i < buttons.length; i++) {
+            for (i = 0; i < buttons.length; i++) {
                 if (click.getSource() == buttons[i] && menuInt == 0) {
                     for(int j=0;j<buttons.length;j++){
                         vendingP[j].setVisible(false);
@@ -542,10 +602,10 @@ public void coinMaintenance() {
                     selectedCake = i;
                 }
             }
-                if (click.getSource() == coin && menuInt == 0) {
-                    // Handle adding coins to the wallet
-                    setUserWallet();
-                }
+            if (click.getSource() == coin && menuInt == 0) {
+                // Handle adding coins to the wallet
+                setUserWallet();
+            }
         }
     }
 }
