@@ -27,51 +27,42 @@ public class SpcVnd extends RgVnd {
      * @param cakeIndex the index of the cake item to be bought.
      * @param itemIndex the array of special item indices to be bought.
      */
-    public void purchaseItem(int[] userBills, int cakeIndex, int[] itemIndex) {
+    @Override
+    public public String purchaseItem(int totalUserBill, int cakeIndex, int[] itemIndex) {
         boolean canGiveChange;
         boolean isItemValid = false;
         boolean isAddOnValid = false;
         boolean hasCakeInStock = vndItemStock.hasCakeInStock();
-        
+        String output="";
         if (!hasCakeInStock) {
-            System.out.println("Can't buy items, no items in stock.");
-            return;
+            output = output.concat("Can't buy items, no items in stock.");
+            return output;
         }
 
         if (vndStock.getTotalAmount() == 0) {
-            System.out.println("The Vending Machine does not have money to process change right now");
+            output = output.concat("The Vending Machine does not have money to process change right now");
             canGiveChange = false;
         } else {
-            System.out.println("The Vending Machine can process change right now");
+            output = output.concat("The Vending Machine can process change right now");
             canGiveChange = true;
         }
 
-        if (userBills.length != 6) {
-            System.out.println("Invalid bill quantities array length. Expected length: 6");
-            return;
-        }
-
-        for (int i = 0; i < userBills.length; i++) {
-            int billValue = vndStock.getBills()[i].getValue();
-            userWallet.addBill(new Bill(userBills[i], billValue));
-        }
-
-        System.out.println("Total amount inserted: " + userWallet.getTotalAmount());
+        output = output.concat("Total amount inserted: " + userWallet.getTotalAmount());
 
         isItemValid = vndItemStock.validItem(cakeIndex);
         if (!isItemValid) {
-            System.out.println("Item is out of stock. Please try again");
+            output = output.concat("Item is out of stock. Please try again");
             userWallet.clearWallet();
-            return;
+            return output;
         }
 
         // Check if all special items are valid
         for (int i = 0; i < itemIndex.length; i++) {
             isAddOnValid = (spcItemStock.validItem(itemIndex[i])&&spcItemStock.isCompatible(itemIndex[i], vndItemStock.getCakeName(cakeIndex)));
             if (!isAddOnValid) {
-                System.out.println("Special item " + spcItemStock.getItemName(itemIndex[i]) + " is out of stock or is incompatible with the cake. Please try again");
+                output = output.concat("Special item " + spcItemStock.getItemName(itemIndex[i]) + " is out of stock or is incompatible with the cake. Please try again");
                 userWallet.clearWallet();
-                return;
+                return output;
             }
         }
 
@@ -82,37 +73,40 @@ public class SpcVnd extends RgVnd {
 
         if (canGiveChange == false) {
             if (userWallet.getTotalAmount() == totalPrice) {
-                vndStock.pay(userWallet.getTotalAmount(), totalPrice);
+                output = output.concat(vndStock.pay(userWallet.getTotalAmount(), totalPrice));
                 userWallet.clearWallet();
                 profit += totalPrice;
-                System.out.println("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".");
+                output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".");
                 vndItemStock.transferCake(vndItemSold, cakeIndex);
                 for (int i = 0; i < itemIndex.length; i++) {
                     spcItemStock.transferItem(spcItemSold, itemIndex[i]);
-                    System.out.println("Payment successful. Dispensing " + spcItemStock.getItemName(itemIndex[i]) + ".");
+                    output = output.concat("Payment successful. Dispensing " + spcItemStock.getItemName(itemIndex[i]) + ".");
                 }
             } else if (userWallet.getTotalAmount() > totalPrice) {
-                System.out.println("Please pay exact amount. No change available");
+                output = output.concat("Please pay exact amount. No change available");
                 userWallet.clearWallet();
+                return output;
             }
         } else {
             if (userWallet.getTotalAmount() < totalPrice) {
-                System.out.println("Insufficient funds. Please add more bills");
+                output = output.concat("Insufficient funds. Please add more bills");
                 userWallet.clearWallet();
-            } else if ((vndStock.pay(userWallet.getTotalAmount(), totalPrice)) && (userWallet.getTotalAmount() >= totalPrice)) {
+            } else if (!vndStock.pay(userWallet.getTotalAmount(), totalPrice).contains("Insufficient bills") && (userWallet.getTotalAmount() >= totalPrice)) {
                 userWallet.clearWallet();
+                output = output.concat(vndStock.pay(userWallet.getTotalAmount(), totalPrice));
                 profit += totalPrice;
-                System.out.println("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".");
+                output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".");
                 vndItemStock.transferCake(vndItemSold, cakeIndex);
                 for (int i = 0; i < itemIndex.length; i++) {
                     spcItemStock.transferItem(spcItemSold, itemIndex[i]);
-                    System.out.println("Payment successful. Dispensing " + spcItemStock.getItemName(itemIndex[i]) + ".");
+                    output = output.concat("Payment successful. Dispensing " + spcItemStock.getItemName(itemIndex[i]) + ".");
                 }
             } else {
-                System.out.println("Please pay exact amount. No change available");
+                output = output.concat("Please pay exact amount. No change available");
                 userWallet.clearWallet();
             }
         }
+        return output;
     }
     /**
      * Sets the defaults (10 for every item, cake, and bill)
