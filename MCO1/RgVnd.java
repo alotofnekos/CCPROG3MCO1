@@ -152,65 +152,66 @@ public class RgVnd {
     }
 /**
  * Lets the user purchase an item at cakeIndex with userBills. Gets the change too.
- * @param userBills the array of bills corresponding to the number of [10, 20, 50, 100, 200, 500] peso bills
+ * @param totalUserBills the total amount inserted by the user
  * @param cakeIndex the index of the item to be bought.
+ * @return output the entire transaction script
  */
-    public void purchaseItem(int[] userBills, int cakeIndex) {
+    public String purchaseItem(int totalUserBill, int cakeIndex) {
         boolean canGiveChange;
         boolean isItemValid = false;
         boolean hasCakeInStock = vndItemStock.hasCakeInStock();
+        String output="";
         if (hasCakeInStock == false) {
-            System.out.println("Can't buy items, no items in stock.");
+            output = output.concat("Can't buy items, no items in stock.");
+            return output;
         } else {
             if (vndStock.getTotalAmount() == 0) {
-                System.out.println("The Vending Machine does not have money to process change right now");
+                output = output.concat("The Vending Machine does not have money to process change right now \n");
                 canGiveChange = false;
             } else {
-                System.out.println("The Vending Machine can process change right now");
+                output = output.concat("The Vending Machine can process change right now \n");
                 canGiveChange = true;
             }
-            if (userBills.length != 6) {
-                System.out.println("Invalid bill quantities array length. Expected length: 6");
-                return;
-            }
-            for (int i = 0; i < userBills.length; i++) {
-                int billValue = vndStock.getBills()[i].getValue();
-                userWallet.addBill(new Bill(userBills[i], billValue));
-            }
-            System.out.println("Total amount inserted: " + userWallet.getTotalAmount());
+            output = output.concat("Total amount inserted: " + userWallet.getTotalAmount()+"\n");
             isItemValid = vndItemStock.validItem(cakeIndex);
             if (isItemValid == false) {
-                System.out.println("Item is out of stock. Please try again");
+                output = output.concat("Item is out of stock. Please try again");
                 userWallet.clearWallet();
-                return;
+                return output;
             }
             int price = vndItemStock.getCakePrice(cakeIndex);
             if (canGiveChange == false) {
                 if (userWallet.getTotalAmount() == price) {
-                    vndStock.pay(userWallet.getTotalAmount(), price);
                     userWallet.clearWallet();
                     profit += price;
-                    System.out.println("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex)+".");
+                    output =output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex)+".");
                     vndItemStock.transferCake(vndItemSold, cakeIndex);
+                    return output;
                 } else if (userWallet.getTotalAmount() > price) {
-                    System.out.println("Please pay exact amount. No change available");
+                    output =output.concat("Please pay exact amount. No change available");
                     userWallet.clearWallet();
+                    return output;
                 }
             } else {
                 if (userWallet.getTotalAmount() < price) {
-                    System.out.println("Insufficient funds. Please add more bills");
+                    output =output.concat("Insufficient funds. Please add more bills");
                     userWallet.clearWallet();
-                } else if ((vndStock.pay(userWallet.getTotalAmount(), price) == true) && (userWallet.getTotalAmount() >= price)) {
+                    return output;
+                } else if (!vndStock.pay(userWallet.getTotalAmount(), price).contains("Insufficient bills") && (userWallet.getTotalAmount() >= price)) {
+                    output = output.concat(vndStock.pay(userWallet.getTotalAmount(), price));
                     userWallet.clearWallet();
                     profit += price;
-                    System.out.println("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex)+".");
+                    output =output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex)+".");
                     vndItemStock.transferCake(vndItemSold, cakeIndex);
+                    return output;
                 } else {
                     System.out.println("Please pay exact amount. No change available");
                     userWallet.clearWallet();
+                    return output;
                 }
             }
         }
+        return output;
     }
 /**
  * Gets the list of items bought before a profit is collected
