@@ -33,7 +33,7 @@ public class Gui extends JFrame implements ActionListener {
     private JLabel[] maintenanceL;
     private JPanel[] maintenanceP;
     private JButton[] maintenanceB;
-    private JPanel mainMainP;
+    private JPanel[] mainMainP;
     private JPanel wallet;
     private JLabel walletLabel;
     // XY position of buttons
@@ -61,7 +61,7 @@ public class Gui extends JFrame implements ActionListener {
         maintenanceB = new JButton[5];
         maintenanceP = new JPanel[5];
         maintenanceL = new JLabel[5];
-        mainMainP = new JPanel();
+        mainMainP = new JPanel[5];
         wallet = new JPanel();
         vnd.setDefaults();
         int i=0;
@@ -89,7 +89,10 @@ public class Gui extends JFrame implements ActionListener {
     public void Display() {
         initializeItemButtons(); // Call the itemButtons method to set up item buttons
         initializeMaintenanceButtons();
-        initializeMaintenanceDataPanel();
+        //Maintenance Panels
+        coinMaintenance();
+        itemMaintenance();
+
         initializeUserOptions();
         createMenu();
         setupMainFrame();
@@ -266,6 +269,12 @@ public class Gui extends JFrame implements ActionListener {
         maintenanceP[index].add(maintenanceL[index]);
         add(maintenanceP[index]);
         add(maintenanceB[index]);
+
+        mainMainP[index].setBounds(400, 50, 600, 450);
+        mainMainP[index].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        mainMainP[index].setLayout(new GridLayout(0,1,1,0));
+        mainMainP[index].setVisible(false);
+        add(mainMainP[index]);
     }
 
     private String getMaintenanceLabel(int index) {
@@ -285,15 +294,7 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
-        public void initializeMaintenanceDataPanel() {
-        mainMainP.setBounds(400, 50, 600, 450);
-        mainMainP.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        mainMainP.setLayout(new GridLayout(0,1,1,0));
-        mainMainP.setVisible(false);
-        add(mainMainP);
-    }
-
-    public void coinMaintenance() {
+public void coinMaintenance() {
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
         formatter.setValueClass(Integer.class);
@@ -306,26 +307,50 @@ public class Gui extends JFrame implements ActionListener {
         JFormattedTextField field5 = new JFormattedTextField(formatter);
         JFormattedTextField field6 = new JFormattedTextField(formatter);
 
-        mainMainP.add(new JLabel("10 Peso Coins to be added:"));
-        mainMainP.add(field1);
-        mainMainP.add(new JLabel("20 Peso Coins to be added:"));
-        mainMainP.add(field2);
-        mainMainP.add(new JLabel("50 Peso Coins to be added:"));
-        mainMainP.add(field3);
-        mainMainP.add(new JLabel("100 Peso Coins to be added:"));
-        mainMainP.add(field4);
-        mainMainP.add(new JLabel("200 Peso Coins to be added:"));
-        mainMainP.add(field5);
-        mainMainP.add(new JLabel("500 Peso Coins to be added:"));
-        mainMainP.add(field6);
+        mainMainP[0].add(new JLabel("10 Peso Coins to be added:"));
+        mainMainP[0].add(field1);
+        mainMainP[0].add(new JLabel("20 Peso Coins to be added:"));
+        mainMainP[0].add(field2);
+        mainMainP[0].add(new JLabel("50 Peso Coins to be added:"));
+        mainMainP[0].add(field3);
+        mainMainP[0].add(new JLabel("100 Peso Coins to be added:"));
+        mainMainP[0].add(field4);
+        mainMainP[0].add(new JLabel("200 Peso Coins to be added:"));
+        mainMainP[0].add(field5);
+        mainMainP[0].add(new JLabel("500 Peso Coins to be added:"));
+        mainMainP[0].add(field6);
     }
-
+    
     public void itemMaintenance() {
-        
+        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(integerFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false); // Only allow valid integers
+
+        JFormattedTextField name = new JFormattedTextField();
+        JFormattedTextField desc = new JFormattedTextField();
+        JFormattedTextField calo = new JFormattedTextField();
+        JFormattedTextField pric = new JFormattedTextField();
+        JFormattedTextField quaP = new JFormattedTextField(formatter);
+        JFormattedTextField quaM = new JFormattedTextField(formatter);
+
+        mainMainP[1].add(new JLabel("Enter New Name:"));
+        mainMainP[1].add(name);
+        mainMainP[1].add(new JLabel("Enter New Description:"));
+        mainMainP[1].add(desc);
+        mainMainP[1].add(new JLabel("Enter New Calorie Count:"));
+        mainMainP[1].add(calo);
+        mainMainP[1].add(new JLabel("Enter New Price:"));
+        mainMainP[1].add(pric);
+        mainMainP[1].add(new JLabel("Enter Stock To Add:"));
+        mainMainP[1].add(quaP);
+        mainMainP[1].add(new JLabel("Enter Stock To Remove:"));
+        mainMainP[1].add(quaM);
     }
 
     public void defaultMaintenance() {
-        
+        mainMainP[2].add(new JLabel("Defaults Settings Restored"));
+        //Set Default
     }
 
     public void collectPayments() {
