@@ -20,7 +20,7 @@ public class Gui extends JFrame implements ActionListener {
 
     // Arrays
     private JButton[] buttons;
-    private JPanel[] vendingP;
+    protected JPanel[] vendingP;
     private JButton buy;
     //private JButton selectCake;
     private JButton coin;
@@ -36,7 +36,7 @@ public class Gui extends JFrame implements ActionListener {
     private JPanel[] mainMainP;
     private JPanel wallet;
     private JTextArea walletLabel;
-    private JTextArea amountTotal;
+    protected JTextArea amountTotal;
     private JTextArea[] itemInfoTextArea;
 
     // Maintenance Variable
@@ -56,7 +56,7 @@ public class Gui extends JFrame implements ActionListener {
     private RgVnd vnd = new RgVnd();
     private int selectedCake =-1;
     private int total =0;
-    private int totalPrice = 0;
+    protected int totalPrice = 0;
 
     public Gui() {
         width = 1100;
@@ -242,7 +242,7 @@ public class Gui extends JFrame implements ActionListener {
 
    
     // It resizes the image and handles the default cake image if the specified image is not found
-    private ImageIcon loadImageIcon(String imageFileName,int width,int height) {
+    public ImageIcon loadImageIcon(String imageFileName,int width,int height) {
         // Load the original image
         BufferedImage originalImage;
         ImageIcon imageIcon = null;
@@ -611,7 +611,8 @@ public void coinMaintenance() {
                     }
                     vendingP[i].setVisible(true);
                     selectedCake = i;
-                    amountTotal.setText( vnd.getCakePrice(i) + "Pesos");
+                    totalPrice = vnd.getCakePrice(i);
+                    amountTotal.setText( totalPrice + "Pesos");
                     buttons[i].setBackground(Color.GREEN);
                 }
             }
