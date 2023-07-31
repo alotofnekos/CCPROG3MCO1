@@ -72,7 +72,7 @@ public class SpcGui extends Gui {
             }
             setupSpcItemButton(itemIndex, xSpcPos, ySpcPos, itemName, imageIcon);
             if (itemIndex < spcitemImageFileNames.size()) {
-                setupSpcItemDetailPanel(itemIndex);
+                setupSpcItemDetailPanel(itemIndex, imageFileName);
             }
             xSpcPos += 70;
             if (itemIndex == 7) {
@@ -107,14 +107,14 @@ public class SpcGui extends Gui {
         add(spcButtons[itemIndex]);
     }
 
-    public void setupSpcItemDetailPanel(int itemIndex) {
+    public void setupSpcItemDetailPanel(int itemIndex,String imageFileName) {
         spcVendingP[itemIndex] = new JPanel();
         spcVendingP[itemIndex].setBounds(725, 30, 350, 250);
         spcVendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         spcVendingP[itemIndex].setLayout(new BorderLayout());
     
         // Load the image and create a JLabel as before
-        ImageIcon itemImageIcon = loadImageIcon(spcitemImageFileNames.get(itemIndex), 125, 125);
+        ImageIcon itemImageIcon = loadImageIcon(imageFileName, 125, 125);
         JLabel itemImageLabel = new JLabel(itemImageIcon);
         itemImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         spcVendingP[itemIndex].add(itemImageLabel, BorderLayout.CENTER);
