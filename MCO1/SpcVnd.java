@@ -130,9 +130,11 @@ public class SpcVnd extends RgVnd {
      * Gets the list of cakes and items bought before a profit is collected
      */
     @Override
-    public void receipt(){
-        vndItemSold.getReceipt();
-        spcItemSold.getReceipt();
+    public String receipt(){
+        String totalReceipt="";
+        totalReceipt = totalReceipt.concat(vndItemSold.getReceipt());
+        totalReceipt = totalReceipt.concat(spcItemSold.getReceipt());
+        return totalReceipt;
     }
     /**
      * Displays the menu, the list of items available to be bought at that moment.
@@ -178,30 +180,32 @@ public class SpcVnd extends RgVnd {
      * @param choice tells which parameter to edit (13 for Calorie, 14 for Price, 15 for adding Stock, 16 for removing Stock)
      * @param index the index of the index to be edited
      * @param value the new value
+     * @return the entire transaction dialog
      */
-    public void editItem(int choice, int index, int value){
+    public String editItem(int choice, int index, int value){
+        String output="";
         if(profit!=0){
-            System.out.println("Get the profit first before editing the cake parameters. Operation aborted");
+            output = output.concat("Get the profit first before editing the cake parameters. Operation aborted");
         }
         else{
             if(choice==13){
-                System.out.println("Calorie of " + spcItemStock.getItemName(index) + " changed to " + value +"!");
+                output = output.concat("Calorie of " + spcItemStock.getItemName(index) + " changed to " + value +"!");
                 spcItemStock.editCalorie(index, value);
                 spcItemSold.editCalorie(index, value);
             }
             else if(choice==14){
-                System.out.println("Price of " + spcItemStock.getItemName(index) +  " changed to " + value +"!");
+                output = output.concat("Price of " + spcItemStock.getItemName(index) +  " changed to " + value +"!");
                 spcItemStock.editPrice(index, value);
                 spcItemSold.editPrice(index, value);
             }
             else if(choice ==15){
-                spcItemStock.addInt(index, value);
+                output = output.concat(spcItemStock.addInt(index, value));
             } 
             else if(choice==16){
-                spcItemStock.subInt(index, value);
+                output = output.concat(spcItemStock.subInt(index, value));
             }
             else{
-                System.out.println("Invalid...");
+                output = output.concat(System.out.println("Invalid..."));
             }
         }
     }
@@ -211,21 +215,23 @@ public class SpcVnd extends RgVnd {
      * @param index the index of the item to be edited
      * @param value the new value
      */
-    public void editItem(int choice, int index, String value){
+    public String editItem(int choice, int index, String value){
+        String output="";
         if(profit!=0){
-            System.out.println("Get the profit first before editing the cake parameters. Operation aborted");
+            output = output.concat("Get the profit first before editing the cake parameters. Operation aborted");
         }
         else{
             if(choice==11){
-                System.out.println("Name of " + spcItemStock.getItemName(index)+" changed to " + value +"!");
+                output = output.concat("Name of " + spcItemStock.getItemName(index)+" changed to " + value +"!");
                 spcItemStock.editName(index, value);
                 spcItemSold.editName(index, value);
             }
             else if(choice == 12){
-                System.out.println("Description of " +spcItemStock.getItemName(index) +" changed to " + value +"!");
+                output = output.concat("Description of " +spcItemStock.getItemName(index) +" changed to " + value +"!");
                 spcItemStock.editDesc(index, value);
                 spcItemSold.editDesc(index, value);
             }
         }
+        return output;
     }
 }
