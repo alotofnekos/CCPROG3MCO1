@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class SpcVnd extends RgVnd {
     private SpcStock spcItemStock;
     private SpcStock spcItemSold;
@@ -20,94 +22,114 @@ public class SpcVnd extends RgVnd {
         spcItemStock = new SpcStock();
         spcItemSold = new SpcStock();
     }
-   
+    /**
+     * Checks if a cake is valid
+     * @param cakeIndex the index of the cake to be checked.
+     * @return true if cake is valid, false otherwise
+     */
+    public boolean validSpcItem(int cakeIndex){
+        return spcItemStock.validItem(cakeIndex);
+    }
+    /**
+     * Checks if a cake is valid
+     * @param index the index of the itwm to be checked.
+     * @return the price of the item
+     */
+    public int getItemPrice(int index){
+        return spcItemStock.getItemPrice(index);
+    }
     /**
      * Lets the user purchase an item at cakeIndex with userBills. Gets the change too.
      * @param userBills the array of bills corresponding to the number of [10, 20, 50, 100, 200, 500] peso bills
      * @param cakeIndex the index of the cake item to be bought.
      * @param itemIndex the array of special item indices to be bought.
      */
-    @Override
-    public public String purchaseItem(int totalUserBill, int cakeIndex, int[] itemIndex) {
+    public String purchaseItem(int totalUserBill, int cakeIndex, ArrayList<Integer> itemIndex) {
         boolean canGiveChange;
         boolean isItemValid = false;
         boolean isAddOnValid = false;
         boolean hasCakeInStock = vndItemStock.hasCakeInStock();
-        String output="";
+        String output = "";
+
         if (!hasCakeInStock) {
-            output = output.concat("Can't buy items, no items in stock.");
+            output = output.concat("Can't buy items, no items in stock.\n");
             return output;
         }
 
         if (vndStock.getTotalAmount() == 0) {
-            output = output.concat("The Vending Machine does not have money to process change right now");
+            output = output.concat("The Vending Machine does not have money to process change right now!\n");
             canGiveChange = false;
         } else {
-            output = output.concat("The Vending Machine can process change right now");
+            output = output.concat("The Vending Machine can process change right now!\n");
             canGiveChange = true;
         }
 
-        output = output.concat("Total amount inserted: " + userWallet.getTotalAmount());
+        output = output.concat("Total amount inserted: " +totalUserBill+"\n");
 
         isItemValid = vndItemStock.validItem(cakeIndex);
         if (!isItemValid) {
-            output = output.concat("Item is out of stock. Please try again");
+            output = output.concat("Item is out of stock. Please try again.\n");
             userWallet.clearWallet();
             return output;
         }
 
         // Check if all special items are valid
-        for (int i = 0; i < itemIndex.length; i++) {
-            isAddOnValid = (spcItemStock.validItem(itemIndex[i])&&spcItemStock.isCompatible(itemIndex[i], vndItemStock.getCakeName(cakeIndex)));
+        for (int i = 0; i < itemIndex.size(); i++) {
+            int index = itemIndex.get(i);
+            isAddOnValid = (spcItemStock.validItem(index) && spcItemStock.isCompatible(index, vndItemStock.getCakeName(cakeIndex)));
             if (!isAddOnValid) {
-                output = output.concat("Special item " + spcItemStock.getItemName(itemIndex[i]) + " is out of stock or is incompatible with the cake. Please try again");
+                output = output.concat("Special item " + spcItemStock.getItemName(index) + " is out of stock or is incompatible with the cake. Please try again.\n");
                 userWallet.clearWallet();
                 return output;
             }
         }
 
         int totalPrice = vndItemStock.getCakePrice(cakeIndex);
-        for (int i = 0; i < itemIndex.length; i++) {
-            totalPrice += spcItemStock.getItemPrice(itemIndex[i]);
+        for (int i = 0; i < itemIndex.size(); i++) {
+            int index = itemIndex.get(i);
+            totalPrice += spcItemStock.getItemPrice(index);
         }
 
         if (canGiveChange == false) {
-            if (userWallet.getTotalAmount() == totalPrice) {
-                output = output.concat(vndStock.pay(userWallet.getTotalAmount(), totalPrice));
+            if (totalUserBill == totalPrice) {
+                output = output.concat(vndStock.pay(totalUserBill, totalPrice));
                 userWallet.clearWallet();
                 profit += totalPrice;
-                output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".");
+                output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".\n");
                 vndItemStock.transferCake(vndItemSold, cakeIndex);
-                for (int i = 0; i < itemIndex.length; i++) {
-                    spcItemStock.transferItem(spcItemSold, itemIndex[i]);
-                    output = output.concat("Payment successful. Dispensing " + spcItemStock.getItemName(itemIndex[i]) + ".");
+                for (int i = 0; i < itemIndex.size(); i++) {
+                    int index = itemIndex.get(i);
+                    spcItemStock.transferItem(spcItemSold, index);
+                    output = output.concat("Payment successful. Dispensing " + spcItemStock.getItemName(index) + ".\n");
                 }
-            } else if (userWallet.getTotalAmount() > totalPrice) {
-                output = output.concat("Please pay exact amount. No change available");
+            } else if (totalUserBill > totalPrice) {
+                output = output.concat("Please pay exact amount. No change available.\n");
                 userWallet.clearWallet();
                 return output;
             }
         } else {
-            if (userWallet.getTotalAmount() < totalPrice) {
-                output = output.concat("Insufficient funds. Please add more bills");
+            if (totalUserBill < totalPrice) {
+                output = output.concat("Insufficient funds. Please add more bills.\n");
                 userWallet.clearWallet();
-            } else if (!vndStock.pay(userWallet.getTotalAmount(), totalPrice).contains("Insufficient bills") && (userWallet.getTotalAmount() >= totalPrice)) {
+            } else if (!vndStock.pay(totalUserBill, totalPrice).contains("Insufficient bills") && (totalUserBill >= totalPrice)) {
+                output = output.concat(vndStock.pay(totalUserBill, totalPrice));
                 userWallet.clearWallet();
-                output = output.concat(vndStock.pay(userWallet.getTotalAmount(), totalPrice));
                 profit += totalPrice;
-                output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".");
+                output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".\n");
                 vndItemStock.transferCake(vndItemSold, cakeIndex);
-                for (int i = 0; i < itemIndex.length; i++) {
-                    spcItemStock.transferItem(spcItemSold, itemIndex[i]);
-                    output = output.concat("Payment successful. Dispensing " + spcItemStock.getItemName(itemIndex[i]) + ".");
+                for (int i = 0; i < itemIndex.size(); i++) {
+                    int index = itemIndex.get(i);
+                    spcItemStock.transferItem(spcItemSold, index);
+                    output = output.concat("Payment successful. Dispensing " + spcItemStock.getItemName(index) + ".\n");
                 }
             } else {
-                output = output.concat("Please pay exact amount. No change available");
+                output = output.concat("Please pay exact amount. No change available.\n");
                 userWallet.clearWallet();
             }
         }
         return output;
     }
+
     /**
      * Sets the defaults (10 for every item, cake, and bill)
      */
@@ -137,12 +159,12 @@ public class SpcVnd extends RgVnd {
         return totalReceipt;
     }
     /**
-     * Displays the menu, the list of items available to be bought at that moment.
+     * Display item details
+     * @param index the index of the item to be checked
+     * @return item details
      */
-    @Override
-    public void displayMenu(){
-        vndItemStock.displayMenu();
-        spcItemStock.displayMenu();
+    public String getItemDetails(int index){
+        return spcItemStock.displayDetails(index);
     }
     /**
      * Collects the current profit of the vending machine, and clears the reciept since profit has been obtained already.
@@ -205,9 +227,10 @@ public class SpcVnd extends RgVnd {
                 output = output.concat(spcItemStock.subInt(index, value));
             }
             else{
-                output = output.concat(System.out.println("Invalid..."));
+                output = output.concat("Invalid...");
             }
         }
+        return output;
     }
     /**
      * Edits the iten at index, based on choice, with a String value. These features are also passed down to the reciept's copy of the inventory.
