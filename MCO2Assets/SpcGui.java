@@ -1,34 +1,27 @@
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.text.NumberFormat;
-
-import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SpcGui extends Gui {
     private JButton[] spcButtons;
     private JPanel[] spcVendingP;
-    private JButton selectAddOn;
+    private JButton clearAddOn;
     private int xSpcPos=20;
     private int ySpcPos=270;
     private JTextArea[] spcItemInfoTextArea;
     private SpcVnd vnd;
     private ArrayList<String> spcitemNames = new ArrayList<>();
     private ArrayList<String> spcitemImageFileNames = new ArrayList<>();
-    private ArrayList<String> selectedItems = new ArrayList<>();
+    private ArrayList<Integer> selectedItems = new ArrayList<>();
     public SpcGui() {
         super();
         vnd = new SpcVnd();
         spcButtons =new JButton[16];
         spcVendingP =new JPanel[16];
-        selectAddOn = new JButton("Select Add-ons");
+        clearAddOn = new JButton("Clear Add-ons");
         spcItemInfoTextArea = new JTextArea[20]; 
         vnd.setDefaults();
         int i=0;
@@ -145,10 +138,10 @@ public class SpcGui extends Gui {
         add(spcVendingP[itemIndex]);
     }
     public void addOn(){
-        selectAddOn.setBounds(600, 295, 125, 50);
-        selectAddOn.addActionListener(this);
-        selectAddOn.setVisible(false);
-        add(selectAddOn);
+        clearAddOn.setBounds(600, 295, 125, 50);
+        clearAddOn.addActionListener(this);
+        clearAddOn.setVisible(false);
+        add(clearAddOn);
     }
     @Override
     public void Display() {
@@ -160,7 +153,7 @@ public class SpcGui extends Gui {
     public void visible() {
         super.visible();
         if (menuInt == 0) {
-            selectAddOn.setVisible(true);
+            clearAddOn.setVisible(true);
             for (int i = 0; i < spcButtons.length; i++) {;
                 spcButtons[i].setVisible(true);
                 spcButtons[i].setBackground(Color.LIGHT_GRAY);
@@ -170,12 +163,42 @@ public class SpcGui extends Gui {
     @Override
     public void inVisible() {
         super.inVisible();
-        selectAddOn.setVisible(false);
+        clearAddOn.setVisible(false);
 
         for(int i = 0; i < spcButtons.length; i++) {
             spcVendingP[i].setVisible(false);
             spcButtons[i].setVisible(false);
         }
+    }
+
+    @Override
+    public void buy() {
+        String result = vnd.purchaseItem(total, selectedCake,selectedItems);
+    
+        if (result.contains("Payment successful")) {
+            JOptionPane.showMessageDialog(null,result+"\nPlease reselect the cake and add ons before buying again.", "Purchase successful!", JOptionPane.INFORMATION_MESSAGE);
+            recordPurchase(selectedCake);
+        } else {
+            JOptionPane.showMessageDialog(null, result+"\nPlease reselect the cake, the add ons, and add bills before trying to buy again.","Purchase failed!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        total = 0;
+        totalPrice=0;
+        selectedCake = -1;
+        for(int j=0;j<buttons.length;j++){
+            buttons[j].setBackground(Color.LIGHT_GRAY);
+        }
+        for(int j=0;j<spcButtons.length;j++){
+            spcButtons[j].setBackground(Color.LIGHT_GRAY);
+            spcButtons[j].setEnabled(true);
+        }
+        itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
+        for(int i: selectedItems){
+             spcItemInfoTextArea[i].setText(vnd.getItemDetails(i));
+        }
+        itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
+        walletLabel.setText(totalPrice + " Pesos");
+        amountTotal.setText(total +" Pesos");
+         
     }
 
     @Override
@@ -185,16 +208,30 @@ public class SpcGui extends Gui {
             if (click.getSource() == spcButtons[i] && menuInt == 0) {
                 for(int j=0;j<spcButtons.length;j++){
                     spcVendingP[j].setVisible(false);
-                    spcButtons[j].setBackground(Color.LIGHT_GRAY);
+                    //spcButtons[j].setBackground(Color.LIGHT_GRAY);
                 }
                 for(int j=0;j<vendingP.length;j++){
                     vendingP[j].setVisible(false);
                 }
                 spcVendingP[i].setVisible(true);
                 totalPrice += vnd.getItemPrice(i);
+                selectedItems.add(i);
                 amountTotal.setText( totalPrice + "Pesos");
                 spcButtons[i].setBackground(Color.GREEN);
+                spcButtons[i].setEnabled(false);
             }    
+        }
+        if (click.getSource() == clearAddOn && menuInt == 0) {
+            for(int i: selectedItems){
+                totalPrice -= vnd.getItemPrice(i);
+            }
+            amountTotal.setText( totalPrice + "Pesos");
+            selectedItems.clear();
+            for(int j=0;j<spcButtons.length;j++){
+                spcButtons[j].setEnabled(true);
+                spcButtons[j].setBackground(Color.LIGHT_GRAY);
+            }
+
         }
     }
 }
