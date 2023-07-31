@@ -68,8 +68,8 @@ public class Gui extends JFrame implements ActionListener {
         buy = new JButton("Buy");
         selectCake = new JButton("Select Cake");
         coin = new JButton("Insert Coins & Bills!");
-        buttons = new JButton[36];
-        vendingP = new JPanel[36];
+        buttons = new JButton[20];
+        vendingP = new JPanel[20];
         maintenanceB = new JButton[5];
         maintenanceP = new JPanel[5];
         maintenanceL = new JLabel[5];
@@ -77,7 +77,7 @@ public class Gui extends JFrame implements ActionListener {
         indexBought = new String[100];
         indexBoughtInfo = new JTextArea[100]; 
         bought = 0;
-        itemInfoTextArea = new JTextArea[36]; 
+        itemInfoTextArea = new JTextArea[20]; 
         for (int i = 0; i < 5; i++) {
             mainMainP[i] = new JPanel(); 
         }
@@ -142,7 +142,7 @@ public class Gui extends JFrame implements ActionListener {
         String itemName;
         String imageFileName;
         ImageIcon imageIcon;
-        for (int itemIndex = 0; itemIndex < 36; itemIndex++) {
+        for (int itemIndex = 0; itemIndex < 20; itemIndex++) {
             if (itemIndex < itemNames.size() && itemIndex < itemImageFileNames.size()) {
                 itemName = itemNames.get(itemIndex);
                 imageFileName = itemImageFileNames.get(itemIndex);
@@ -161,10 +161,10 @@ public class Gui extends JFrame implements ActionListener {
                 xPos = 20;
                 yPos += 120;
             }
-            if(itemIndex > 20&& (itemIndex-19) % 8 == 0){
+            /*if(itemIndex > 20&& (itemIndex-19) % 8 == 0){
                 xPos=20;
                 yPos+=120;
-            }
+            }*/
         }
     }
     
