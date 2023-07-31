@@ -22,7 +22,7 @@ public class Gui extends JFrame implements ActionListener {
     private JButton[] buttons;
     private JPanel[] vendingP;
     private JButton buy;
-    private JButton selectCake;
+    //private JButton selectCake;
     private JButton coin;
 
     // Other variables
@@ -66,7 +66,7 @@ public class Gui extends JFrame implements ActionListener {
         initializeMachine = new JMenuItem("Initialize Machine");
         itemMaintenance = new JMenuItem("Item Maintenance");
         buy = new JButton("Buy");
-        selectCake = new JButton("Select Cake");
+        //selectCake = new JButton("Select Cake");
         coin = new JButton("Insert Coins & Bills!");
         buttons = new JButton[20];
         vendingP = new JPanel[20];
@@ -160,6 +160,9 @@ public class Gui extends JFrame implements ActionListener {
             if (itemIndex<=20 && (itemIndex + 1) % 10 == 0) {
                 xPos = 20;
                 yPos += 120;
+            }
+            if(itemIndex==19){
+                System.out.println("xPos: "+ xPos+ " yPos: " + yPos);
             }
             /*if(itemIndex > 20&& (itemIndex-19) % 8 == 0){
                 xPos=20;
@@ -403,10 +406,10 @@ public void coinMaintenance() {
     }
 
     public void initializeUserOptions() {
-        selectCake.setBounds(600, 295, 125, 50);
-        selectCake.addActionListener(this);
-        selectCake.setVisible(false);
-        add(selectCake);
+        //selectCake.setBounds(600, 295, 125, 50);
+        //selectCake.addActionListener(this);
+        //selectCake.setVisible(false);
+        //add(selectCake);
         buy.setBounds(750, 295, 125, 50);
         buy.addActionListener(this);
         buy.setVisible(false);
@@ -441,7 +444,7 @@ public void coinMaintenance() {
 
     public void visible() {
         if (menuInt == 0) {
-            selectCake.setVisible(true);
+            //selectCake.setVisible(true);
             buy.setVisible(true);
             wallet.setVisible(true);
             for (int i = 0; i < buttons.length; i++) {;
@@ -458,7 +461,7 @@ public void coinMaintenance() {
     }
     
     public void inVisible() {
-        selectCake.setVisible(false);
+        //selectCake.setVisible(false);
         buy.setVisible(false);
         wallet.setVisible(false);
 
