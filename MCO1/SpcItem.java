@@ -17,12 +17,12 @@ public class SpcItem extends RgItem {
         super(name, quantity, price, calorie, description);
         incompatibleCakes = new ArrayList<>();
         this.strTag = strTag;
-        this.strTag="";
+        this.flavorText="";
         // Inherit restrictions from the specified SpcItem objects
         for (SpcItem item : inheritsFrom) {
             if (item != null) {
                 incompatibleCakes.addAll(item.incompatibleCakes);
-                this.strTag=strTag.concat(item.getFlavorText()+"\n");
+                this.flavorText=flavorText.concat(item.getFlavorText()+"\n");
             }
         }
     }
