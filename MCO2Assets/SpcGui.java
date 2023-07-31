@@ -41,8 +41,8 @@ public class SpcGui extends Gui {
             spcitemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\choco.NoBg.png");
             spcitemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\IceCream.Topping.NoBg.png");
             spcitemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\birthdaycake.jpg");
-            spcitemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\alamodefruit.jpg");
             spcitemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\alamodechoc.jpg");
+            spcitemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\alamodefruit.jpg");
             i++; 
         }
         Arrays.fill(spcButtons, new JButton());
@@ -183,7 +183,7 @@ public class SpcGui extends Gui {
         }
         total = 0;
         totalPrice=0;
-        selectedCake = -1;
+        
         for(int j=0;j<buttons.length;j++){
             buttons[j].setBackground(Color.LIGHT_GRAY);
         }
@@ -198,6 +198,8 @@ public class SpcGui extends Gui {
         itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
         walletLabel.setText(totalPrice + " Pesos");
         amountTotal.setText(total +" Pesos");
+        selectedCake = -1;
+        selectedItems.clear();
          
     }
 
