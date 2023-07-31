@@ -48,11 +48,31 @@ public class Gui extends JFrame implements ActionListener {
     private JButton itemEditButton;
     private JButton deleCakeButton;
     private JButton addCakeButton;
-    private JLabel profitsMenu;
+    private JPanel added;
+
+    // Add Coins
+    private JButton editConfirmCoin;
+    private JFormattedTextField p10;
+    private JFormattedTextField p20;
+    private JFormattedTextField p50;
+    private JFormattedTextField p100;
+    private JFormattedTextField p200;
+    private JFormattedTextField p500;
+
+    // Add Cake
+    private JButton addConfirm;
+    private JFormattedTextField addName;
+    private JFormattedTextField addDesc;
+    private JFormattedTextField addCalo;
+    private JFormattedTextField addPric;
+    private JFormattedTextField addQuan;
+
+    private JLabel colProfits;
+
     private int bought;
     private int profit;
 
-    //Maintenance Menu Variables
+    // Maintenance Menu Variables
     private JRadioButton name;
     private JRadioButton desc;
     private JRadioButton calo;
@@ -96,7 +116,6 @@ public class Gui extends JFrame implements ActionListener {
         itemEditButton = new JButton("Item Edit Menu");
         deleCakeButton = new JButton("Item Delete");
         addCakeButton = new JButton("Add Cake");
-        profitsMenu = new JLabel("Total Profits: 0");
         indexBought = new String[100];
         indexBoughtInfo = new JTextArea[100]; 
         bought = 0;
@@ -129,13 +148,12 @@ public class Gui extends JFrame implements ActionListener {
     
 
     public void Display() {
-        initializeItemButtons(); // Call the itemButtons method to set up item buttons
+        initializeItemButtons();
         initializeMaintenanceButtons();
-        //Maintenance Panels
         coinMaintenance();
         itemMaintenance();
         defaultMaintenance();
-
+        cakeAdded();
         initializeUserOptions();
         createMenu();
         setupMainFrame();
@@ -346,27 +364,27 @@ public void coinMaintenance() {
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false); // Only allow valid integers
 
-        JFormattedTextField field1 = new JFormattedTextField(formatter);
-        JFormattedTextField field2 = new JFormattedTextField(formatter);
-        JFormattedTextField field3 = new JFormattedTextField(formatter);
-        JFormattedTextField field4 = new JFormattedTextField(formatter);
-        JFormattedTextField field5 = new JFormattedTextField(formatter);
-        JFormattedTextField field6 = new JFormattedTextField(formatter);
-        JButton editConfirmCoin = new JButton("Confirm Changes");
+        p10 = new JFormattedTextField(formatter);
+        p20 = new JFormattedTextField(formatter);
+        p50 = new JFormattedTextField(formatter);
+        p100 = new JFormattedTextField(formatter);
+        p200 = new JFormattedTextField(formatter);
+        p500 = new JFormattedTextField(formatter);
+        editConfirmCoin = new JButton("Confirm Changes");
         editConfirmCoin.addActionListener(this);
 
         mainMainP[0].add(new JLabel("10 Peso Coins to be added:"));
-        mainMainP[0].add(field1);
+        mainMainP[0].add(p10);
         mainMainP[0].add(new JLabel("20 Peso Coins to be added:"));
-        mainMainP[0].add(field2);
+        mainMainP[0].add(p20);
         mainMainP[0].add(new JLabel("50 Peso Coins to be added:"));
-        mainMainP[0].add(field3);
+        mainMainP[0].add(p50);
         mainMainP[0].add(new JLabel("100 Peso Coins to be added:"));
-        mainMainP[0].add(field4);
+        mainMainP[0].add(p100);
         mainMainP[0].add(new JLabel("200 Peso Coins to be added:"));
-        mainMainP[0].add(field5);
+        mainMainP[0].add(p200);
         mainMainP[0].add(new JLabel("500 Peso Coins to be added:"));
-        mainMainP[0].add(field6);
+        mainMainP[0].add(p500);
         mainMainP[0].add(editConfirmCoin);
         mainMainP[0].setVisible(false);
     }
@@ -398,26 +416,26 @@ public void coinMaintenance() {
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false); // Only allow valid integers
 
-        JFormattedTextField name = new JFormattedTextField();
-        JFormattedTextField desc = new JFormattedTextField();
-        JFormattedTextField calo = new JFormattedTextField();
-        JFormattedTextField pric = new JFormattedTextField(formatter);
-        JFormattedTextField quan = new JFormattedTextField(formatter);
-        JButton addConfirm = new JButton("Confirm");
+        addName = new JFormattedTextField();
+        addDesc = new JFormattedTextField();
+        addCalo = new JFormattedTextField();
+        addPric = new JFormattedTextField(formatter);
+        addQuan = new JFormattedTextField(formatter);
+        addConfirm = new JButton("Confirm");
         addConfirm.addActionListener(this);
 
         addCake.add(new JLabel("Enter New Cake Name:"));
-        addCake.add(name);
+        addCake.add(addName);
         addCake.add(new JLabel("Enter New Cake Description:"));
-        addCake.add(desc);
+        addCake.add(addDesc);
         addCake.add(new JLabel("Enter New Cake Calorie Count:"));
-        addCake.add(calo);
+        addCake.add(addCalo);
         addCake.add(new JLabel("Enter New Cake Price:"));
-        addCake.add(pric);
+        addCake.add(addPric);
         addCake.add(new JLabel("Enter New Cake Stock [Max 10]:"));
-        addCake.add(quan);
-
+        addCake.add(addQuan);
         addCake.add(addConfirm);
+
         addCake.setVisible(false);
     }
 
@@ -485,21 +503,15 @@ public void coinMaintenance() {
     }
 
     public void defaultMaintenance() {
-        vnd.setDefaults();
         mainMainP[2].add(new JLabel("Defaults Settings Restored"), CENTER_ALIGNMENT);
         mainMainP[2].setVisible(false);
     }
 
     public void collectPayments() {
-        mainMainP[3].add(profitsMenu);
         mainMainP[3].setVisible(false);
     }
 
     public void itemBought() {
-        for(int i = 0; i < bought; i++) {
-            indexBoughtInfo[bought].setText(indexBought[bought]);
-            mainMainP[4].add(indexBoughtInfo[bought]);
-        }
         mainMainP[4].setVisible(false);
     }
 
@@ -571,6 +583,7 @@ public void coinMaintenance() {
         addCake.setVisible(false);
         delCake.setVisible(false);
         ediCake.setVisible(false);
+        added.setVisible(false);
 
         for(int i = 0; i < buttons.length; i++) {
             vendingP[i].setVisible(false);
@@ -629,6 +642,16 @@ public void coinMaintenance() {
         getContentPane().setBackground(new Color(38, 46, 90));
         inVisible();
         visible();
+    }
+
+    public void cakeAdded() {
+        added = new JPanel();
+        added.setBounds(400, 50, 600, 450);
+        added.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        added.setLayout(new GridLayout(0,1,1,0));
+        added.add(new JLabel("Values Added"));
+        added.setVisible(false);
+        add(added);
     }
 
     public void setUserWallet() {
@@ -712,36 +735,64 @@ public void coinMaintenance() {
     
     @Override
     public void actionPerformed(ActionEvent click) {
-        //Measure for when no item selected
-        //int i=-1;
-
+        // Main Menu
         if (click.getSource() == initializeMachine) {
             vendingMachinePanel();
-        } else if (click.getSource() == itemMaintenance) {
+        } 
+        else if (click.getSource() == itemMaintenance) {
             maintenanceMenu();
-        } else if (click.getSource() == buy) {
+        } 
+        else if (click.getSource() == buy) {
             buy();
-            
-        } else if (click.getSource() == maintenanceB[0]) {
+        } 
+        // Maintenance Menu
+        else if (click.getSource() == maintenanceB[0]) {
             maintenanceMenuToggle(0);
-        } else if (click.getSource() == maintenanceB[1]) {
+        } 
+        else if (click.getSource() == maintenanceB[1]) {
             maintenanceMenuToggle(1);
-        } else if (click.getSource() == maintenanceB[2]) {
+        } 
+        else if (click.getSource() == maintenanceB[2]) {
             maintenanceMenuToggle(2);
-        } else if (click.getSource() == maintenanceB[3]) {
-            profit = vnd.collectProfit();
-            profitsMenu.setText("Total Profits: "+profit);
+            vnd.setDefaults();
+        } 
+        else if (click.getSource() == maintenanceB[3]) {
             maintenanceMenuToggle(3);
+            profit = vnd.collectProfit();
+            colProfits = new JLabel("Profit: "+ profit);
+            mainMainP[3].add(colProfits);
             profit = 0;
-        } else if (click.getSource() == maintenanceB[4]) {
+        } 
+        else if (click.getSource() == maintenanceB[4]) {
             maintenanceMenuToggle(4);
-        } else if (click.getSource() == itemEditButton) {
+            for(int i = 0; i < bought; i++) {
+            indexBoughtInfo[bought].setText(indexBought[bought]);
+            mainMainP[4].add(indexBoughtInfo[bought]);
+            }
+        } 
+        // Item Maintenance Menu
+        else if (click.getSource() == itemEditButton) {
             itemMenuToggle(1);
-        } else if (click.getSource() == deleCakeButton) {
+        } 
+        else if (click.getSource() == deleCakeButton) {
             itemMenuToggle(2);
-        } else if (click.getSource() == addCakeButton) {
+        } 
+        else if (click.getSource() == addCakeButton) {
             itemMenuToggle(3);
         } 
+        // Item Additions
+        else if (click.getSource() == addConfirm) {
+            addCake.setVisible(false);
+            added.setVisible(true);
+            vnd.addNewCake(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan));
+        } 
+        else if (click.getSource() == editConfirmCoin) {
+            int Bills[] = {parseFieldValue(p10), parseFieldValue(p20), parseFieldValue(p50), parseFieldValue(p100), parseFieldValue(p200), parseFieldValue(p500)};
+            inVisible();
+            added.setVisible(true);
+            vnd.billMaintenance(Bills);
+        }
+        // Item Buttons in Vending
         else {
             for (int i = 0; i < buttons.length; i++) {
                 if (click.getSource() == buttons[i] && menuInt == 0) {
