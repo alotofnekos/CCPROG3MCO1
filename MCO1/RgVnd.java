@@ -3,11 +3,11 @@
  * The class BillVnd recieves all the vending machine operations and sends it to the appropriate class
  */ 
 public class RgVnd {
-    private RgStock vndItemStock;
-    private RgStock vndItemSold;
-    private BillWallet userWallet;
-    private BillWallet vndStock;
-    private int profit=0;
+    protected RgStock vndItemStock;
+    protected RgStock vndItemSold;
+    protected BillWallet userWallet;
+    protected BillWallet vndStock;
+    protected int profit=0;
 /**
  * This is a constructor that initializes the RgStocks and BillWallets to be used throughout the program. 
  * vndStock is the stock of bills the vending machine can use to produce change, the userWallet is the stock of bills the user uses to pay the vending machine.
@@ -198,18 +198,20 @@ public class RgVnd {
                     return output;
                 }
             } else {
-                if (userWallet.getTotalAmount() < price) {
-                    output =output.concat("Insufficient funds. Please add more bills");
-                    userWallet.clearWallet();
-                    return output;
-                } else if (!vndStock.pay(userWallet.getTotalAmount(), price).contains("Insufficient bills") && (userWallet.getTotalAmount() >= price)) {
+                if (!vndStock.pay(userWallet.getTotalAmount(), price).contains("Insufficient bills") && (userWallet.getTotalAmount() >= price)) {
                     output = output.concat(vndStock.pay(userWallet.getTotalAmount(), price));
                     userWallet.clearWallet();
                     profit += price;
                     output =output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex)+".");
                     vndItemStock.transferCake(vndItemSold, cakeIndex);
                     return output;
-                } else {
+                } 
+                else if (userWallet.getTotalAmount() < price) {
+                    output =output.concat("Insufficient funds. Please add more bills");
+                    userWallet.clearWallet();
+                    return output;
+                }
+                else {
                     System.out.println("Please pay exact amount. No change available");
                     userWallet.clearWallet();
                     return output;
