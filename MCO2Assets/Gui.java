@@ -733,7 +733,14 @@ public class Gui extends JFrame implements ActionListener {
             maintenanceMenuToggle(3);
         } else if (click.getSource() == maintenanceB[4]) {
             maintenanceMenuToggle(4);
-        } else {
+        } else if (click.getSource() == itemEditButton) {
+            itemMenuToggle(1);
+        } else if (click.getSource() == deleCakeButton) {
+            itemMenuToggle(2);
+        } else if (click.getSource() == addCakeButton) {
+            itemMenuToggle(3);
+        } 
+        else {
             for (int i = 0; i < buttons.length; i++) {
                 if (click.getSource() == buttons[i] && menuInt == 0) {
                     for(int j=0;j<buttons.length;j++){
@@ -742,8 +749,7 @@ public class Gui extends JFrame implements ActionListener {
                     }
                     vendingP[i].setVisible(true);
                     selectedCake = i;
-                    totalPrice = vnd.getCakePrice(i);
-                    amountTotal.setText( totalPrice + "Pesos");
+                    amountTotal.setText( vnd.getCakePrice(i) + "Pesos");
                     buttons[i].setBackground(Color.GREEN);
                 }
             }
