@@ -218,16 +218,18 @@ public class RgStock{
 /**
  * Display the receipt showing the cake name, quantity, and total price for each cake.
  */
-    public void getReceipt() {
-        System.out.println("Cake Name\t\t\tQty\tPrice");
+    public String getReceipt() {
+        String output="";
+        output=output.concat("Cake Name\t\t\tQty\tPrice\n");
         for (int i = 0; i < item.length; i++) {
             if (validItem(i)) {
                 RgItem cake = item[i];
                 int quantity = cake.getQty();
                 int totalPrice = cake.getPrice() * quantity;
-                System.out.println(cake.getName() + "\t\t" + quantity + "\t" + "P" + totalPrice);
+                output=output.concat(cake.getName() + "\t\t" + quantity + "\t" + "P" + totalPrice+"\n");
             }
         }
+        return output;
     }
 
 /**
