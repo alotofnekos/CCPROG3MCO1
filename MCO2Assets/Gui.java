@@ -19,7 +19,7 @@ public class Gui extends JFrame implements ActionListener {
     private JMenuItem itemMaintenance;
 
     // Arrays
-    private JButton[] buttons;
+    protected JButton[] buttons;
     protected JPanel[] vendingP;
     private JButton buy;
     //private JButton selectCake;
@@ -35,9 +35,9 @@ public class Gui extends JFrame implements ActionListener {
     private JButton[] maintenanceB;
     private JPanel[] mainMainP;
     private JPanel wallet;
-    private JTextArea walletLabel;
+    protected JTextArea walletLabel;
     protected JTextArea amountTotal;
-    private JTextArea[] itemInfoTextArea;
+    protected JTextArea[] itemInfoTextArea;
 
     // Maintenance Variable
     private String indexBought[];
@@ -54,8 +54,8 @@ public class Gui extends JFrame implements ActionListener {
     //NOT FOR GUI
     private int[] vndBills = {0, 0, 0, 0, 0, 0};
     private RgVnd vnd = new RgVnd();
-    private int selectedCake =-1;
-    private int total =0;
+    protected int selectedCake =-1;
+    protected int total =0;
     protected int totalPrice = 0;
 
     public Gui() {
