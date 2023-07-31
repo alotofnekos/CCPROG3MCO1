@@ -109,28 +109,32 @@ public class RgStock{
  * @param cakeIndex the cakeIndex of the cake to be edited
  * @param value the amount to be added
  */
-    public void addInt(int cakeIndex, int value){
+    public String addInt(int cakeIndex, int value){
+        String output="";
         if(item[cakeIndex].getQty() + value <= 10){
             item[cakeIndex].changeQtyAdd(value);
-            System.out.println("Stock of "+ item[cakeIndex].getName() +  " increased by " + value +"!");
+            output=output.concat("Stock of "+ item[cakeIndex].getName() +  " increased by " + value +"!");
         }
         else{
-            System.out.println("Invalid Number. Exceeds Total Capacity of 10");
+            output=output.concat("Invalid Number. Exceeds Total Capacity of 10");
         }
+        return output;
     }
 /**
  * Subtracts an amount value to Cake at cakeIndex.
  * @param cakeIndex the cakeIndex of the cake to be edited
  * @param value the amount to be subtracted
  */
-    public void subInt(int cakeIndex, int value){
+    public String subInt(int cakeIndex, int value){
+        String output="";
         if(item[cakeIndex].getQty() - value >= 0){
             item[cakeIndex].changeQtySub(value);
-            System.out.println("Stock of "+ item[cakeIndex].getName() + " decreased by " + value +"!");
+            output=output.concat("Stock of "+ item[cakeIndex].getName() + " decreased by " + value +"!");
         }
         else{
-            System.out.println("Invalid Number. Quantity Results to Less Than 0");
+            output=output.concat("Invalid Number. Quantity Results to Less Than 0");
         }
+        return output;
     }
 /**
  * Edits the name of the Cake at cakeIndex.
