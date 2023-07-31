@@ -43,6 +43,20 @@ public class Gui extends JFrame implements ActionListener {
     private String indexBought[];
     private JTextArea[] indexBoughtInfo;
     private int bought;
+    private JPanel addCake;
+    private JPanel delCake;
+    private JPanel ediCake;
+    private JButton itemEditButton;
+    private JButton deleCakeButton;
+    private JButton addCakeButton;
+
+    //Maintenance Menu Variables
+    private JRadioButton name;
+    private JRadioButton desc;
+    private JRadioButton calo;
+    private JRadioButton pric;
+    private JRadioButton quaA;
+    private JRadioButton quaM;
 
     // XY position of buttons
     private int xPos = 20;
@@ -74,6 +88,12 @@ public class Gui extends JFrame implements ActionListener {
         maintenanceP = new JPanel[5];
         maintenanceL = new JLabel[5];
         mainMainP = new JPanel[5];
+        addCake = new JPanel();
+        delCake = new JPanel();
+        ediCake = new JPanel();
+        itemEditButton = new JButton("Item Edit Menu");
+        deleCakeButton = new JButton("Item Delete");
+        addCakeButton = new JButton("Add Cake");
         indexBought = new String[100];
         indexBoughtInfo = new JTextArea[100]; 
         bought = 0;
@@ -295,6 +315,7 @@ public class Gui extends JFrame implements ActionListener {
         mainMainP[index].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         mainMainP[index].setLayout(new GridLayout(0,1,1,0));
         mainMainP[index].setVisible(false);
+        
         add(mainMainP[index]);
     }
 
@@ -315,7 +336,7 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
-public void coinMaintenance() {
+    public void coinMaintenance() {
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
         formatter.setValueClass(Integer.class);
@@ -344,32 +365,119 @@ public void coinMaintenance() {
         mainMainP[0].add(field6);
         mainMainP[0].add(editConfirmCoin);
         mainMainP[0].setVisible(false);
-
-        // Implement values to machine stock
     }
     
     public void itemMaintenance() {
+        addCake();
+        deleteCake();
+        editCake();
+
+        itemEditButton.addActionListener(this);
+        deleCakeButton.addActionListener(this);
+        addCakeButton.addActionListener(this);
+        
+        mainMainP[1].add(itemEditButton);
+        mainMainP[1].add(deleCakeButton);
+        mainMainP[1].add(addCakeButton);
+        mainMainP[1].setVisible(false);
+    }
+
+    public void addCake() {
+        addCake.setBounds(400, 50, 600, 450);
+        addCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        addCake.setLayout(new GridLayout(0,1,1,0));
+        addCake.setVisible(false);
+        add(addCake);
+
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false); // Only allow valid integers
 
-        JFormattedTextField inde = new JFormattedTextField(formatter);
-        JFormattedTextField chan = new JFormattedTextField(formatter);
+        JFormattedTextField name = new JFormattedTextField();
+        JFormattedTextField desc = new JFormattedTextField();
+        JFormattedTextField calo = new JFormattedTextField();
+        JFormattedTextField pric = new JFormattedTextField(formatter);
+        JFormattedTextField quan = new JFormattedTextField(formatter);
+        JButton addConfirm = new JButton("Confirm");
+        addConfirm.addActionListener(this);
+
+        addCake.add(new JLabel("Enter New Cake Name:"));
+        addCake.add(name);
+        addCake.add(new JLabel("Enter New Cake Description:"));
+        addCake.add(desc);
+        addCake.add(new JLabel("Enter New Cake Calorie Count:"));
+        addCake.add(calo);
+        addCake.add(new JLabel("Enter New Cake Price:"));
+        addCake.add(pric);
+        addCake.add(new JLabel("Enter New Cake Stock [Max 10]:"));
+        addCake.add(quan);
+
+        addCake.add(addConfirm);
+        addCake.setVisible(false);
+    }
+
+    public void deleteCake() {
+        delCake.setBounds(400, 50, 600, 450);
+        delCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        delCake.setLayout(new GridLayout(0,1,1,0));
+        delCake.setVisible(false);
+        add(delCake);
+
+        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(integerFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false); // Only allow valid integers
+
+        JFormattedTextField delete = new JFormattedTextField(formatter);
+        JButton delConfirm = new JButton("Confirm");
+        delConfirm.addActionListener(this);
+
+        delCake.add(new JLabel("Insert Cake Number To Delete [1-36]"));
+        delCake.add(delete);
+        delCake.add(delConfirm);
+        delCake.setVisible(false);
+    }
+
+    public void editCake() {
+        ediCake.setBounds(400, 50, 600, 450);
+        ediCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        ediCake.setLayout(new GridLayout(0,1,1,0));
+        ediCake.setVisible(false);
+        add(ediCake);
+
+        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(integerFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false); // Only allow valid integers
+
+        JFormattedTextField inde = new JFormattedTextField();
         JFormattedTextField vari = new JFormattedTextField();
         JButton editConfirmItem = new JButton("Confirm Changes");
         editConfirmItem.addActionListener(this);
 
-        mainMainP[1].add(new JLabel("Enter Cake Number:"));
-        mainMainP[1].add(inde);
-        mainMainP[1].add(new JLabel("Enter Number To Edit [1]Name | [2]Description | [3]Calories | [4]Price | [5]Add Stock | [6]Subtract Stock"));
-        mainMainP[1].add(chan);
-        mainMainP[1].add(new JLabel("Enter New Value:"));
-        mainMainP[1].add(vari);
-        mainMainP[1].add(editConfirmItem);
-        mainMainP[1].setVisible(false);
+        name = new JRadioButton("Name");
+        desc = new JRadioButton("Description");
+        calo = new JRadioButton("Calorie Count");
+        pric = new JRadioButton("Price");
+        quaA = new JRadioButton("Add Stock");
+        quaM = new JRadioButton("Remove Stock");
+        
+        ediCake.add(new JLabel("Insert Cake Number"));
+        ediCake.add(inde);
+        
+        ediCake.add(new JLabel("What To Edit"));
+        ediCake.add(name);
+        ediCake.add(desc);
+        ediCake.add(calo);
+        ediCake.add(pric);
+        ediCake.add(quaA);
+        ediCake.add(quaM);
 
-        // Edit item values in the action listener implement rgVnd editItem with inde,chan,vari
+        ediCake.add(new JLabel("Enter New Data"));
+        ediCake.add(vari);
+        ediCake.add(editConfirmItem);
+        ediCake.setVisible(false);
     }
 
     public void defaultMaintenance() {
@@ -441,7 +549,7 @@ public void coinMaintenance() {
 
     public void visible() {
         if (menuInt == 0) {
-            //selectCake.setVisible(true);
+            selectCake.setVisible(true);
             buy.setVisible(true);
             wallet.setVisible(true);
             for (int i = 0; i < buttons.length; i++) {;
@@ -458,9 +566,12 @@ public void coinMaintenance() {
     }
     
     public void inVisible() {
-        //selectCake.setVisible(false);
+        selectCake.setVisible(false);
         buy.setVisible(false);
         wallet.setVisible(false);
+        addCake.setVisible(false);
+        delCake.setVisible(false);
+        ediCake.setVisible(false);
 
         for(int i = 0; i < buttons.length; i++) {
             vendingP[i].setVisible(false);
@@ -480,6 +591,29 @@ public void coinMaintenance() {
             mainMainP[i].setVisible(false);
         }
         mainMainP[Chosen].setVisible(true);
+    }
+
+    public void itemMenuToggle(int Chosen) {
+        for(int i = 0; i < 5; i++){
+            mainMainP[i].setVisible(false);
+        }
+        delCake.setVisible(false);
+        addCake.setVisible(false);
+        ediCake.setVisible(false);
+
+        switch (Chosen) {
+            case 1:
+                ediCake.setVisible(true);
+                break;
+            case 2:
+                delCake.setVisible(true);
+                break;
+            case 3:
+                addCake.setVisible(true);
+                break;
+            default:
+                break;
+        }
     }
 
     public void vendingMachinePanel() {
