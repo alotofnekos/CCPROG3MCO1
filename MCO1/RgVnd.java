@@ -86,32 +86,34 @@ public class RgVnd {
  * @param cakeIndex the index of the cake to be edited
  * @param value the new value
  */
-    public void editCake(int choice, int cakeIndex, int value){
+    public String editCake(int choice, int cakeIndex, int value){
+        String output="";
         if(profit!=0){
-            System.out.println("Get the profit first before editing the cake parameters. Operation aborted");
+            output=output.concat("Get the profit first before editing the cake parameters. Operation aborted");
         }
         else{
             if(choice==3){
-                System.out.println("Calorie of " + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
+                output=output.concat("Calorie of " + vndItemStock.getCakeName(cakeIndex) + " changed to " + value +"!");
                 vndItemStock.editCalorie(cakeIndex, value);
                 vndItemSold.editCalorie(cakeIndex, value);
             }
             else if(choice==4){
-                System.out.println("Price of " + vndItemStock.getCakeName(cakeIndex) +  " changed to " + value +"!");
+                output=output.concat("Price of " + vndItemStock.getCakeName(cakeIndex) +  " changed to " + value +"!");
                 vndItemStock.editPrice(cakeIndex, value);
                 vndItemSold.editPrice(cakeIndex, value);
             }
             else if(choice ==5){
-                vndItemStock.addInt(cakeIndex, value);
+                output=output.concat(vndItemStock.addInt(cakeIndex, value));
             } 
             else if(choice==6){
-                vndItemStock.subInt(cakeIndex, value);
+                output=output.concat(vndItemStock.subInt(cakeIndex, value));
             }
             else{
-                System.out.println("Invalid...");
+                output=output.concat("Invalid...");
             }
+            
         }
-
+        return output;
     }
 /**
  * Edits the cake at cakeIndex, based on choice, with a String value. These features are also passed down to the reciept's copy of the inventory.
@@ -119,22 +121,24 @@ public class RgVnd {
  * @param cakeIndex the index of the cake to be edited
  * @param value the new value
  */
-    public void editCake(int choice, int cakeIndex, String value){
+    public String editCake(int choice, int cakeIndex, String value){
+        String output="";
         if(profit!=0){
-            System.out.println("Get the profit first before editing the cake parameters. Operation aborted");
+           output=output.concat("Get the profit first before editing the cake parameters. Operation aborted");
         }
         else{
             if(choice==1){
-                System.out.println("Name of " + vndItemStock.getCakeName(cakeIndex) +" changed to " + value +"!");
+                output=output.concat("Name of " + vndItemStock.getCakeName(cakeIndex) +" changed to " + value +"!");
                 vndItemStock.editName(cakeIndex, value);
                 vndItemSold.editName(cakeIndex, value);
             }
             else if(choice == 2){
-                System.out.println("Description of " +vndItemStock.getCakeName(cakeIndex) +" changed to " + value +"!");
+                output=output.concat("Description of " +vndItemStock.getCakeName(cakeIndex) +" changed to " + value +"!");
                 vndItemStock.editDesc(cakeIndex, value);
                 vndItemSold.editDesc(cakeIndex, value);
             }
         }
+        return output;
     }
 /**
  * Collects the current profit of the vending machine, and clears the reciept since profit has been obtained already.
@@ -180,6 +184,7 @@ public class RgVnd {
                 return output;
             }
             int price = vndItemStock.getCakePrice(cakeIndex);
+            output = output.concat("Total Price: " + price +"\n");
             if (canGiveChange == false) {
                 if (userWallet.getTotalAmount() == price) {
                     userWallet.clearWallet();
@@ -258,6 +263,15 @@ public class RgVnd {
  */
     public boolean validItem(int cakeIndex){
         return vndItemStock.validItem(cakeIndex);
+    }
+
+/**
+ * Checks cake price
+ * @param cakeIndex the index of the cake to be checked.
+ * @return cake price
+ */
+    public int getCakePrice(int cakeIndex){
+        return vndItemStock.getCakePrice(cakeIndex);
     }
     
 }
