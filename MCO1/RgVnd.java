@@ -221,8 +221,8 @@ public class RgVnd {
 /**
  * Gets the list of items bought before a profit is collected
  */
-    public void receipt(){
-        vndItemSold.getReceipt();
+    public String receipt(){
+        return vndItemSold.getReceipt();
     }
 /**
  * Sets the defaults (10 for every item and bill)
