@@ -23,7 +23,6 @@ public class SpcItem extends RgItem {
             }
         }
     }
-
     public SpcItem() {
         incompatibleCakes = new ArrayList<>();
         this.strTag = " ";
@@ -49,4 +48,5 @@ public class SpcItem extends RgItem {
     public boolean hasTag(String tagName) {
         return strTag.equals(tagName);
     }
+
 }
