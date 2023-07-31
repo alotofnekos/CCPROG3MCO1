@@ -35,7 +35,8 @@ public class Gui extends JFrame implements ActionListener {
     private JButton[] maintenanceB;
     private JPanel[] mainMainP;
     private JPanel wallet;
-    private JLabel walletLabel;
+    private JTextArea walletLabel;
+    private JTextArea amountTotal;
     private JTextArea[] itemInfoTextArea;
 
     // Maintenance Variable
@@ -55,6 +56,7 @@ public class Gui extends JFrame implements ActionListener {
     private RgVnd vnd = new RgVnd();
     private int selectedCake =-1;
     private int total =0;
+    private int totalPrice = 0;
 
     public Gui() {
         width = 1100;
@@ -412,8 +414,20 @@ public void coinMaintenance() {
         wallet.setBounds(900, 295, 175, 50);
         wallet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         wallet.setVisible(false);
-        walletLabel = new JLabel("0 Pesos");
+        JTextArea walletLabelText;
+        walletLabelText = new JTextArea("Amount Inserted:");
+        walletLabelText.setEditable(false);
+        walletLabel = new JTextArea("0 Pesos");
+        walletLabel.setEditable(false);
+        JTextArea walletLabelText2;
+        walletLabelText2 = new JTextArea("Total Price:");
+        amountTotal = new JTextArea("0 Pesos");
+        walletLabel = new JTextArea("0 Pesos");
+        walletLabel.setEditable(false);
+        wallet.add(walletLabelText);
         wallet.add(walletLabel);
+        wallet.add(walletLabelText2);
+        wallet.add(amountTotal);
         add(wallet);
 
         xPos = 900;
@@ -548,12 +562,14 @@ public void coinMaintenance() {
     
         if (result.contains("Payment successful")) {
             JOptionPane.showMessageDialog(null,result, "Purchase successful!", JOptionPane.INFORMATION_MESSAGE);
+            recordPurchase(selectedCake);
         } else {
             JOptionPane.showMessageDialog(null, result,"Purchase failed!", JOptionPane.INFORMATION_MESSAGE);
         }
         total = 0;
         itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
         selectedCake = -1;
+
         walletLabel.setText(total + " Pesos");
          
     }
@@ -561,15 +577,15 @@ public void coinMaintenance() {
     @Override
     public void actionPerformed(ActionEvent click) {
         //Measure for when no item selected
-        int i=-1;
+        //int i=-1;
 
         if (click.getSource() == initializeMachine) {
             vendingMachinePanel();
         } else if (click.getSource() == itemMaintenance) {
             maintenanceMenu();
-        } else if (click.getSource() == buy && i != -1) {
+        } else if (click.getSource() == buy) {
             buy();
-            recordPurchase(i);
+            
         } else if (click.getSource() == maintenanceB[0]) {
             maintenanceMenuToggle(0);
         } else if (click.getSource() == maintenanceB[1]) {
@@ -581,13 +597,14 @@ public void coinMaintenance() {
         } else if (click.getSource() == maintenanceB[4]) {
             maintenanceMenuToggle(4);
         } else {
-            for (i = 0; i < buttons.length; i++) {
+            for (int i = 0; i < buttons.length; i++) {
                 if (click.getSource() == buttons[i] && menuInt == 0) {
                     for(int j=0;j<buttons.length;j++){
                         vendingP[j].setVisible(false);
                     }
                     vendingP[i].setVisible(true);
                     selectedCake = i;
+                    amountTotal.setText( vnd.getCakePrice(i) + "Pesos");
                 }
             }
             if (click.getSource() == coin && menuInt == 0) {
@@ -597,5 +614,4 @@ public void coinMaintenance() {
         }
     }
 }
-
 
