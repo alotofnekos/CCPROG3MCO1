@@ -161,9 +161,6 @@ public class Gui extends JFrame implements ActionListener {
                 xPos = 20;
                 yPos += 120;
             }
-            if(itemIndex==19){
-                System.out.println("xPos: "+ xPos+ " yPos: " + yPos);
-            }
             /*if(itemIndex > 20&& (itemIndex-19) % 8 == 0){
                 xPos=20;
                 yPos+=120;
