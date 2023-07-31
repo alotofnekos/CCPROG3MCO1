@@ -143,10 +143,12 @@ public class RgVnd {
 /**
  * Collects the current profit of the vending machine, and clears the reciept since profit has been obtained already.
  */
-    public void collectProfit(){
+    public int collectProfit(){
+        int vendProfit = profit;
         System.out.println("Total Profit obtained: "+profit+ ". Clearing wallet.");
         profit=0;
         vndItemSold.setStock(0);
+        return vendProfit;
     }
 /**
  * Displays the menu, the list of items available to be bought at that moment.
