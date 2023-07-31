@@ -19,10 +19,10 @@ public class Gui extends JFrame implements ActionListener {
     private JMenuItem itemMaintenance;
 
     // Arrays
-    protected JButton[] buttons;
-    protected JPanel[] vendingP;
+    private JButton[] buttons;
+    private JPanel[] vendingP;
     private JButton buy;
-    //private JButton selectCake;
+    private JButton selectCake;
     private JButton coin;
 
     // Other variables
@@ -35,20 +35,22 @@ public class Gui extends JFrame implements ActionListener {
     private JButton[] maintenanceB;
     private JPanel[] mainMainP;
     private JPanel wallet;
-    protected JTextArea walletLabel;
-    protected JTextArea amountTotal;
-    protected JTextArea[] itemInfoTextArea;
+    private JTextArea walletLabel;
+    private JTextArea amountTotal;
+    private JTextArea[] itemInfoTextArea;
 
     // Maintenance Variable
     private String indexBought[];
     private JTextArea[] indexBoughtInfo;
-    private int bought;
     private JPanel addCake;
     private JPanel delCake;
     private JPanel ediCake;
     private JButton itemEditButton;
     private JButton deleCakeButton;
     private JButton addCakeButton;
+    private JLabel profitsMenu;
+    private int bought;
+    private int profit;
 
     //Maintenance Menu Variables
     private JRadioButton name;
@@ -68,9 +70,9 @@ public class Gui extends JFrame implements ActionListener {
     //NOT FOR GUI
     private int[] vndBills = {0, 0, 0, 0, 0, 0};
     private RgVnd vnd = new RgVnd();
-    protected int selectedCake =-1;
-    protected int total =0;
-    protected int totalPrice = 0;
+    private int selectedCake =-1;
+    private int total = 0;
+    private int totalPrice = 0;
 
     public Gui() {
         width = 1100;
@@ -80,10 +82,10 @@ public class Gui extends JFrame implements ActionListener {
         initializeMachine = new JMenuItem("Initialize Machine");
         itemMaintenance = new JMenuItem("Item Maintenance");
         buy = new JButton("Buy");
-        //selectCake = new JButton("Select Cake");
+        selectCake = new JButton("Select Cake");
         coin = new JButton("Insert Coins & Bills!");
-        buttons = new JButton[20];
-        vendingP = new JPanel[20];
+        buttons = new JButton[36];
+        vendingP = new JPanel[36];
         maintenanceB = new JButton[5];
         maintenanceP = new JPanel[5];
         maintenanceL = new JLabel[5];
@@ -94,10 +96,11 @@ public class Gui extends JFrame implements ActionListener {
         itemEditButton = new JButton("Item Edit Menu");
         deleCakeButton = new JButton("Item Delete");
         addCakeButton = new JButton("Add Cake");
+        profitsMenu = new JLabel("Total Profits: 0");
         indexBought = new String[100];
         indexBoughtInfo = new JTextArea[100]; 
         bought = 0;
-        itemInfoTextArea = new JTextArea[20]; 
+        itemInfoTextArea = new JTextArea[36]; 
         for (int i = 0; i < 5; i++) {
             mainMainP[i] = new JPanel(); 
         }
@@ -162,7 +165,7 @@ public class Gui extends JFrame implements ActionListener {
         String itemName;
         String imageFileName;
         ImageIcon imageIcon;
-        for (int itemIndex = 0; itemIndex < 20; itemIndex++) {
+        for (int itemIndex = 0; itemIndex < 36; itemIndex++) {
             if (itemIndex < itemNames.size() && itemIndex < itemImageFileNames.size()) {
                 itemName = itemNames.get(itemIndex);
                 imageFileName = itemImageFileNames.get(itemIndex);
@@ -181,10 +184,10 @@ public class Gui extends JFrame implements ActionListener {
                 xPos = 20;
                 yPos += 120;
             }
-            /*if(itemIndex > 20&& (itemIndex-19) % 8 == 0){
+            if(itemIndex > 20&& (itemIndex-19) % 8 == 0){
                 xPos=20;
                 yPos+=120;
-            }*/
+            }
         }
     }
     
@@ -259,7 +262,7 @@ public class Gui extends JFrame implements ActionListener {
 
    
     // It resizes the image and handles the default cake image if the specified image is not found
-    public ImageIcon loadImageIcon(String imageFileName,int width,int height) {
+    private ImageIcon loadImageIcon(String imageFileName,int width,int height) {
         // Load the original image
         BufferedImage originalImage;
         ImageIcon imageIcon = null;
@@ -315,8 +318,9 @@ public class Gui extends JFrame implements ActionListener {
         mainMainP[index].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         mainMainP[index].setLayout(new GridLayout(0,1,1,0));
         mainMainP[index].setVisible(false);
-        
+
         add(mainMainP[index]);
+
     }
 
     private String getMaintenanceLabel(int index) {
@@ -336,7 +340,7 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
-    public void coinMaintenance() {
+public void coinMaintenance() {
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
         formatter.setValueClass(Integer.class);
@@ -487,16 +491,11 @@ public class Gui extends JFrame implements ActionListener {
     }
 
     public void collectPayments() {
-        // Find wat to only get PRICEE
-        for(int i = 0; i < bought; i++) {
-            indexBoughtInfo[bought].setText(indexBought[bought]);
-            mainMainP[3].add(indexBoughtInfo[bought]);
-        }
+        mainMainP[3].add(profitsMenu);
         mainMainP[3].setVisible(false);
     }
 
     public void itemBought() {
-        // Find way to only get NAME
         for(int i = 0; i < bought; i++) {
             indexBoughtInfo[bought].setText(indexBought[bought]);
             mainMainP[4].add(indexBoughtInfo[bought]);
@@ -511,10 +510,10 @@ public class Gui extends JFrame implements ActionListener {
     }
 
     public void initializeUserOptions() {
-        //selectCake.setBounds(600, 295, 125, 50);
-        //selectCake.addActionListener(this);
-        //selectCake.setVisible(false);
-        //add(selectCake);
+        selectCake.setBounds(600, 295, 125, 50);
+        selectCake.addActionListener(this);
+        selectCake.setVisible(false);
+        add(selectCake);
         buy.setBounds(750, 295, 125, 50);
         buy.addActionListener(this);
         buy.setVisible(false);
@@ -730,7 +729,10 @@ public class Gui extends JFrame implements ActionListener {
         } else if (click.getSource() == maintenanceB[2]) {
             maintenanceMenuToggle(2);
         } else if (click.getSource() == maintenanceB[3]) {
+            profit = vnd.collectProfit();
+            profitsMenu.setText("Total Profits: "+profit);
             maintenanceMenuToggle(3);
+            profit = 0;
         } else if (click.getSource() == maintenanceB[4]) {
             maintenanceMenuToggle(4);
         } else if (click.getSource() == itemEditButton) {
@@ -760,4 +762,3 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 }
-
