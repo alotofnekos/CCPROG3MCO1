@@ -148,28 +148,32 @@ public class SpcStock {
      * @param index the index of the Item to be edited
      * @param value the amount to be added
      */
-        public void addInt(int index, int value){
+        public String addInt(int index, int value){
+            String output="";
             if(spitem[index].getQty() + value <= 10){
                 spitem[index].changeQtyAdd(value);
-                System.out.println("Stock of "+ spitem[index].getName() +  " increased by " + value +"!");
+                output = output.concat("Stock of "+ spitem[index].getName() +  " increased by " + value +"!");
             }
             else{
-                System.out.println("Invalid Number. Exceeds Total Capacity of 10");
+                output = output.concat("Invalid Number. Exceeds Total Capacity of 10");
             }
+            return output;
         }
     /**
      * Subtracts an amount value to Item at index.
      * @param index the index of the Item to be edited
      * @param value the amount to be subtracted
      */
-        public void subInt(int index, int value){
+        public String subInt(int index, int value){
+            String output="";
             if(spitem[index].getQty() - value >= 0){
                 spitem[index].changeQtySub(value);
-                System.out.println("Stock of "+ spitem[index].getName() + " decreased by " + value +"!");
+                output = output.concat("Stock of "+ spitem[index].getName() + " decreased by " + value +"!");
             }
             else{
-                System.out.println("Invalid Number. Quantity Results to Less Than 0");
+                output = output.concat("Invalid Number. Quantity Results to Less Than 0");
             }
+            return output;
         }
     /**
      * Edits the name of the Item at index.
@@ -206,7 +210,7 @@ public class SpcStock {
      * 
      */
 
-            public int countItems() {
+        public int countItems() {
                 int intLoop;
                 int intCounter = 9;
                 for (intLoop = 9; intLoop < 20; intLoop++) {
@@ -244,16 +248,18 @@ public class SpcStock {
     /**
      * Display the receipt showing the Item name, quantity, and total price for each Item.
      */
-        public void getReceipt() {
-            System.out.println("Name\t\t\t\tQty\tPrice");
+        public String getReceipt() {
+            String output="";
+            output = output.concat("Item Name\t\t\tQty\tPrice\n");
             for (int i = 0; i < spitem.length; i++) {
                 if (validItem(i)) {
                     SpcItem spcItem = spitem[i];
                     int quantity = spcItem.getQty();
                     int totalPrice = spcItem.getPrice() * quantity;
-                    System.out.println(spcItem.getName() + "\t\t" + quantity + "\t" + "P" + totalPrice);
+                    output = output.concat(spcItem.getName() + "\t" + quantity + "\t" + "P" + totalPrice+"\n");
                 }
             }
+            return output;
         }
 
     /**
