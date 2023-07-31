@@ -68,7 +68,7 @@ public class SpcGui extends Gui {
         String imageFileName;
         ImageIcon imageIcon;
         for (int itemIndex = 0; itemIndex < 16; itemIndex++) {
-            if (itemIndex < spcitemImageFileNames.size()) {
+            if (itemIndex < spcitemImageFileNames.size() && itemIndex < spcitemNames.size()) {
                 itemName = spcitemNames.get(itemIndex);
                 imageFileName = spcitemImageFileNames.get(itemIndex);
                 imageIcon = loadImageIcon(imageFileName, 50, 50);
@@ -191,8 +191,8 @@ public class SpcGui extends Gui {
                     vendingP[j].setVisible(false);
                 }
                 spcVendingP[i].setVisible(true);
-                totalPrice 
-                amountTotal.setText( + "Pesos");
+                totalPrice += vnd.getItemPrice(i);
+                amountTotal.setText( totalPrice + "Pesos");
                 spcButtons[i].setBackground(Color.GREEN);
             }    
         }
