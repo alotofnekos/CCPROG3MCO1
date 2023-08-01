@@ -248,16 +248,16 @@ public class SpcGui extends Gui {
             spcButtons[j].setBackground(Color.LIGHT_GRAY);
             spcButtons[j].setEnabled(true);
         }
-        itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
-        for(int i: selectedItems){
-             spcItemInfoTextArea[i].setText(vnd.getItemDetails(i));
+        if(selectedCake!=-1){
+            itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
         }
-        itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
+        for(int i: selectedItems){
+            spcItemInfoTextArea[i].setText(vnd.getItemDetails(i));
+        }
         walletLabel.setText(totalPrice + " Pesos");
         amountTotal.setText(total +" Pesos");
         selectedCake = -1;
-        selectedItems.clear();
-         
+        selectedItems.clear(); 
     }
     /**
      * Overrides the superclass's actionPerformed method to handle more button actions.
