@@ -11,7 +11,9 @@ import java.text.NumberFormat;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * This class Gui handles the GUI for special vending machines.
+ */
 public class Gui extends JFrame implements ActionListener {
     protected JMenuBar menu;
     protected JMenu maintMenu;
@@ -96,7 +98,10 @@ public class Gui extends JFrame implements ActionListener {
     protected int selectedCake =-1;
     protected int total = 0;
     protected int totalPrice = 0;
-
+    /**
+     * The constructor for the `Gui` class. Initializes and sets up the graphical user interface
+     * components for the regular cake vending machine.
+     */
     public Gui() {
         width = 1100;
         length = 600;
@@ -148,7 +153,11 @@ public class Gui extends JFrame implements ActionListener {
         Arrays.fill(vendingP, new JPanel());
     }
     
-
+/**
+ * This method initializes and displays the main vending machine user interface.
+ * It sets up and displays the item buttons, maintenance buttons, coin maintenance,
+ * item maintenance, default maintenance, cake added, user options, and the menu bar.
+ */
     public void Display() {
         initializeItemButtons();
         initializeMaintenanceButtons();
@@ -160,7 +169,9 @@ public class Gui extends JFrame implements ActionListener {
         createMenu();
         setupMainFrame();
     }
-
+/**
+ * This method sets up the main frame of the vending machine user interface.
+ */
     public void setupMainFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
@@ -171,7 +182,12 @@ public class Gui extends JFrame implements ActionListener {
         Font customFont = new Font("Arial", Font.PLAIN, 8);
         setCustomButtonFont(customFont);
     }
-
+/**
+ * This method creates and sets up the menu bar for the vending machine user interface.
+ * It adds action listeners to the "Initialize Machine" and "Item Maintenance" menu items.
+ * The "Initialize Machine" and "Item Maintenance" menu items are added to the "Admin" menu.
+ * The "Admin" menu is then added to the menu bar.
+ */
     public void createMenu() {
         initializeMachine.addActionListener(this);
         itemMaintenance.addActionListener(this);
@@ -180,7 +196,13 @@ public class Gui extends JFrame implements ActionListener {
         maintMenu.add(initializeMachine);
         maintMenu.add(itemMaintenance);
     }
-
+/**
+ * This method initializes and sets up the item buttons for the vending machine user interface.
+ * It iterates through the item list and corresponding image file names, and creates buttons for each item.
+ * If an item has a valid name and image file name, the button is created with the correct information.
+ * If an item does not have a valid name or image file name, a default button is created.
+ * The buttons are positioned based on the item index and arranged in rows of 10.
+ */
     public void initializeItemButtons() {
         String itemName;
         String imageFileName;
@@ -207,7 +229,10 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
     
-    
+/**
+ * Sets a custom font for all the buttons in the vending machine user interface.
+ * @param font The Font object representing the custom font to be applied to the buttons.
+ */  
     protected void setCustomButtonFont(Font font) {
         for (JButton button : buttons) {
             if (button != null) {
@@ -216,15 +241,22 @@ public class Gui extends JFrame implements ActionListener {
         }
         
     }
-
-    // Setup individual item buttons
+/**
+ * Sets up a individual item buttons and detail panels in the vending machine user interface.
+ *
+ * @param itemIndex The index of the item in the buttons array.
+ * @param x The x-coordinate of the button's position.
+ * @param y The y-coordinate of the button's position.
+ * @param itemName The name of the item to be displayed on the button.
+ * @param imageIcon The ImageIcon representing the image to be displayed on the button.
+ */
     public void setupItemButton(int itemIndex, int x, int y, String itemName, ImageIcon imageIcon) {
         buttons[itemIndex] = new JButton(itemName);
         buttons[itemIndex].setBounds(x, y, 70, 75);
         buttons[itemIndex].addActionListener(this);
         buttons[itemIndex].setVisible(false);
 
-        vendingP[itemIndex] = new JPanel(); // Initialize the vendingP array element here
+        vendingP[itemIndex] = new JPanel(); 
         vendingP[itemIndex].setBounds(725, 30, 350, 250);
         vendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         vendingP[itemIndex].setLayout(new BorderLayout());
@@ -242,7 +274,11 @@ public class Gui extends JFrame implements ActionListener {
         add(vendingP[itemIndex]);
         add(buttons[itemIndex]);
     }
-    
+/**
+ * Sets up a panel to display detailed information for a specific item in the vending machine user interface.
+ *
+ * @param itemIndex The index of the item in the vendingP array.
+ */
     public void setupItemDetailPanel(int itemIndex) {
         vendingP[itemIndex] = new JPanel();
         vendingP[itemIndex].setBounds(725, 30, 350, 250);
@@ -275,9 +311,14 @@ public class Gui extends JFrame implements ActionListener {
         }
     
     
-
-   
-    // It resizes the image and handles the default cake image if the specified image is not found
+/**
+ * Loads and resizes an image file to create an ImageIcon with the specified width and height.
+ *
+ * @param imageFileName The file path of the image to load.
+ * @param width         The desired width of the resized image.
+ * @param height        The desired height of the resized image.
+ * @return An ImageIcon created from the resized image, or the default cake image if loading fails.
+ */
     protected ImageIcon loadImageIcon(String imageFileName,int width,int height) {
         // Load the original image
         BufferedImage originalImage;
@@ -286,8 +327,8 @@ public class Gui extends JFrame implements ActionListener {
         try {
             originalImage = ImageIO.read(new File(imageFileName));
             // Resize the image to the desired width and height
-            int desiredWidth = width; // Set the desired width here
-            int desiredHeight = height; // Set the desired height here
+            int desiredWidth = width; 
+            int desiredHeight = height; 
             Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
             // Create the ImageIcon from the resized image
             imageIcon = new ImageIcon(resizedImage);
@@ -300,7 +341,9 @@ public class Gui extends JFrame implements ActionListener {
         return imageIcon;
     }
 
-    // Setup maintenance buttons
+/**
+ * Initializes the maintenance menu buttons positions.
+ */
     public void initializeMaintenanceButtons() {
         yPos = 50;
         for (int i = 0; i < 5; i++) {
@@ -309,8 +352,11 @@ public class Gui extends JFrame implements ActionListener {
         }
         yPos = 50;
     }
-
-    // Setup individual maintenance buttons
+/**
+ * Sets up the maintenance menu assets for the specified index.
+ *
+ * @param index The index of the maintenance menu asset.
+ */
     public void setupMaintenanceMenuAssets(int index) {
         maintenanceB[index] = new JButton(index + 1 + "");
         maintenanceB[index].setBounds(xPos, yPos, 75, 50);
@@ -338,7 +384,12 @@ public class Gui extends JFrame implements ActionListener {
         add(mainMainP[index]);
 
     }
-
+/**
+ * Retrieves the maintenance label for the specified index.
+ *
+ * @param index The index of the maintenance label.
+ * @return The maintenance label corresponding to the given index.
+ */
     protected String getMaintenanceLabel(int index) {
         switch (index) {
             case 0:
@@ -355,7 +406,9 @@ public class Gui extends JFrame implements ActionListener {
                 return "Maintenance " + (index + 1);
         }
     }
-
+/**
+ * Initializes the coin maintenance menu with text fields and buttons for adding coins.
+ */
 public void coinMaintenance() {
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
@@ -401,7 +454,9 @@ public void coinMaintenance() {
         mainMainP[1].add(addCakeButton);
         mainMainP[1].setVisible(false);
     }
-
+/**
+ * Initializes the "Add Cake" menu with text fields and a button for adding a new cake to the vending machine.
+ */
     public void addCake() {
         addCake.setBounds(400, 50, 600, 450);
         addCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -436,7 +491,9 @@ public void coinMaintenance() {
 
         addCake.setVisible(false);
     }
-
+/**
+ * Initializes the "Delete Cake" menu with a text field and a button for deleting a cake from the vending machine.
+ */
     public void deleteCake() {
         delCake.setBounds(400, 50, 600, 450);
         delCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -458,7 +515,9 @@ public void coinMaintenance() {
         delCake.add(delConfirm);
         delCake.setVisible(false);
     }
-
+/**
+ * Initializes the "Edit Cake" menu with input fields and buttons for editing cake information in the vending machine.
+ */
     public void editCake() {
         ediCake.setBounds(400, 50, 600, 450);
         ediCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -499,26 +558,39 @@ public void coinMaintenance() {
         ediCake.add(editConfirmItem);
         ediCake.setVisible(false);
     }
-
+/**
+ * Sets up the "Default Maintenance" menu with a label indicating that default settings have been restored.
+ */
     public void defaultMaintenance() {
         mainMainP[2].add(new JLabel("Defaults Settings Restored"), CENTER_ALIGNMENT);
         mainMainP[2].setVisible(false);
     }
-
+/**
+ * Sets the visibility of the "Collect Payments" menu to false
+ */
     public void collectPayments() {
         mainMainP[3].setVisible(false);
     }
-
+/**
+ * Sets the visibility of the "Items Bought" menu to false.
+ */
     public void itemBought() {
         mainMainP[4].setVisible(false);
     }
-
+/**
+ * Records a purchase of a cake item and adds it to the indexBought array.
+ * 
+ * @param itemIndex The index of the cake item that was purchased.
+ */
     public void recordPurchase(int itemIndex) {
         String itemInfo = vnd.getCakeDetails(itemIndex);
         indexBought[bought] = itemInfo;
         bought++;
     }
-
+/**
+ * Initializes the user options for the vending machine.
+ * This includes setting up the "Buy" button, the wallet display, and the coin insertion button.
+ */
     public void initializeUserOptions() {
         buy.setBounds(750, 295, 125, 50);
         buy.addActionListener(this);
@@ -551,7 +623,11 @@ public void coinMaintenance() {
         add(coin);
 
     }
-
+/**
+ * Makes the necessary components visible based on the current menu state (menuInt).
+ * If menuInt is 0, it shows the regular vending machine interface with the "Buy" button, wallet display, coin insertion button, and cake buttons.
+ * If menuInt is 1, it shows the maintenance menu with the maintenance buttons and panels.
+ */
     public void visible() {
         if (menuInt == 0) {
             buy.setVisible(true);
@@ -568,7 +644,10 @@ public void coinMaintenance() {
             }
         }
     }
-    
+/**
+ * Makes the necessary components invisible. It hides the regular vending machine interface components such as the "Buy" button,
+ * wallet display, cake add, delete, and edit panels, and also hides the maintenance menu components if applicable.
+ */    
     public void inVisible() {
         buy.setVisible(false);
         wallet.setVisible(false);
@@ -589,14 +668,22 @@ public void coinMaintenance() {
             }
         }
     }
-
+/**
+ * Toggles the visibility of maintenance menu panels based on the chosen option.
+ * 
+ * @param chosen The index of the maintenance menu panel to be made visible.
+ */
     public void maintenanceMenuToggle(int Chosen) {
         for(int i = 0; i < 5; i++){
             mainMainP[i].setVisible(false);
         }
         mainMainP[Chosen].setVisible(true);
     }
-
+/**
+ * Toggles the visibility of item menu panels based on the chosen option.
+ * 
+ * @param chosen The index of the item menu panel to be made visible.
+ */
     public void itemMenuToggle(int Chosen) {
         for(int i = 0; i < 5; i++){
             mainMainP[i].setVisible(false);
@@ -619,7 +706,10 @@ public void coinMaintenance() {
                 break;
         }
     }
-
+/**
+ * Sets up the vending machine panel with the main menu for cake selection and purchase.
+ * The main menu includes the cake buttons, wallet display, and buy button.
+ */
     public void vendingMachinePanel() {
         menuInt = 0;
         setTitle("Cake Vending Machine");
@@ -627,7 +717,10 @@ public void coinMaintenance() {
         inVisible();
         visible();
     }
-
+/**
+ * Sets up the maintenance menu for the cake vending machine.
+ * The maintenance menu includes options for coin maintenance, item maintenance, and other maintenance actions.
+ */
     public void maintenanceMenu() {
         menuInt = 1;
         setTitle("Maintenance Menu");
@@ -635,7 +728,10 @@ public void coinMaintenance() {
         inVisible();
         visible();
     }
-
+/**
+ * Sets up the panel to display information about the cake that was added.
+ * The panel will show the values of the newly added cake.
+ */
     public void cakeAdded() {
         added = new JPanel();
         added.setBounds(400, 50, 600, 450);
@@ -645,7 +741,11 @@ public void coinMaintenance() {
         added.setVisible(false);
         add(added);
     }
-
+/**
+ * Sets up a dialog for the user to input the amount of bills they want to add to their wallet.
+ * The dialog allows the user to input the quantity of each bill denomination (10, 20, 50, 100, 200, 500 pesos).
+ * The total amount of bills added to the wallet is calculated and displayed in a message dialog.
+ */
     public void setUserWallet() {
         
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
@@ -691,6 +791,12 @@ public void coinMaintenance() {
             System.out.println("Cancelled");
         }
     }
+/**
+ * Parses the value from the formatted text field and returns it as an integer.
+ *
+ * @param field The formatted text field from which to extract the value.
+ * @return The parsed integer value from the formatted text field if it is a positive integer, otherwise returns 0.
+ */
     protected int parseFieldValue(JFormattedTextField field) {
         int result;
         try {
@@ -705,7 +811,12 @@ public void coinMaintenance() {
             return 0; 
         }
     }
-    
+/**
+ * Initiates the process of purchasing a cake and handles the purchase transaction.
+ * Displays a message dialog to inform the user of the purchase result.
+ * Resets the total amount inserted and selected cake after the purchase.
+ * Updates the item information display and resets the selected cake button backgrounds to default.
+ */
     public void buy() {
         String result = vnd.purchaseItem(total, selectedCake);
     
@@ -726,7 +837,11 @@ public void coinMaintenance() {
         amountTotal.setText(totalPrice + " Pesos");
          
     }
-    
+/**
+ * Handles the action events generated by different GUI components.
+ *
+ * @param click The ActionEvent representing the user's interaction with a GUI component.
+ */
     @Override
     public void actionPerformed(ActionEvent click) {
         // Main Menu
