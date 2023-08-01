@@ -10,10 +10,6 @@ public class SpcVnd extends RgVnd {
      */
     public SpcVnd() {
         super();
-        userWallet = new BillWallet();
-        vndStock = new BillWallet();
-        vndItemSold = new RgStock();
-        vndItemStock = new RgStock();
         spcItemStock = new SpcStock();
         spcItemSold = new SpcStock();
     }
