@@ -13,86 +13,86 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Gui extends JFrame implements ActionListener {
-    private JMenuBar menu;
-    private JMenu maintMenu;
-    private JMenuItem initializeMachine;
-    private JMenuItem itemMaintenance;
+    protected JMenuBar menu;
+    protected JMenu maintMenu;
+    protected JMenuItem initializeMachine;
+    protected JMenuItem itemMaintenance;
 
     // Arrays
-    private JButton[] buttons;
-    private JPanel[] vendingP;
-    private JButton buy;
-    private JButton selectCake;
-    private JButton coin;
+    protected JButton[] buttons;
+    protected JPanel[] vendingP;
+    protected JButton buy;
+    protected JButton selectCake;
+    protected JButton coin;
 
     // Other variables
-    private int width;
-    private int length;
-    private ArrayList<String> itemNames = new ArrayList<>();
-    private ArrayList<String> itemImageFileNames = new ArrayList<>();
-    private JLabel[] maintenanceL;
-    private JPanel[] maintenanceP;
-    private JButton[] maintenanceB;
-    private JPanel[] mainMainP;
-    private JPanel wallet;
-    private JTextArea walletLabel;
-    private JTextArea amountTotal;
-    private JTextArea[] itemInfoTextArea;
+    protected int width;
+    protected int length;
+    protected ArrayList<String> itemNames = new ArrayList<>();
+    protected ArrayList<String> itemImageFileNames = new ArrayList<>();
+    protected JLabel[] maintenanceL;
+    protected JPanel[] maintenanceP;
+    protected JButton[] maintenanceB;
+    protected JPanel[] mainMainP;
+    protected JPanel wallet;
+    protected JTextArea walletLabel;
+    protected JTextArea amountTotal;
+    protected JTextArea[] itemInfoTextArea;
 
     // Maintenance Variable
-    private String indexBought[];
-    private JTextArea[] indexBoughtInfo;
-    private JPanel addCake;
-    private JPanel delCake;
-    private JPanel ediCake;
-    private JButton itemEditButton;
-    private JButton deleCakeButton;
-    private JButton addCakeButton;
-    private JPanel added;
+    protected String indexBought[];
+    protected JTextArea[] indexBoughtInfo;
+    protected JPanel addCake;
+    protected JPanel delCake;
+    protected JPanel ediCake;
+    protected JButton itemEditButton;
+    protected JButton deleCakeButton;
+    protected JButton addCakeButton;
+    protected JPanel added;
 
     // Add Coins
-    private JButton editConfirmCoin;
-    private JFormattedTextField p10;
-    private JFormattedTextField p20;
-    private JFormattedTextField p50;
-    private JFormattedTextField p100;
-    private JFormattedTextField p200;
-    private JFormattedTextField p500;
+    protected JButton editConfirmCoin;
+    protected JFormattedTextField p10;
+    protected JFormattedTextField p20;
+    protected JFormattedTextField p50;
+    protected JFormattedTextField p100;
+    protected JFormattedTextField p200;
+    protected JFormattedTextField p500;
 
     // Add Cake
-    private JButton addConfirm;
-    private JFormattedTextField addName;
-    private JFormattedTextField addDesc;
-    private JFormattedTextField addCalo;
-    private JFormattedTextField addPric;
-    private JFormattedTextField addQuan;
+    protected JButton addConfirm;
+    protected JFormattedTextField addName;
+    protected JFormattedTextField addDesc;
+    protected JFormattedTextField addCalo;
+    protected JFormattedTextField addPric;
+    protected JFormattedTextField addQuan;
 
-    private JLabel colProfits;
+    protected JLabel colProfits;
 
-    private int bought;
-    private int profit;
+    protected int bought;
+    protected int profit;
 
     // Maintenance Menu Variables
-    private JRadioButton name;
-    private JRadioButton desc;
-    private JRadioButton calo;
-    private JRadioButton pric;
-    private JRadioButton quaA;
-    private JRadioButton quaM;
+    protected JRadioButton name;
+    protected JRadioButton desc;
+    protected JRadioButton calo;
+    protected JRadioButton pric;
+    protected JRadioButton quaA;
+    protected JRadioButton quaM;
 
     // XY position of buttons
-    private int xPos = 20;
-    private int yPos = 30;
+    protected int xPos = 20;
+    protected int yPos = 30;
     
     // Menu indicator
     int menuInt;
 
     //NOT FOR GUI
-    private int[] vndBills = {0, 0, 0, 0, 0, 0};
-    private RgVnd vnd = new RgVnd();
-    private int selectedCake =-1;
-    private int total = 0;
-    private int totalPrice = 0;
+    protected int[] vndBills = {0, 0, 0, 0, 0, 0};
+    protected RgVnd vnd = new RgVnd();
+    protected int selectedCake =-1;
+    protected int total = 0;
+    protected int totalPrice = 0;
 
     public Gui() {
         width = 1100;
@@ -210,7 +210,7 @@ public class Gui extends JFrame implements ActionListener {
     }
     
     
-    private void setCustomButtonFont(Font font) {
+    protected void setCustomButtonFont(Font font) {
         for (JButton button : buttons) {
             if (button != null) {
                 button.setFont(font);
@@ -280,7 +280,7 @@ public class Gui extends JFrame implements ActionListener {
 
    
     // It resizes the image and handles the default cake image if the specified image is not found
-    private ImageIcon loadImageIcon(String imageFileName,int width,int height) {
+    protected ImageIcon loadImageIcon(String imageFileName,int width,int height) {
         // Load the original image
         BufferedImage originalImage;
         ImageIcon imageIcon = null;
@@ -341,7 +341,7 @@ public class Gui extends JFrame implements ActionListener {
 
     }
 
-    private String getMaintenanceLabel(int index) {
+    protected String getMaintenanceLabel(int index) {
         switch (index) {
             case 0:
                 return "Coin Maintenance";
@@ -699,7 +699,7 @@ public void coinMaintenance() {
             System.out.println("Cancelled");
         }
     }
-    private int parseFieldValue(JFormattedTextField field) {
+    protected int parseFieldValue(JFormattedTextField field) {
         int result;
         try {
             result = Integer.parseInt(field.getText());
