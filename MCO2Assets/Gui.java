@@ -26,32 +26,31 @@ public class Gui extends JFrame implements ActionListener {
     protected JButton buy;
     protected JButton coin;
 
-    // Other variables
+    // Size variables
     protected int width;
     protected int length;
+
+    // Item variables
     protected ArrayList<String> itemNames = new ArrayList<>();
     protected ArrayList<String> itemImageFileNames = new ArrayList<>();
-    protected JLabel[] maintenanceL;
-    protected JPanel[] maintenanceP;
-    protected JButton[] maintenanceB;
-    protected JPanel[] mainMainP;
+
+    // User money variables
     protected JPanel wallet;
     protected JTextArea walletLabel;
     protected JTextArea amountTotal;
     protected JTextArea[] itemInfoTextArea;
 
-    // Maintenance Variable
+    // Item bought variables
     protected String indexBought[];
     protected JTextArea[] indexBoughtInfo;
-    protected JPanel addCake;
-    protected JPanel delCake;
-    protected JPanel ediCake;
-    protected JButton itemEditButton;
-    protected JButton deleCakeButton;
-    protected JButton addCakeButton;
-    protected JPanel added;
 
-    // Add Coins
+    // Maintenance menu variables
+    protected JLabel[] maintenanceL;
+    protected JButton[] maintenanceB;
+    protected JPanel[] maintenanceP;
+    protected JPanel[] mainMainP;
+
+    // Add coin variables
     protected JButton editConfirmCoin;
     protected JFormattedTextField p10;
     protected JFormattedTextField p20;
@@ -60,7 +59,16 @@ public class Gui extends JFrame implements ActionListener {
     protected JFormattedTextField p200;
     protected JFormattedTextField p500;
 
-    // Add Cake
+    //Item maintenance variables
+    protected JPanel addCake;
+    protected JPanel delCake;
+    protected JPanel ediCake;
+    protected JButton addCakeButton;
+    protected JButton deleCakeButton;
+    protected JButton itemEditButton;
+    protected JPanel added;
+
+    // Add cake variables
     protected JButton addConfirm;
     protected JFormattedTextField addName;
     protected JFormattedTextField addDesc;
@@ -68,12 +76,13 @@ public class Gui extends JFrame implements ActionListener {
     protected JFormattedTextField addPric;
     protected JFormattedTextField addQuan;
 
-    protected JLabel colProfits;
-
-    protected int bought;
-    protected int profit;
-
-    // Maintenance Menu Variables
+    // Edit cake variables
+    protected JButton editConfirmItem;
+    protected ButtonGroup editRadioButtons;
+    protected JFormattedTextField inde;
+    protected JFormattedTextField vari;
+    
+    // Item edit variables
     protected JRadioButton name;
     protected JRadioButton desc;
     protected JRadioButton calo;
@@ -81,9 +90,16 @@ public class Gui extends JFrame implements ActionListener {
     protected JRadioButton quaA;
     protected JRadioButton quaM;
 
-    // Delete Cake
+    // Delete cake variables
     protected JFormattedTextField delete;
     protected JButton delConfirm;
+
+    // Collect profit and receipt variables
+    protected JTextArea colReceipt;
+    protected JLabel colProfits;
+    protected String receipt;
+    protected int bought;
+    protected int profit;
 
     // XY position of buttons
     protected int xPos = 20;
@@ -103,16 +119,20 @@ public class Gui extends JFrame implements ActionListener {
      * components for the regular cake vending machine.
      */
     public Gui() {
+        // Size
         width = 1100;
         length = 600;
+        // Frame initialization
         menu = new JMenuBar();
         maintMenu = new JMenu("Admin");
         initializeMachine = new JMenuItem("Initialize Machine");
         itemMaintenance = new JMenuItem("Item Maintenance");
+        // Vending machine initialization
         buy = new JButton("Buy");
         coin = new JButton("Insert Coins & Bills!");
         buttons = new JButton[20];
         vendingP = new JPanel[20];
+        // Maintenance menu initialization
         maintenanceB = new JButton[5];
         maintenanceP = new JPanel[5];
         maintenanceL = new JLabel[5];
@@ -123,13 +143,16 @@ public class Gui extends JFrame implements ActionListener {
         itemEditButton = new JButton("Item Edit Menu");
         deleCakeButton = new JButton("Item Delete");
         addCakeButton = new JButton("Add Cake");
+        // Purchase record initialization
         indexBought = new String[100];
         indexBoughtInfo = new JTextArea[100]; 
         bought = 0;
+        // Item data panel intialization
         itemInfoTextArea = new JTextArea[20]; 
         for (int i = 0; i < 5; i++) {
             mainMainP[i] = new JPanel(); 
         }
+        // User wallet intialization
         wallet = new JPanel();
         vnd.setDefaults();
         int i=0;
@@ -164,6 +187,10 @@ public class Gui extends JFrame implements ActionListener {
         coinMaintenance();
         itemMaintenance();
         defaultMaintenance();
+        
+        collectPayments();
+        itemBought();
+        
         cakeAdded();
         initializeUserOptions();
         createMenu();
@@ -309,8 +336,41 @@ public class Gui extends JFrame implements ActionListener {
         vendingP[itemIndex].setVisible(false);
         add(vendingP[itemIndex]);
         }
+/**
+ * Sets up a NEW panel to display detailed information for a NEW item in the vending machine user interface.
+ *
+ * @param itemIndex The index of the item in the vendingP array.
+ */
+    public void updateNewItemDetailPanel(int itemIndex) {
+        // Create a JTextArea to display the item information
+        buttons[itemIndex].setText("Cake#" + (itemIndex+1));
+
+        itemInfoTextArea[itemIndex] = new JTextArea();
+        itemInfoTextArea[itemIndex].setEditable(false);
+        itemInfoTextArea[itemIndex].setLineWrap(true);
+        itemInfoTextArea[itemIndex].setWrapStyleWord(true);
     
+        // Get the item information using getItemInfoString() method
+        String itemInfo = vnd.getCakeDetails(itemIndex);
     
+        // Set the item information as the text of the JTextArea
+        itemInfoTextArea[itemIndex].setText(itemInfo);
+    
+        // Add the JTextArea to the SOUTH of the vendingP panel
+        vendingP[itemIndex].add(itemInfoTextArea[itemIndex], BorderLayout.SOUTH);
+    
+        vendingP[itemIndex].setVisible(false);
+        add(vendingP[itemIndex]);
+    }
+/**
+ * Updates the specific item panel to display NEW detailed information in the vending machine user interface.
+ *
+ * @param itemIndex The index of the item in the vendingP array.
+ */
+    public void updateItemDetailPanel(int itemIndex) {
+        String itemInfo = vnd.getCakeDetails(itemIndex);
+        itemInfoTextArea[itemIndex].setText(itemInfo);
+    }
 /**
  * Loads and resizes an image file to create an ImageIcon with the specified width and height.
  *
@@ -409,7 +469,7 @@ public class Gui extends JFrame implements ActionListener {
 /**
  * Initializes the coin maintenance menu with text fields and buttons for adding coins.
  */
-public void coinMaintenance() {
+    public void coinMaintenance() {
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
         formatter.setValueClass(Integer.class);
@@ -439,7 +499,9 @@ public void coinMaintenance() {
         mainMainP[0].add(editConfirmCoin);
         mainMainP[0].setVisible(false);
     }
-    
+/**
+ * Initializes the item maintenance menu with 3 buttons representing the 3 of its main functions add, edit, delete.
+ */
     public void itemMaintenance() {
         addCake();
         deleteCake();
@@ -510,7 +572,7 @@ public void coinMaintenance() {
         delConfirm = new JButton("Confirm");
         delConfirm.addActionListener(this);
 
-        delCake.add(new JLabel("Insert Cake Number To Delete [1-20]"));
+        delCake.add(new JLabel("Insert Cake Number To Delete [1-36]"));
         delCake.add(delete);
         delCake.add(delConfirm);
         delCake.setVisible(false);
@@ -530,21 +592,34 @@ public void coinMaintenance() {
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false); // Only allow valid integers
 
-        JFormattedTextField inde = new JFormattedTextField();
-        JFormattedTextField vari = new JFormattedTextField();
-        JButton editConfirmItem = new JButton("Confirm Changes");
+        inde = new JFormattedTextField();
+        vari = new JFormattedTextField();
+        editRadioButtons = new ButtonGroup();
+        editConfirmItem = new JButton("Confirm Changes");
         editConfirmItem.addActionListener(this);
 
         name = new JRadioButton("Name");
+        name.addActionListener(this);
         desc = new JRadioButton("Description");
+        desc.addActionListener(this);
         calo = new JRadioButton("Calorie Count");
+        calo.addActionListener(this);
         pric = new JRadioButton("Price");
+        pric.addActionListener(this);
         quaA = new JRadioButton("Add Stock");
+        quaA.addActionListener(this);      
         quaM = new JRadioButton("Remove Stock");
-        
+        quaM.addActionListener(this);
         ediCake.add(new JLabel("Insert Cake Number"));
         ediCake.add(inde);
         
+        editRadioButtons.add(name);
+        editRadioButtons.add(desc);
+        editRadioButtons.add(calo);
+        editRadioButtons.add(pric);
+        editRadioButtons.add(quaA);
+        editRadioButtons.add(quaM);
+
         ediCake.add(new JLabel("What To Edit"));
         ediCake.add(name);
         ediCake.add(desc);
@@ -566,15 +641,21 @@ public void coinMaintenance() {
         mainMainP[2].setVisible(false);
     }
 /**
- * Sets the visibility of the "Collect Payments" menu to false
+ * Sets the variables and label of Collect Payments to base as well turning its visibility to false
  */
     public void collectPayments() {
+        profit = 0;
+        colProfits = new JLabel("Profit: "+ profit);
+        mainMainP[3].add(colProfits);
         mainMainP[3].setVisible(false);
     }
 /**
- * Sets the visibility of the "Items Bought" menu to false.
+ * Sets the variables and text area of Collect Receipt to base as well turning its visibility to false
  */
     public void itemBought() {
+        receipt = " ";
+        colReceipt = new JTextArea(receipt);
+        mainMainP[4].add(colReceipt);
         mainMainP[4].setVisible(false);
     }
 /**
@@ -851,10 +932,11 @@ public void coinMaintenance() {
         else if (click.getSource() == itemMaintenance) {
             maintenanceMenu();
         } 
+        // Buy Item
         else if (click.getSource() == buy) {
             buy();
         } 
-        // Maintenance Menu
+        // Maintenance Menu Options
         else if (click.getSource() == maintenanceB[0]) {
             maintenanceMenuToggle(0);
         } 
@@ -868,18 +950,16 @@ public void coinMaintenance() {
         else if (click.getSource() == maintenanceB[3]) {
             maintenanceMenuToggle(3);
             profit = vnd.collectProfit();
-            colProfits = new JLabel("Profit: "+ profit);
-            mainMainP[3].add(colProfits);
+            colProfits.setText("Profit: "+ profit);
             profit = 0;
         } 
         else if (click.getSource() == maintenanceB[4]) {
             maintenanceMenuToggle(4);
-            for(int i = 0; i < bought; i++) {
-            indexBoughtInfo[bought].setText(indexBought[bought]);
-            mainMainP[4].add(indexBoughtInfo[bought]);
-            }
+            receipt = vnd.receipt();
+            colReceipt.setText(receipt);
+            receipt = " ";
         } 
-        // Item Maintenance Menu
+        // Item Maintenance Menu Options
         else if (click.getSource() == itemEditButton) {
             itemMenuToggle(1);
         } 
@@ -889,18 +969,57 @@ public void coinMaintenance() {
         else if (click.getSource() == addCakeButton) {
             itemMenuToggle(3);
         } 
-        // Item Additions
+        // Item Editing Allocation
+        else if (click.getSource() == editConfirmItem) {
+            String editValString = vari.getText();
+            int editVal = parseFieldValue(vari);
+            int choice;
+            int index = (parseFieldValue(inde) - 1);
+            if(name.isSelected()) {
+                choice = 1;
+                vnd.editCake(choice, index, editValString);
+            }
+            else if(desc.isSelected()) {
+                choice = 2;
+                vnd.editCake(choice, index, editValString);
+            }
+            else if(calo.isSelected()) {
+                choice = 3;
+                vnd.editCake(choice, index, editVal);
+            }
+            else if(pric.isSelected()) {
+                choice = 4;
+                vnd.editCake(choice, index, editVal);
+            }
+            else if(quaA.isSelected()) {
+                choice = 5;
+                vnd.editCake(choice, index, editVal);
+            }
+            else if(quaM.isSelected()) {
+                choice = 6;
+                vnd.editCake(choice, index, editVal);
+            }
+            updateItemDetailPanel(index);
+            ediCake.setVisible(false);
+            added.setVisible(true);
+        }
+        // Add New Cake Into The System
         else if (click.getSource() == addConfirm) {
+            int count = 10;
             addCake.setVisible(false);
             added.setVisible(true);
             vnd.addNewCake(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan));
+            updateNewItemDetailPanel(count);
+            count++;
         } 
+        // Add Coins Into The System
         else if (click.getSource() == editConfirmCoin) {
             int Bills[] = {parseFieldValue(p10), parseFieldValue(p20), parseFieldValue(p50), parseFieldValue(p100), parseFieldValue(p200), parseFieldValue(p500)};
             inVisible();
             added.setVisible(true);
             vnd.billMaintenance(Bills);
         }
+        // Delete nth Cake using Index
         else if (click.getSource() == delConfirm) {
             vnd.deleteACake((parseFieldValue(delete)-1));
             setupItemDetailPanel((parseFieldValue(delete)-1));
@@ -915,8 +1034,7 @@ public void coinMaintenance() {
                     }
                     vendingP[i].setVisible(true);
                     selectedCake = i;
-                    totalPrice = vnd.getCakePrice(i);
-                    amountTotal.setText( totalPrice + "Pesos");
+                    amountTotal.setText( vnd.getCakePrice(i) + "Pesos");
                     buttons[i].setBackground(Color.GREEN);
                 }
             }
