@@ -51,6 +51,7 @@ public class RgStock{
         }
     }
 /**
+ * @deprecated
  * Displays the cake menu, to be shown when purchasing an item. An item with quantity - 0 will not be shown.
  *   
  */
@@ -64,8 +65,15 @@ public class RgStock{
         }        
     }
 /**
- * Displays Cake menu
- * @param cakeIndex
+ * Displays the details of a cake item at the specified index.
+ *
+ * If the item at the given index exists, its details will be returned in a formatted string.
+ * If the item at the given index does not exist, a default message with placeholders for the
+ * item's name, description, calorie count, price, and available quantity will be returned.
+ *
+ * @param cakeIndex The index of the cake item to display details for.
+ * @return A formatted string containing the details of the cake item at the specified index, or
+ *         a default message if the item does not exist.
  */
     public String displayDetails(int cakeIndex){
         if(!item[cakeIndex].getName().equals(" ")){
@@ -105,9 +113,15 @@ public class RgStock{
         item[cakeIndex].setPrice(intPrice);
     }
 /**
- * Adds an amount value to Cake at cakeIndex.
- * @param cakeIndex the cakeIndex of the cake to be edited
- * @param value the amount to be added
+ * Increases the stock quantity of a cake item at the specified index by the given value.
+ * If the resulting quantity exceeds the maximum capacity of 10, no changes will be made, and
+ * an error message indicating an invalid number will be returned.
+ *
+ * @param cakeIndex The index of the cake item to increase the stock quantity for.
+ * @param value The value by which to increase the stock quantity of the cake item.
+ * @return A message indicating the result of the operation. If the stock quantity was increased
+ *         successfully, the message will confirm the new stock quantity. If the operation failed
+ *         due to exceeding the maximum capacity, the message will indicate an invalid number.
  */
     public String addInt(int cakeIndex, int value){
         String output="";
@@ -121,9 +135,15 @@ public class RgStock{
         return output;
     }
 /**
- * Subtracts an amount value to Cake at cakeIndex.
- * @param cakeIndex the cakeIndex of the cake to be edited
- * @param value the amount to be subtracted
+ * Decreases the stock quantity of a cake item at the specified index by the given value.
+ * If the resulting quantity would be less than 0, no changes will be made, 
+ * and an error message indicating an invalid number will be returned.
+ *
+ * @param cakeIndex The index of the cake item to decrease the stock quantity for.
+ * @param value The value by which to decrease the stock quantity of the cake item.
+ * @return A message indicating the result of the operation. If the stock quantity was decreased
+ *         successfully, the message will confirm the new stock quantity. If the operation failed
+ *         due to a resulting quantity less than 0, the message will indicate an invalid number.
  */
     public String subInt(int cakeIndex, int value){
         String output="";
@@ -216,7 +236,15 @@ public class RgStock{
     }
 
 /**
- * Display the receipt showing the cake name, quantity, and total price for each cake.
+ * Generates a receipt containing the names, quantities, and total prices of valid cake items in the vending machine.
+ *
+ * This method iterates through the cake items in the vending machine bought stock and constructs a receipt
+ * showing the name, quantity, and total price of each valid cake item. A valid cake item is one
+ * that is not empty or out of stock. The receipt is formatted with the cake name, quantity, and
+ * total price displayed in columns for easy readability.
+ *
+ * @return A formatted string representing the receipt with cake names, quantities, and total
+ *         prices.
  */
     public String getReceipt() {
         String output="";
