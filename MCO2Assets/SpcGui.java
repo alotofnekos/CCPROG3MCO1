@@ -240,7 +240,7 @@ public class SpcGui extends Gui {
         }
         total = 0;
         totalPrice=0;
-        
+        previousCake =0;
         for(int j=0;j<buttons.length;j++){
             buttons[j].setBackground(Color.LIGHT_GRAY);
         }
