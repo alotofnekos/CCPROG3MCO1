@@ -39,10 +39,17 @@ public class SpcVnd extends RgVnd {
         return spcItemStock.getItemPrice(index);
     }
     /**
-     * Lets the user purchase an item at cakeIndex with userBills. Gets the change too.
-     * @param userBills the array of bills corresponding to the number of [10, 20, 50, 100, 200, 500] peso bills
-     * @param cakeIndex the index of the cake item to be bought.
-     * @param itemIndex the array of special item indices to be bought.
+     * Process a purchase transaction for a cake and its add-ons.
+     *
+     * This method handles the purchase transaction for a cake and its add-ons. It takes the total amount
+     * inserted by the user, the index of the selected cake, and an ArrayList of item indices representing
+     * the selected add-ons. The machine then processes the transaction accordingly, then informs the user of the output. 
+     * It also clears the user's wallet.
+     *
+     * @param totalUserBill The total amount inserted by the user.
+     * @param cakeIndex The index of the selected cake.
+     * @param itemIndex An ArrayList of item indices representing the selected add-ons.
+     * @return A String containing the output messages for the purchase transaction.
      */
     public String purchaseItem(int totalUserBill, int cakeIndex, ArrayList<Integer> itemIndex) {
         boolean canGiveChange;
@@ -168,15 +175,23 @@ public class SpcVnd extends RgVnd {
     public String getItemDetails(int index){
         return spcItemStock.displayDetails(index);
     }
-    /**
-     * Collects the current profit of the vending machine, and clears the reciept since profit has been obtained already.
-     */
+/**
+ * Collect the accumulated profit and reset the vending machine's statistics.
+ *
+ * The method retrieves the current profit value, prints a message displaying the total profit obtained,
+ * and then clears the profit by setting it to zero. Additionally, it sets the stocks of both regular
+ * and special items to zero, indicating that all items have been sold have been taken note of.
+ *
+ * @return The total profit obtained from the vending machine.
+ */
     @Override
-    public void collectProfit(){
+    public int collectProfit(){
+        int vndProfit = profit;
         System.out.println("Total Profit obtained: "+profit+ ". Clearing wallet.");
         profit=0;
         vndItemSold.setStock(0);
         spcItemSold.setStock(0);
+        return vndProfit;
     }
     /**
      * Adds a new item to the vending machine's stock. Reciept's copy also adds the new cake to prevent discrepancies, but the quantity is set to zero since its not bought.
