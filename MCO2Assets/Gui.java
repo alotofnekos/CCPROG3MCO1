@@ -67,6 +67,10 @@ public class Gui extends JFrame implements ActionListener {
     protected JFormattedTextField addPric;
     protected JFormattedTextField addQuan;
 
+    // Delete Cake
+    protected JFormattedTextField delete;
+    protected JButton delConfirm;
+
     protected JLabel colProfits;
 
     protected int bought;
@@ -387,7 +391,7 @@ public void coinMaintenance() {
     
     public void itemMaintenance() {
         addCake();
-        deleteCake();
+        Cake();
         editCake();
 
         itemEditButton.addActionListener(this);
@@ -447,11 +451,11 @@ public void coinMaintenance() {
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false); // Only allow valid integers
 
-        JFormattedTextField delete = new JFormattedTextField(formatter);
-        JButton delConfirm = new JButton("Confirm");
+        delete = new JFormattedTextField(formatter);
+        delConfirm = new JButton("Confirm");
         delConfirm.addActionListener(this);
 
-        delCake.add(new JLabel("Insert Cake Number To Delete [1-20]"));
+        delCake.add(new JLabel("Insert Cake Number To Delete [1-36]"));
         delCake.add(delete);
         delCake.add(delConfirm);
         delCake.setVisible(false);
@@ -787,6 +791,10 @@ public void coinMaintenance() {
             inVisible();
             added.setVisible(true);
             vnd.billMaintenance(Bills);
+        }
+        else if (click.getSource() == delConfirm) {
+            vnd.deleteACake((parseFieldValue(delete)-1));
+            setupItemDetailPanel((parseFieldValue(delete)-1));
         }
         // Item Buttons in Vending
         else {
