@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * This class SpcGui handles the GUI for special vending machines.
+ */
 public class SpcGui extends Gui {
     private JButton[] spcButtons;
     private JPanel[] spcVendingP;
@@ -16,6 +18,19 @@ public class SpcGui extends Gui {
     private ArrayList<String> spcitemNames = new ArrayList<>();
     private ArrayList<String> spcitemImageFileNames = new ArrayList<>();
     private ArrayList<Integer> selectedItems = new ArrayList<>();
+    /**
+     * Constructor for the SpcGui class.
+     *
+     * This constructor initializes the SpcGui object. It first calls the constructor of Gui class (RgVnd's GUI)
+     * using the `super()` call. It creates a new `SpcVnd` object named `vnd`, which is an instance of a spc vending 
+     * machine class. It initializes several arrays, such as `spcButtons`, `spcVendingP`, and `spcItemInfoTextArea`, which
+     * stores buttons, panels, and text areas related to the special items in the GUI.
+     *
+     * It sets the defaults of the `vnd` object using the `setDefaults()` method, possibly to initialize the vending
+     * machine with default settings. It then sets up the names and image file names for the special items. It loops through 
+     * a list of special items and set corresponding names like "AddOn#1", "AddOn#2", etc., and image file paths for each special item.
+     *
+     */
     public SpcGui() {
         super();
         vnd = new SpcVnd();
@@ -48,6 +63,12 @@ public class SpcGui extends Gui {
         Arrays.fill(spcButtons, new JButton());
         Arrays.fill(spcVendingP, new JPanel());
     }
+    /**
+     * Sets up the panel for the special cake vending machine.
+     *
+     * This method overrides the `vendingMachinePanel()` method from the superclass. It is responsible for setting up
+     * the main panel of the special cake vending machine GUI. The only difference, being the color of the panels.
+     */
     @Override
     public void vendingMachinePanel() {
         menuInt = 0;
@@ -56,6 +77,9 @@ public class SpcGui extends Gui {
         inVisible();
         visible();
     }
+    /**
+     * Initializes and sets up the special cake item buttons and detail panels in the GUI.
+     */
     public void initializeSpcItemButtons() {
         String itemName;
         String imageFileName;
@@ -81,7 +105,15 @@ public class SpcGui extends Gui {
             }
         }
     }    
-
+    /**
+     * Sets up an individual special cake add-on item button in the GUI.
+     *
+     * @param itemIndex The index of the special cake add-on  item.
+     * @param x         The X-coordinate for positioning the button.
+     * @param y         The Y-coordinate for positioning the button.
+     * @param itemName  The name of the special cake add-on item.
+     * @param imageIcon The image icon for the special cake add-on item.
+     */
     public void setupSpcItemButton(int itemIndex, int x, int y, String itemName, ImageIcon imageIcon) {
         spcButtons[itemIndex] = new JButton();
         spcButtons[itemIndex].setBounds(x, y, 70, 75);
@@ -106,7 +138,12 @@ public class SpcGui extends Gui {
         add(spcVendingP[itemIndex]);
         add(spcButtons[itemIndex]);
     }
-
+    /**
+     * Sets up the detail panel for an individual special cake add-on item.
+     *
+     * @param itemIndex     The index of the special cake add-on item.
+     * @param imageFileName The file name of the image for the special cake add-on item.
+     */
     public void setupSpcItemDetailPanel(int itemIndex,String imageFileName) {
         spcVendingP[itemIndex] = new JPanel();
         spcVendingP[itemIndex].setBounds(725, 30, 350, 250);
@@ -137,18 +174,32 @@ public class SpcGui extends Gui {
         spcVendingP[itemIndex].setVisible(false);
         add(spcVendingP[itemIndex]);
     }
+    /**
+     * Adds the "Clear Add-ons" button to the GUI.
+     * The button is used to clear the selected add-ons from the cake.
+     */
     public void addOn(){
         clearAddOn.setBounds(600, 295, 125, 50);
         clearAddOn.addActionListener(this);
         clearAddOn.setVisible(false);
         add(clearAddOn);
     }
+    /**
+     * Displays the main user interface for the special cake vending machine.
+     * It calls the superclass's Display method to set up the base GUI.
+     * It then initializes the special item buttons and adds the "Clear Add-ons" button to the GUI.
+     */
     @Override
     public void Display() {
         super.Display();
         initializeSpcItemButtons();
         addOn();
     }
+    /**
+     * Overrides the superclass's visible method to make certain components visible.
+     * If the value of menuInt is 0 [initialize machine], it makes the "Clear Add-ons" button and the special item buttons visible.
+     * It also sets the background color of the special item buttons to LIGHT_GRAY.
+     */
     @Override
     public void visible() {
         super.visible();
@@ -160,6 +211,10 @@ public class SpcGui extends Gui {
             }
         }
     }
+    /**
+     * Overrides the superclass's inVisible method to make certain components invisible.
+     * It makes the "Clear Add-ons" button and all special item buttons invisible.
+     */
     @Override
     public void inVisible() {
         super.inVisible();
@@ -170,7 +225,9 @@ public class SpcGui extends Gui {
             spcButtons[i].setVisible(false);
         }
     }
-
+    /**
+     * Overrides the superclass's buy method to handle the purchase process suitable for special vending machines.
+     */
     @Override
     public void buy() {
         String result = vnd.purchaseItem(total, selectedCake,selectedItems);
@@ -202,7 +259,9 @@ public class SpcGui extends Gui {
         selectedItems.clear();
          
     }
-
+    /**
+     * Overrides the superclass's actionPerformed method to handle more button actions.
+     */
     @Override
     public void actionPerformed(ActionEvent click) {
         super.actionPerformed(click);
