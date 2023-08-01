@@ -114,6 +114,7 @@ public class Gui extends JFrame implements ActionListener {
     protected int selectedCake =-1;
     protected int total = 0;
     protected int totalPrice = 0;
+    protected int previousCake = 0;
     /**
      * The constructor for the `Gui` class. Initializes and sets up the graphical user interface
      * components for the regular cake vending machine.
@@ -909,6 +910,7 @@ public class Gui extends JFrame implements ActionListener {
         }
         total = 0;
         totalPrice =0;
+        previousCake =0;
         itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
         selectedCake = -1;
         for(int j=0;j<buttons.length;j++){
@@ -1034,7 +1036,10 @@ public class Gui extends JFrame implements ActionListener {
                     }
                     vendingP[i].setVisible(true);
                     selectedCake = i;
-                    amountTotal.setText( vnd.getCakePrice(i) + "Pesos");
+                    totalPrice -= previousCake;
+                    totalPrice += vnd.getCakePrice(i);
+                    previousCake = vnd.getCakePrice(i);
+                    amountTotal.setText( totalPrice + "Pesos");
                     buttons[i].setBackground(Color.GREEN);
                 }
             }
