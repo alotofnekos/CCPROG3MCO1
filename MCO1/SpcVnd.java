@@ -3,11 +3,6 @@ import java.util.ArrayList;
 public class SpcVnd extends RgVnd {
     private SpcStock spcItemStock;
     private SpcStock spcItemSold;
-    private RgStock vndItemStock;
-    private RgStock vndItemSold;
-    private BillWallet userWallet;
-    private BillWallet vndStock;
-    private int profit=0;
 
     /**
      * This is the constructor for the SpcVnd class that initializes the SpcStocks for
