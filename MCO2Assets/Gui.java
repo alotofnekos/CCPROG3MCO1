@@ -22,7 +22,6 @@ public class Gui extends JFrame implements ActionListener {
     protected JButton[] buttons;
     protected JPanel[] vendingP;
     protected JButton buy;
-    protected JButton selectCake;
     protected JButton coin;
 
     // Other variables
@@ -67,10 +66,6 @@ public class Gui extends JFrame implements ActionListener {
     protected JFormattedTextField addPric;
     protected JFormattedTextField addQuan;
 
-    // Delete Cake
-    protected JFormattedTextField delete;
-    protected JButton delConfirm;
-
     protected JLabel colProfits;
 
     protected int bought;
@@ -83,6 +78,10 @@ public class Gui extends JFrame implements ActionListener {
     protected JRadioButton pric;
     protected JRadioButton quaA;
     protected JRadioButton quaM;
+
+    // Delete Cake
+    protected JFormattedTextField delete;
+    protected JButton delConfirm;
 
     // XY position of buttons
     protected int xPos = 20;
@@ -106,7 +105,6 @@ public class Gui extends JFrame implements ActionListener {
         initializeMachine = new JMenuItem("Initialize Machine");
         itemMaintenance = new JMenuItem("Item Maintenance");
         buy = new JButton("Buy");
-        selectCake = new JButton("Select Cake");
         coin = new JButton("Insert Coins & Bills!");
         buttons = new JButton[20];
         vendingP = new JPanel[20];
@@ -391,7 +389,7 @@ public void coinMaintenance() {
     
     public void itemMaintenance() {
         addCake();
-        Cake();
+        deleteCake();
         editCake();
 
         itemEditButton.addActionListener(this);
@@ -455,7 +453,7 @@ public void coinMaintenance() {
         delConfirm = new JButton("Confirm");
         delConfirm.addActionListener(this);
 
-        delCake.add(new JLabel("Insert Cake Number To Delete [1-36]"));
+        delCake.add(new JLabel("Insert Cake Number To Delete [1-20]"));
         delCake.add(delete);
         delCake.add(delConfirm);
         delCake.setVisible(false);
@@ -522,10 +520,6 @@ public void coinMaintenance() {
     }
 
     public void initializeUserOptions() {
-        selectCake.setBounds(600, 295, 125, 50);
-        selectCake.addActionListener(this);
-        selectCake.setVisible(false);
-        add(selectCake);
         buy.setBounds(750, 295, 125, 50);
         buy.addActionListener(this);
         buy.setVisible(false);
@@ -560,7 +554,6 @@ public void coinMaintenance() {
 
     public void visible() {
         if (menuInt == 0) {
-            selectCake.setVisible(true);
             buy.setVisible(true);
             wallet.setVisible(true);
             for (int i = 0; i < buttons.length; i++) {;
@@ -577,7 +570,6 @@ public void coinMaintenance() {
     }
     
     public void inVisible() {
-        selectCake.setVisible(false);
         buy.setVisible(false);
         wallet.setVisible(false);
         addCake.setVisible(false);
@@ -724,12 +716,14 @@ public void coinMaintenance() {
             JOptionPane.showMessageDialog(null, result+"\nPlease reselect the cake and add bills before trying to buy again.","Purchase failed!", JOptionPane.INFORMATION_MESSAGE);
         }
         total = 0;
+        totalPrice =0;
         itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
         selectedCake = -1;
         for(int j=0;j<buttons.length;j++){
             buttons[j].setBackground(Color.LIGHT_GRAY);
         }
         walletLabel.setText(total + " Pesos");
+        amountTotal.setText(totalPrice + " Pesos");
          
     }
     
@@ -806,7 +800,8 @@ public void coinMaintenance() {
                     }
                     vendingP[i].setVisible(true);
                     selectedCake = i;
-                    amountTotal.setText( vnd.getCakePrice(i) + "Pesos");
+                    totalPrice = vnd.getCakePrice(i);
+                    amountTotal.setText( totalPrice + "Pesos");
                     buttons[i].setBackground(Color.GREEN);
                 }
             }
