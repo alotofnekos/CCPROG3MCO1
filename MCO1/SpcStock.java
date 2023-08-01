@@ -34,7 +34,7 @@ public class SpcStock {
         spitem[8].addIncompatibleCake("Strawberry Cake");
         spitem[8].addIncompatibleCake("Chocolate Mousse Cake");
         spitem[8].addIncompatibleCake("Lemon Blueberry Cake");
-        spitem[9] = new SpcItem("Upgrade to B-Day Cake", 0, 40, 74, "Greet your loved ones with a Happy Birthday with this package! Includes a dedication topper and a candle.", "birthday package", new SpcItem[]{spitem[0], spitem[3]});
+        spitem[9] = new SpcItem("Upgrade to B-Day Cake", 0, 30, 74, "Greet your loved ones with a Happy Birthday with this package! Includes a dedication topper and a candle.", "birthday package", new SpcItem[]{spitem[0], spitem[3]});
         spitem[10] = new SpcItem("Upgrade to Chocolate a la Mode", 0, 60, 136, "Ice Cream, Chocolate, and Cake? What a sweet combination! Inherits restrictions from Ice Cream and Chocolate.", "Ice Cream Chocolate Package", new SpcItem[]{spitem[7], spitem[8]});
         spitem[11] = new SpcItem("Upgrade to Fruit a la Mode", 0, 60, 90, "Ice Cream, Fruit, and Cake? What a refreshing combination! Inherits restrictions from Ice Cream and Fruits.", "Ice Cream Fruit Package", new SpcItem[]{spitem[6], spitem[8]});
         for (int i = 12; i < spitem.length; i++) {
@@ -209,13 +209,18 @@ public class SpcStock {
             spitem[index].setDesc(value);
         }
     /**
-     * Adds a New Item.
-     * @param strName the name of the Item
-     * @param strDesc the description of the Item
-     * @param intCalorie the calorie amount of the Item
-     * @param intPrice the price of the Item
-     * @param intQuantity the amount of cakes to be added
-     * 
+     * Add a new special cake add-on item to the inventory.
+     *
+     * This method allows adding a new special cake add-on item to the inventory. The add-on item is then added to the inventory at the next available
+     * index, increasing the inventory size.
+     *
+     * @param strName     The name of the special cake add-on item.
+     * @param strDesc     The description of the special cake add-on item.
+     * @param intCalorie  The calorie count of the special cake add-on item.
+     * @param intPrice    The price of the special cake add-on item.
+     * @param intQuantity The available quantity of the special cake add-on item in the inventory.
+     * @param strTag      The tag associated with the special cake add-on item.
+     * @param strFT       The flavor text of the special cake add-on item.
      */
         public void addNewSpcItem(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity, String strTag, String strFT){
             int index = countItems();
@@ -262,9 +267,17 @@ public class SpcStock {
             return false; // No cakes have stock
         }
 
-    /**
-     * Display the receipt showing the Item name, quantity, and total price for each Item.
-     */
+/**
+ * Get the receipt for the selected special cake add-on items.
+ *
+ * This method generates and returns a formatted receipt for the selected special cake add-on items.
+ * It iterates through the spitem array, checking if each item is valid (exists in the inventory).
+ * For each valid item, it retrieves the quantity and calculates the total price based on the item's price
+ * and quantity. The method then concatenates the item name, quantity, and total price in a formatted string
+ * and adds it to the output string, separating each item's details with a newline character.
+ *
+ * @return A formatted receipt displaying the names, quantities, and total prices of the selected special cake add-on items.
+ */
         public String getReceipt() {
             String output="";
             output = output.concat("Item Name\t\t\tQty\tPrice\n");
