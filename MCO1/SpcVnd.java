@@ -48,6 +48,7 @@ public class SpcVnd extends RgVnd {
         boolean isAddOnValid = false;
         boolean hasCakeInStock = vndItemStock.hasCakeInStock();
         String output = "";
+        int totalPrice=0;
 
         if (!hasCakeInStock) {
             output = output.concat("Can't buy items, no items in stock.\n");
@@ -63,44 +64,67 @@ public class SpcVnd extends RgVnd {
         }
 
         output = output.concat("Total amount inserted: " +totalUserBill+"\n");
+        if(cakeIndex==-1){
+            for (int i = 0; i < itemIndex.size(); i++) {
+                if(spcItemStock.getItemName(i).contains("Upgrade")||spcItemStock.getItemName(i).contains("Ice Cream")){
+                    output = output.concat(spcItemStock.getItemName(i) + "Cannot be bought by itself. Please try again.\n");
+                    return output;
+                }
+            }
+            for (int i = 0; i < itemIndex.size(); i++) {
+                int index = itemIndex.get(i);
+                totalPrice += spcItemStock.getItemPrice(index);
+            }
 
-        isItemValid = vndItemStock.validItem(cakeIndex);
-        if (!isItemValid) {
-            output = output.concat("Item is out of stock. Please try again.\n");
-            userWallet.clearWallet();
-            return output;
         }
-
-        // Check if all special items are valid
-        for (int i = 0; i < itemIndex.size(); i++) {
-            int index = itemIndex.get(i);
-            isAddOnValid = (spcItemStock.validItem(index) && spcItemStock.isCompatible(index, vndItemStock.getCakeName(cakeIndex)));
-            if (!isAddOnValid) {
-                output = output.concat("Special item " + spcItemStock.getItemName(index) + " is out of stock or is incompatible with the cake. Please try again.\n");
+        else{
+            isItemValid = vndItemStock.validItem(cakeIndex);
+            if (!isItemValid) {
+                output = output.concat("Item is out of stock. Please try again.\n");
                 userWallet.clearWallet();
                 return output;
             }
-        }
 
-        int totalPrice = vndItemStock.getCakePrice(cakeIndex);
-        for (int i = 0; i < itemIndex.size(); i++) {
-            int index = itemIndex.get(i);
-            totalPrice += spcItemStock.getItemPrice(index);
-        }
+            // Check if all special items are valid
+            for (int i = 0; i < itemIndex.size(); i++) {
+                int index = itemIndex.get(i);
+                isAddOnValid = (spcItemStock.validItem(index) && spcItemStock.isCompatible(index, vndItemStock.getCakeName(cakeIndex)));
+                if (!isAddOnValid) {
+                    output = output.concat("Special item " + spcItemStock.getItemName(index) + " is out of stock or is incompatible with the cake. Please try again.\n");
+                    userWallet.clearWallet();
+                    return output;
+                }
+            }
 
+            totalPrice = vndItemStock.getCakePrice(cakeIndex);
+            for (int i = 0; i < itemIndex.size(); i++) {
+                int index = itemIndex.get(i);
+                totalPrice += spcItemStock.getItemPrice(index);
+            }
+        }
         if (canGiveChange == false) {
             if (totalUserBill == totalPrice) {
                 output = output.concat(vndStock.pay(totalUserBill, totalPrice));
                 userWallet.clearWallet();
                 profit += totalPrice;
-                for (int i = 0; i < itemIndex.size(); i++) {
-                    int index = itemIndex.get(i);
-                    spcItemStock.transferItem(spcItemSold, index);
-                    output = output.concat(spcItemStock.getFT(index) + "\n");
+                if(cakeIndex!=-1){
+                    for (int i = 0; i < itemIndex.size(); i++) {
+                        int index = itemIndex.get(i);
+                        spcItemStock.transferItem(spcItemSold, index);
+                        output = output.concat(spcItemStock.getFT(index) + "\n");
+                    }
+                    output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".\n");
+                    vndItemStock.transferCake(vndItemSold, cakeIndex);
                 }
-                output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".\n");
-                vndItemStock.transferCake(vndItemSold, cakeIndex);
-            } else if (totalUserBill > totalPrice) {
+                else{
+                    for (int i = 0; i < itemIndex.size(); i++) {
+                        int index = itemIndex.get(i);
+                        spcItemStock.transferItem(spcItemSold, index);
+                        output = output.concat("Payment successful. Dispensing " + spcItemStock.getItemName(index) + ".\n");
+                    }
+                }
+                
+            } else {
                 output = output.concat("Please pay exact amount. No change available.\n");
                 userWallet.clearWallet();
                 return output;
@@ -110,13 +134,22 @@ public class SpcVnd extends RgVnd {
                 output = output.concat(vndStock.pay(totalUserBill, totalPrice));
                 userWallet.clearWallet();
                 profit += totalPrice;
-                vndItemStock.transferCake(vndItemSold, cakeIndex);
-                for (int i = 0; i < itemIndex.size(); i++) {
-                    int index = itemIndex.get(i);
-                    spcItemStock.transferItem(spcItemSold, index);
-                    output = output.concat(spcItemStock.getFT(index) + "\n");
+                if(cakeIndex!=-1){
+                    for (int i = 0; i < itemIndex.size(); i++) {
+                        int index = itemIndex.get(i);
+                        spcItemStock.transferItem(spcItemSold, index);
+                        output = output.concat(spcItemStock.getFT(index) + "\n");
+                    }
+                    output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".\n");
+                    vndItemStock.transferCake(vndItemSold, cakeIndex);
                 }
-                output = output.concat("Payment successful. Dispensing " + vndItemStock.getCakeName(cakeIndex) + ".\n");
+                else{
+                    for (int i = 0; i < itemIndex.size(); i++) {
+                        int index = itemIndex.get(i);
+                        spcItemStock.transferItem(spcItemSold, index);
+                        output = output.concat("Payment successful. Dispensing " + spcItemStock.getItemName(index) + ".\n");
+                    }
+                }
             } 
             else if (totalUserBill < totalPrice) {
                 output = output.concat("Insufficient funds. Please add more bills.\n");
