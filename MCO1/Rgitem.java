@@ -144,9 +144,14 @@ public class RgItem{
         strName = " ";
     }
 /**
- * Displays the cake.
- * 
- * @return the Display name of the cake
+ * Generates a formatted string representing the details of a cake item.
+ *
+ * This method constructs a formatted string containing the name, description, calorie count,
+ * price, and available quantity of the cake item. The details are displayed in separate lines
+ * for easy readability.
+ *
+ * @return A formatted string containing the name, description, calorie count, price, and available
+ *         quantity of the cake item.
  */
 public String displayItem() {
     return  "Name: " + strName
