@@ -379,7 +379,7 @@ public class SpcGui extends Gui {
     /**
      * Overrides and toggles the visibility of maintenance menu panels based on the chosen option.
     * 
-    * @param chosen The index of the maintenance menu panel to be made visible.
+    * @param Chosen The index of the maintenance menu panel to be made visible.
     */
     @Override
     public void maintenanceMenuToggle(int Chosen) {
@@ -402,7 +402,7 @@ public class SpcGui extends Gui {
     /**
     * Toggles the visibility of item menu panels based on the chosen option.
     * 
-    * @param chosen The index of the item menu panel to be made visible.
+    * @param Chosen The index of the item menu panel to be made visible.
     */
     public void spcItemMenuToggle(int Chosen) {
         for(int i = 0; i < 6; i++){
