@@ -408,8 +408,7 @@ public class SpcGui extends Gui {
     *
     * @param itemIndex The index of the item in the vendingP array.
     */
-    @Override
-    public void setupItemDetailPanel(int itemIndex) {
+    public void setupSpcItemInfoPanel(int itemIndex) {
         spcVendingP[itemIndex] = new JPanel();
         spcVendingP[itemIndex].setBounds(725, 30, 350, 250);
         spcVendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -430,32 +429,6 @@ public class SpcGui extends Gui {
         // Add the JTextArea to the SOUTH of the spcVendingP panel
         spcVendingP[itemIndex].add(spcItemInfoTextArea[itemIndex], BorderLayout.SOUTH);
     
-        spcVendingP[itemIndex].setVisible(false);
-        add(spcVendingP[itemIndex]);
-    }
-    /**
-    * Updates panel to display detailed information for a item in the vending machine user interface.
-    *
-    * @param itemIndex The index of the item in the spcVendingP array.
-    */
-    @Override
-    public void updateNewItemDetailPanel(int itemIndex) {
-        // Create a JTextArea to display the item information
-
-        spcItemInfoTextArea[itemIndex] = new JTextArea();
-        spcItemInfoTextArea[itemIndex].setEditable(false);
-        spcItemInfoTextArea[itemIndex].setLineWrap(true);
-        spcItemInfoTextArea[itemIndex].setWrapStyleWord(true);
-
-        // Get the item information using getItemInfoString() method
-        String itemInfo = vnd.getItemDetails(itemIndex);
-
-        // Set the item information as the text of the JTextArea
-        spcItemInfoTextArea[itemIndex].setText(itemInfo);
-
-        // Add the JTextArea to the SOUTH of the spcVendingP panel
-        spcVendingP[itemIndex].add(spcItemInfoTextArea[itemIndex], BorderLayout.SOUTH);
-
         spcVendingP[itemIndex].setVisible(false);
         add(spcVendingP[itemIndex]);
     }
@@ -531,14 +504,14 @@ public class SpcGui extends Gui {
             addCake.setVisible(false);
             added.setVisible(true);
             vnd.addNewItem(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan), addTag.getText(), addFlav.getText());
-            setupItemDetailPanel(count);
+            setupSpcItemInfoPanel(count);
             count++;
         } 
         else if (click.getSource() == delConfirm) {
             delCake.setVisible(false);
             added.setVisible(true);
             vnd.deleteAnItem((parseFieldValue(delete)));
-            setupItemDetailPanel((parseFieldValue(delete)));
+            setupSpcItemInfoPanel((parseFieldValue(delete)));
         }
         else if(click.getSource() == maintenanceB[2]) {
             maintenanceMenuToggle(2);
