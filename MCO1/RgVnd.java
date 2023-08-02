@@ -7,7 +7,10 @@ public class RgVnd {
     protected RgStock vndItemSold;
     protected BillWallet userWallet;
     protected BillWallet vndStock;
-    protected int profit=0;
+    /**
+     * The profit of the vending machine
+     */
+    protected int profit=0; 
 /**
  * This is a constructor that initializes the RgStocks and BillWallets to be used throughout the program. 
  * vndStock is the stock of bills the vending machine can use to produce change, the userWallet is the stock of bills the user uses to pay the vending machine.
@@ -50,8 +53,9 @@ public class RgVnd {
         }
     }
 /**
- * Adds bills to the vending machine's stock
- * @param usrBills the array of bills corresponding to the number of [10, 20, 50, 100, 200, 500] peso bills
+ * Adds bills to the vending machine, from the user
+ * @param vndBills the array of bills corresponding to the number of [10, 20, 50, 100, 200, 500] peso bills
+ * @return the bills added
  */
     public int addUserBill(int[] vndBills) {
         if (vndBills.length != 6) {
@@ -110,6 +114,7 @@ public class RgVnd {
  * @param choice tells which parameter to edit (3 for Calorie, 4 for Price, 5 for adding Stock, 6 for removing Stock)
  * @param cakeIndex the index of the cake to be edited
  * @param value the new value
+ * @return the transcation details
  */
     public String editCake(int choice, int cakeIndex, int value){
         String output="";
@@ -145,6 +150,7 @@ public class RgVnd {
  * @param choice tells which parameter to edit (1 for name, 2 for description)
  * @param cakeIndex the index of the cake to be edited
  * @param value the new value
+ * @return the transaction a detail
  */
     public String editCake(int choice, int cakeIndex, String value){
         String output="";
@@ -186,7 +192,7 @@ public class RgVnd {
     }
 /**
  * Lets the user purchase an item at cakeIndex with userBills. Gets the change too.
- * @param totalUserBills the total amount inserted by the user
+ * @param totalUserBill the total amount inserted by the user
  * @param cakeIndex the index of the item to be bought.
  * @return output the entire transaction script
  */
@@ -252,6 +258,7 @@ public class RgVnd {
     }
 /**
  * Gets the list of items bought before a profit is collected
+ * @return the reciept
  */
     public String receipt(){
         return vndItemSold.getReceipt();
