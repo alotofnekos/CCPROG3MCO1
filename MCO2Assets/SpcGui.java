@@ -22,6 +22,13 @@ public class SpcGui extends Gui {
     private ArrayList<Integer> selectedItems = new ArrayList<>();
     private JFormattedTextField addTag;
     private JFormattedTextField addFlav;
+    private JButton spcItemEditButton;
+    private JButton spcDeleItemButton;
+    private JButton spcAddItemButton;
+    private JPanel addItem;
+    private JPanel delItem;
+    private JPanel ediItem;
+    private int wMenu;
     /**
      * Constructor for the SpcGui class.
      *
@@ -42,6 +49,9 @@ public class SpcGui extends Gui {
         spcVendingP =new JPanel[16];
         clearAddOn = new JButton("Clear Add-ons");
         spcItemInfoTextArea = new JTextArea[20]; 
+        addItem = new JPanel();
+        delItem = new JPanel();
+        ediItem = new JPanel();
         vnd.setDefaults();
         int i=0;
         while(vnd.validSpcItem(i)){
@@ -66,6 +76,9 @@ public class SpcGui extends Gui {
         }
         Arrays.fill(spcButtons, new JButton());
         Arrays.fill(spcVendingP, new JPanel());
+        spcItemEditButton = new JButton("Edit Special Item");
+        spcDeleItemButton = new JButton("Delete Special Item");
+        spcAddItemButton = new JButton("Add Special Item");
     }
     /**
      * Sets up the panel for the special cake vending machine.
@@ -197,6 +210,7 @@ public class SpcGui extends Gui {
     public void Display() {
         super.Display();
         initializeSpcItemButtons();
+        itemSpcMaintenance();
         addOn();
     }
     /**
@@ -214,6 +228,12 @@ public class SpcGui extends Gui {
                 spcButtons[i].setBackground(Color.LIGHT_GRAY);
             }
         }
+        else if (menuInt == 1) {
+            for (int i = 0; i < 6; i++) {
+                maintenanceB[i].setVisible(true);
+                maintenanceP[i].setVisible(true);
+            }
+        }
     }
     /**
      * Overrides the superclass's inVisible method to make certain components invisible.
@@ -223,10 +243,17 @@ public class SpcGui extends Gui {
     public void inVisible() {
         super.inVisible();
         clearAddOn.setVisible(false);
+        addItem.setVisible(false);
+        delItem.setVisible(false);
+        ediItem.setVisible(false);
 
         for(int i = 0; i < spcButtons.length; i++) {
             spcVendingP[i].setVisible(false);
             spcButtons[i].setVisible(false);
+        }
+        for (int i = 0; i < 6; i++) {
+            maintenanceB[i].setVisible(false);
+            maintenanceP[i].setVisible(false);
         }
     }
     /**
@@ -262,33 +289,165 @@ public class SpcGui extends Gui {
         selectedCake = -1;
         selectedItems.clear(); 
     }
+    
+
     /**
-     * Overrides the superclass's itemMaintenance method to handle initializationo of Spc Item edit menus
-     */
+    * Overrides the initialization of the maintenance menu buttons + positions.
+    */
     @Override
-    public void itemMaintenance() {
+    public void initializeMaintenanceButtons() {
+        yPos = 50;
+        for (int i = 0; i < 6; i++) {
+            
+            setupMaintenanceMenuAssets(i);
+            yPos += 75;
+            if(i == 1) {
+                yPos += 75;
+            }
+            else if(i == 4) {
+                yPos = 200;
+            }
+        }
+        yPos = 50;
+    }
+    /**
+    * Sets up the maintenance menu assets for the specified index.
+    *
+    * @param index The index of the maintenance menu asset.
+    */
+    @Override
+    public void setupMaintenanceMenuAssets(int index) {
+        if(index == 2)
+            maintenanceB[index] = new JButton("4");
+        else if(index == 5)
+            maintenanceB[index] = new JButton("3");
+        else if(index > 2)
+            maintenanceB[index] = new JButton(index + 2 + "");
+        else
+            maintenanceB[index] = new JButton(index + 1 + "");
+
+        maintenanceB[index].setBounds(xPos, yPos, 75, 50);
+        maintenanceB[index].addActionListener(this);
+        maintenanceB[index].setVisible(false);
+
+        maintenanceP[index] = new JPanel();
+        maintenanceP[index].setBounds(xPos + 100, yPos, 200, 50);
+        maintenanceP[index].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        maintenanceP[index].setVisible(false);
+
+        String maintenanceLabel = getMaintenanceLabel(index);
+        maintenanceL[index] = new JLabel(maintenanceLabel);
+        maintenanceL[index].setVisible(true);
+        maintenanceP[index].add(maintenanceL[index]);
+        add(maintenanceP[index]);
+        add(maintenanceB[index]);
+
+        mainMainP[index] = new JPanel();
+        mainMainP[index].setBounds(400, 50, 600, 450);
+        mainMainP[index].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        mainMainP[index].setLayout(new GridLayout(0,1,1,0));
+        mainMainP[index].setVisible(false);
+
+        add(mainMainP[index]);
+    }
+    /**
+    * Overrieds and retrieves the maintenance label for the specified index.
+    *
+    * @param index The index of the maintenance label.
+    * @return The maintenance label corresponding to the given index.
+    */
+    @Override
+    protected String getMaintenanceLabel(int index) {
+        switch (index) {
+            case 0:
+                return "Coin Maintenance";
+            case 1:
+                return "Item Maintenance";
+            case 2:
+                return "Set Defaults";
+            case 3:
+                return "Collect Payments";
+            case 4:
+                return "Items Bought";
+            case 5:
+                return "Spc Item Maintenance";
+            default:
+                return "Maintenance " + (index + 1);
+        }
+    }
+    /**
+     * Overrides and toggles the visibility of maintenance menu panels based on the chosen option.
+    * 
+    * @param chosen The index of the maintenance menu panel to be made visible.
+    */
+    @Override
+    public void maintenanceMenuToggle(int Chosen) {
+        addCake.setVisible(false);
+        delCake.setVisible(false);
+        ediCake.setVisible(false);
+
+        addItem.setVisible(false);
+        delItem.setVisible(false);
+        ediItem.setVisible(false);
+
+        for(int i = 0; i < 6; i++){
+            mainMainP[i].setVisible(false);
+        }
+        mainMainP[Chosen].setVisible(true);
+    }
+    /**
+    * Toggles the visibility of item menu panels based on the chosen option.
+    * 
+    * @param chosen The index of the item menu panel to be made visible.
+    */
+    public void spcItemMenuToggle(int Chosen) {
+        for(int i = 0; i < 6; i++){
+            mainMainP[i].setVisible(false);
+        }
+        delItem.setVisible(false);
+        addItem.setVisible(false);
+        ediItem.setVisible(false);
+
+        switch (Chosen) {
+            case 1:
+                ediItem.setVisible(true);
+                break;
+            case 2:
+                delItem.setVisible(true);
+                break;
+            case 3:
+                addItem.setVisible(true);
+                break;
+            default:
+                break;
+        }
+    }
+    /**
+     * handle initializationo of Spc Item edit menus
+     */
+    public void itemSpcMaintenance() {
         addItem();
         deleteItem();
         editItem();
 
-        itemEditButton.addActionListener(this);
-        deleCakeButton.addActionListener(this);
-        addCakeButton.addActionListener(this);
+        spcItemEditButton.addActionListener(this);
+        spcDeleItemButton.addActionListener(this);
+        spcAddItemButton.addActionListener(this);
         
-        mainMainP[1].add(itemEditButton);
-        mainMainP[1].add(deleCakeButton);
-        mainMainP[1].add(addCakeButton);
-        mainMainP[1].setVisible(false);
+        mainMainP[5].add(spcItemEditButton);
+        mainMainP[5].add(spcDeleItemButton);
+        mainMainP[5].add(spcAddItemButton);
+        mainMainP[5].setVisible(false);
     }
     /**
      * Menu for adding a new specific item in the system
      */
     public void addItem() {
-        addCake.setBounds(400, 50, 600, 450);
-        addCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        addCake.setLayout(new GridLayout(0,1,1,0));
-        addCake.setVisible(false);
-        add(addCake);
+        addItem.setBounds(400, 50, 600, 450);
+        addItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        addItem.setLayout(new GridLayout(0,1,1,0));
+        addItem.setVisible(false);
+        add(addItem);
 
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
@@ -305,33 +464,33 @@ public class SpcGui extends Gui {
         addConfirm = new JButton("Confirm");
         addConfirm.addActionListener(this);
 
-        addCake.add(new JLabel("Enter New Item Name:"));
-        addCake.add(addName);
-        addCake.add(new JLabel("Enter New Item Description:"));
-        addCake.add(addDesc);
-        addCake.add(new JLabel("Enter New Item Calorie Count:"));
-        addCake.add(addCalo);
-        addCake.add(new JLabel("Enter New Item Price:"));
-        addCake.add(addPric);
-        addCake.add(new JLabel("Enter New Item Stock [Max 10]:"));
-        addCake.add(addQuan);
-        addCake.add(new JLabel("Enter New Item Tag:"));
-        addCake.add(addTag);
-        addCake.add(new JLabel("Enter New Item Flavor Text:"));
-        addCake.add(addFlav);
-        addCake.add(addConfirm);
+        addItem.add(new JLabel("Enter New Item Name:"));
+        addItem.add(addName);
+        addItem.add(new JLabel("Enter New Item Description:"));
+        addItem.add(addDesc);
+        addItem.add(new JLabel("Enter New Item Calorie Count:"));
+        addItem.add(addCalo);
+        addItem.add(new JLabel("Enter New Item Price:"));
+        addItem.add(addPric);
+        addItem.add(new JLabel("Enter New Item Stock [Max 10]:"));
+        addItem.add(addQuan);
+        addItem.add(new JLabel("Enter New Item Tag:"));
+        addItem.add(addTag);
+        addItem.add(new JLabel("Enter New Item Flavor Text:"));
+        addItem.add(addFlav);
+        addItem.add(addConfirm);
 
-        addCake.setVisible(false);
+        addItem.setVisible(false);
     }
     /**
      * Menu for deleting a specific item in the system
      */
     public void deleteItem() {
-        delCake.setBounds(400, 50, 600, 450);
-        delCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        delCake.setLayout(new GridLayout(0,1,1,0));
-        delCake.setVisible(false);
-        add(delCake);
+        delItem.setBounds(400, 50, 600, 450);
+        delItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        delItem.setLayout(new GridLayout(0,1,1,0));
+        delItem.setVisible(false);
+        add(delItem);
 
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
@@ -342,20 +501,20 @@ public class SpcGui extends Gui {
         delConfirm = new JButton("Confirm");
         delConfirm.addActionListener(this);
 
-        delCake.add(new JLabel("Insert Item Number To Delete"));
-        delCake.add(delete);
-        delCake.add(delConfirm);
-        delCake.setVisible(false);
+        delItem.add(new JLabel("Insert Item Number To Delete"));
+        delItem.add(delete);
+        delItem.add(delConfirm);
+        delItem.setVisible(false);
     }
     /**
      * Menu for editing a specific item in the system
      */
     public void editItem() {
-        ediCake.setBounds(400, 50, 600, 450);
-        ediCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        ediCake.setLayout(new GridLayout(0,1,1,0));
-        ediCake.setVisible(false);
-        add(ediCake);
+        ediItem.setBounds(400, 50, 600, 450);
+        ediItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        ediItem.setLayout(new GridLayout(0,1,1,0));
+        ediItem.setVisible(false);
+        add(ediItem);
 
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(integerFormat);
@@ -380,8 +539,8 @@ public class SpcGui extends Gui {
         quaA.addActionListener(this);      
         quaM = new JRadioButton("Remove Stock");
         quaM.addActionListener(this);
-        ediCake.add(new JLabel("Insert Item Number"));
-        ediCake.add(inde);
+        ediItem.add(new JLabel("Insert Item Number"));
+        ediItem.add(inde);
         
         editRadioButtons.add(name);
         editRadioButtons.add(desc);
@@ -390,18 +549,47 @@ public class SpcGui extends Gui {
         editRadioButtons.add(quaA);
         editRadioButtons.add(quaM);
 
-        ediCake.add(new JLabel("What To Edit"));
-        ediCake.add(name);
-        ediCake.add(desc);
-        ediCake.add(calo);
-        ediCake.add(pric);
-        ediCake.add(quaA);
-        ediCake.add(quaM);
+        ediItem.add(new JLabel("What To Edit"));
+        ediItem.add(name);
+        ediItem.add(desc);
+        ediItem.add(calo);
+        ediItem.add(pric);
+        ediItem.add(quaA);
+        ediItem.add(quaM);
 
-        ediCake.add(new JLabel("Enter New Data"));
-        ediCake.add(vari);
-        ediCake.add(editConfirmItem);
-        ediCake.setVisible(false);
+        ediItem.add(new JLabel("Enter New Data"));
+        ediItem.add(vari);
+        ediItem.add(editConfirmItem);
+        ediItem.setVisible(false);
+    }
+    /**
+     * Sets up the "Default Maintenance" menu with a label indicating that default settings have been restored.
+     */
+    @Override
+    public void defaultMaintenance() {
+        mainMainP[2].add(new JLabel("Defaults Settings Restored"), CENTER_ALIGNMENT);
+        mainMainP[2].setVisible(false);
+    }
+    /**
+    * Sets the variables and label of Collect Payments to base as well turning its visibility to false
+    */
+    @Override
+    public void collectPayments() {
+        profit = 0;
+        colProfits = new JLabel("Profit: "+ profit);
+        mainMainP[3].add(colProfits);
+        mainMainP[3].setVisible(false);
+    }
+    /**
+    * Sets the variables and text area of Collect Receipt to base as well turning its visibility to false
+    */
+    @Override
+    public void itemBought() {
+        receipt = " ";
+        colReceipt = new JTextArea(receipt);
+        colReceipt.setEditable(false);
+        mainMainP[4].add(colReceipt);
+        mainMainP[4].setVisible(false);
     }
     /**
     * Sets up a NEW panel to display detailed information for a NEW item in the vending machine user interface.
@@ -431,6 +619,16 @@ public class SpcGui extends Gui {
     
         spcVendingP[itemIndex].setVisible(false);
         add(spcVendingP[itemIndex]);
+    }
+    /**
+    * Updates panel to display detailed information for an item in the vending machine user interface.
+    *
+    * @param itemIndex The index of the item in the vendingP array.
+    */
+    public void spcUpdateItemDetailPanel(int itemIndex) {
+        String itemInfo = vnd.getItemDetails(itemIndex);
+        spcItemInfoTextArea[itemIndex].setText(itemInfo);
+        spcItemInfoTextArea[itemIndex].setEditable(false);
     }
     /**
      * Overrides the superclass's actionPerformed method to handle more button actions.
@@ -466,7 +664,16 @@ public class SpcGui extends Gui {
                 spcButtons[j].setBackground(Color.LIGHT_GRAY);
             }
         }
-        else if (click.getSource() == editConfirmItem) {
+        else if (click.getSource() == spcItemEditButton) {
+            spcItemMenuToggle(1);
+        }
+        else if (click.getSource() == spcDeleItemButton) {
+            spcItemMenuToggle(2);
+        }
+        else if (click.getSource() == spcAddItemButton) {
+            spcItemMenuToggle(3);
+        }
+        else if ((click.getSource() == editConfirmItem) && wMenu == 2) {
             String editValString = vari.getText();
             int editVal = parseFieldValue(vari);
             int choice;
@@ -495,37 +702,88 @@ public class SpcGui extends Gui {
                 choice = 16;
                 vnd.editItem(choice, index, editVal);
             }
-            updateItemDetailPanel(index);
-            ediCake.setVisible(false);
+            spcUpdateItemDetailPanel(index);
+            ediItem.setVisible(false);
             added.setVisible(true);
         }
-        else if (click.getSource() == addConfirm) {
+        else if ((click.getSource() == addConfirm) && wMenu == 2) {
             int count = 12;
-            addCake.setVisible(false);
+            addItem.setVisible(false);
             added.setVisible(true);
             vnd.addNewItem(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan), addTag.getText(), addFlav.getText());
             setupSpcItemInfoPanel(count);
             count++;
         } 
-        else if (click.getSource() == delConfirm) {
-            delCake.setVisible(false);
+        else if ((click.getSource() == delConfirm) && wMenu == 2) {
+            delItem.setVisible(false);
             added.setVisible(true);
             vnd.deleteAnItem((parseFieldValue(delete)));
-            setupSpcItemInfoPanel((parseFieldValue(delete)));
+            spcUpdateItemDetailPanel((parseFieldValue(delete)));
         }
-        else if(click.getSource() == maintenanceB[2]) {
-            maintenanceMenuToggle(2);
-            vnd.setDefaults();
+        else if ((click.getSource() == editConfirmItem) && wMenu == 1) {
+            String editValString = vari.getText();
+            int editVal = parseFieldValue(vari);
+            int choice;
+            int index = (parseFieldValue(inde) - 1);
+            if(name.isSelected()) {
+                choice = 1;
+                vnd.editCake(choice, index, editValString);
+            }
+            else if(desc.isSelected()) {
+                choice = 2;
+                vnd.editCake(choice, index, editValString);
+            }
+            else if(calo.isSelected()) {
+                choice = 3;
+                vnd.editCake(choice, index, editVal);
+            }
+            else if(pric.isSelected()) {
+                choice = 4;
+                vnd.editCake(choice, index, editVal);
+            }
+            else if(quaA.isSelected()) {
+                choice = 5;
+                vnd.editCake(choice, index, editVal);
+            }
+            else if(quaM.isSelected()) {
+                choice = 6;
+                vnd.editCake(choice, index, editVal);
+            }
+            updateItemDetailPanel(index);
+            ediItem.setVisible(false);
+            added.setVisible(true);
+        }
+        else if ((click.getSource() == addConfirm) && wMenu == 1) {
+            int count = 10;
+            addItem.setVisible(false);
+            added.setVisible(true);
+            vnd.addNewCake(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan));
+            updateNewItemDetailPanel(count);
+            count++;
+        } 
+        else if ((click.getSource() == delConfirm) && wMenu == 1) {
+            vnd.deleteACake((parseFieldValue(delete)-1));
+            setupItemDetailPanel((parseFieldValue(delete)-1));
+        }
+        else if(click.getSource() == maintenanceB[1]) {
+            maintenanceMenuToggle(1);
+            wMenu = 1;
         }
         else if(click.getSource() == maintenanceB[3]) {
+            maintenanceMenuToggle(3);
             int profit = vnd.collectProfit();
             colProfits.setText("Profit: "+ profit);
             profit = 0;
         }
         else if(click.getSource() == maintenanceB[4]) {
+            maintenanceMenuToggle(4);
             String receipt = vnd.receipt();
             colReceipt.setText(receipt);
             receipt = " ";
+        }
+        else if(click.getSource() == maintenanceB[5]) {
+            maintenanceMenuToggle(5);
+            wMenu = 2;
         }
     }
 }
