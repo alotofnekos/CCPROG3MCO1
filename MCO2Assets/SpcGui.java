@@ -212,6 +212,7 @@ public class SpcGui extends Gui {
         initializeSpcItemButtons();
         itemSpcMaintenance();
         addOn();
+        vendingMachinePanel();
     }
     /**
      * Overrides the superclass's visible method to make certain components visible.
