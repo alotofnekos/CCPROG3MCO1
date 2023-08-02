@@ -67,18 +67,37 @@ public class RgVnd {
  * @param intCalorie the calorie amount of the cake
  * @param intPrice the price of the cake
  * @param intQuantity the amount of cakes to be added
+ * @return the results of the transaction
  */
-    public void addNewCake(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity){
-        vndItemStock.addNewCake(strName,strDesc, intCalorie,intPrice, intQuantity);
-        vndItemSold.addNewCake(strName,strDesc, intCalorie,intPrice, 0);
+    public String addNewCake(String strName, String strDesc, int intCalorie, int intPrice, int intQuantity){
+        String output="";
+        if(profit!=0){
+            output=output.concat("Get the profit first before editing the cake parameters. Operation aborted");
+        }
+        else{
+            output=output.concat(strName+" was added!");
+            vndItemStock.addNewCake(strName,strDesc, intCalorie,intPrice, intQuantity);
+            vndItemSold.addNewCake(strName,strDesc, intCalorie,intPrice, 0);
+        }
+        return output;
     }
 /**
  * Deletes the cake at cakeIndex. Reciept's copy also deletes the cake to prevent discrepancies.
  * @param cakeIndex the index of the cake to be deleted
+ * @return the results of the transaction
  */
-    public void deleteACake(int cakeIndex){
-        vndItemStock.deleteCake(cakeIndex);
-        vndItemSold.deleteCake(cakeIndex);
+    public String deleteACake(int cakeIndex){
+        String output="";
+        if(profit!=0){
+            output=output.concat("Get the profit first before editing the cake parameters. Operation aborted");
+        }
+        else{
+            output=output.concat(vndItemStock.getCakeName(cakeIndex)+" was deleted.");
+            vndItemStock.deleteCake(cakeIndex);
+            vndItemSold.deleteCake(cakeIndex);
+        }
+        
+        return output;
     }
 /**
  * Edits the cake at cakeIndex, based on choice, with an integer value. Some features are also passed down to the reciept's copy of the inventory, unless it pertains about the quantity.
