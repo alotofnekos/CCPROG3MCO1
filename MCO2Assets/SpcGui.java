@@ -18,6 +18,8 @@ public class SpcGui extends Gui {
     private ArrayList<String> spcitemNames = new ArrayList<>();
     private ArrayList<String> spcitemImageFileNames = new ArrayList<>();
     private ArrayList<Integer> selectedItems = new ArrayList<>();
+    private JFormattedTextField addTag;
+    private JFormattedTextField addFlav;
     /**
      * Constructor for the SpcGui class.
      *
@@ -260,6 +262,204 @@ public class SpcGui extends Gui {
         selectedItems.clear(); 
     }
     /**
+     * Overrides the superclass's itemMaintenance method to handle initializationo of Spc Item edit menus
+     */
+    @Override
+    public void itemMaintenance() {
+        addItem();
+        deleteItem();
+        editItem();
+
+        itemEditButton.addActionListener(this);
+        deleCakeButton.addActionListener(this);
+        addCakeButton.addActionListener(this);
+        
+        mainMainP[1].add(itemEditButton);
+        mainMainP[1].add(deleCakeButton);
+        mainMainP[1].add(addCakeButton);
+        mainMainP[1].setVisible(false);
+    }
+    /**
+     * Menu for adding a new specific item in the system
+     */
+    public void addItem() {
+        addCake.setBounds(400, 50, 600, 450);
+        addCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        addCake.setLayout(new GridLayout(0,1,1,0));
+        addCake.setVisible(false);
+        add(addCake);
+
+        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(integerFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false); // Only allow valid integers
+
+        addName = new JFormattedTextField();
+        addDesc = new JFormattedTextField();
+        addCalo = new JFormattedTextField();
+        addPric = new JFormattedTextField(formatter);
+        addQuan = new JFormattedTextField(formatter);
+        addTag = new JFormattedTextField();
+        addFlav = new JFormattedTextField();
+        addConfirm = new JButton("Confirm");
+        addConfirm.addActionListener(this);
+
+        addCake.add(new JLabel("Enter New Item Name:"));
+        addCake.add(addName);
+        addCake.add(new JLabel("Enter New Item Description:"));
+        addCake.add(addDesc);
+        addCake.add(new JLabel("Enter New Item Calorie Count:"));
+        addCake.add(addCalo);
+        addCake.add(new JLabel("Enter New Item Price:"));
+        addCake.add(addPric);
+        addCake.add(new JLabel("Enter New Item Stock [Max 10]:"));
+        addCake.add(addQuan);
+        addCake.add(new JLabel("Enter New Item Tag:"));
+        addCake.add(addTag);
+        addCake.add(new JLabel("Enter New Item Flavor Text:"));
+        addCake.add(addFlav);
+        addCake.add(addConfirm);
+
+        addCake.setVisible(false);
+    }
+    /**
+     * Menu for deleting a specific item in the system
+     */
+    public void deleteItem() {
+        delCake.setBounds(400, 50, 600, 450);
+        delCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        delCake.setLayout(new GridLayout(0,1,1,0));
+        delCake.setVisible(false);
+        add(delCake);
+
+        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(integerFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false); // Only allow valid integers
+
+        delete = new JFormattedTextField(formatter);
+        delConfirm = new JButton("Confirm");
+        delConfirm.addActionListener(this);
+
+        delCake.add(new JLabel("Insert Item Number To Delete"));
+        delCake.add(delete);
+        delCake.add(delConfirm);
+        delCake.setVisible(false);
+    }
+    /**
+     * Menu for editing a specific item in the system
+     */
+    public void editItem() {
+        ediCake.setBounds(400, 50, 600, 450);
+        ediCake.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        ediCake.setLayout(new GridLayout(0,1,1,0));
+        ediCake.setVisible(false);
+        add(ediCake);
+
+        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(integerFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false); // Only allow valid integers
+
+        inde = new JFormattedTextField();
+        vari = new JFormattedTextField();
+        editRadioButtons = new ButtonGroup();
+        editConfirmItem = new JButton("Confirm Changes");
+        editConfirmItem.addActionListener(this);
+
+        name = new JRadioButton("Name");
+        name.addActionListener(this);
+        desc = new JRadioButton("Description");
+        desc.addActionListener(this);
+        calo = new JRadioButton("Calorie Count");
+        calo.addActionListener(this);
+        pric = new JRadioButton("Price");
+        pric.addActionListener(this);
+        quaA = new JRadioButton("Add Stock");
+        quaA.addActionListener(this);      
+        quaM = new JRadioButton("Remove Stock");
+        quaM.addActionListener(this);
+        ediCake.add(new JLabel("Insert Item Number"));
+        ediCake.add(inde);
+        
+        editRadioButtons.add(name);
+        editRadioButtons.add(desc);
+        editRadioButtons.add(calo);
+        editRadioButtons.add(pric);
+        editRadioButtons.add(quaA);
+        editRadioButtons.add(quaM);
+
+        ediCake.add(new JLabel("What To Edit"));
+        ediCake.add(name);
+        ediCake.add(desc);
+        ediCake.add(calo);
+        ediCake.add(pric);
+        ediCake.add(quaA);
+        ediCake.add(quaM);
+
+        ediCake.add(new JLabel("Enter New Data"));
+        ediCake.add(vari);
+        ediCake.add(editConfirmItem);
+        ediCake.setVisible(false);
+    }
+    /**
+    * Sets up a NEW panel to display detailed information for a NEW item in the vending machine user interface.
+    *
+    * @param itemIndex The index of the item in the vendingP array.
+    */
+    @Override
+    public void setupItemDetailPanel(int itemIndex) {
+        spcVendingP[itemIndex] = new JPanel();
+        spcVendingP[itemIndex].setBounds(725, 30, 350, 250);
+        spcVendingP[itemIndex].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        spcVendingP[itemIndex].setLayout(new BorderLayout());
+
+        // Create a JTextArea to display the item information
+        spcItemInfoTextArea[itemIndex] = new JTextArea();
+        spcItemInfoTextArea[itemIndex].setEditable(false);
+        spcItemInfoTextArea[itemIndex].setLineWrap(true);
+        spcItemInfoTextArea[itemIndex].setWrapStyleWord(true);
+
+        // Get the item information using getItemInfoString() method
+        String itemInfo = vnd.getItemDetails(itemIndex);
+
+        // Set the item information as the text of the JTextArea
+        spcItemInfoTextArea[itemIndex].setText(itemInfo);
+    
+        // Add the JTextArea to the SOUTH of the spcVendingP panel
+        spcVendingP[itemIndex].add(spcItemInfoTextArea[itemIndex], BorderLayout.SOUTH);
+    
+        spcVendingP[itemIndex].setVisible(false);
+        add(spcVendingP[itemIndex]);
+    }
+    /**
+    * Updates panel to display detailed information for a item in the vending machine user interface.
+    *
+    * @param itemIndex The index of the item in the spcVendingP array.
+    */
+    @Override
+    public void updateNewItemDetailPanel(int itemIndex) {
+        // Create a JTextArea to display the item information
+        spcButtons[itemIndex].setText("Addon#" + (itemIndex+1));
+
+        spcItemInfoTextArea[itemIndex] = new JTextArea();
+        spcItemInfoTextArea[itemIndex].setEditable(false);
+        spcItemInfoTextArea[itemIndex].setLineWrap(true);
+        spcItemInfoTextArea[itemIndex].setWrapStyleWord(true);
+
+        // Get the item information using getItemInfoString() method
+        String itemInfo = vnd.getCakeDetails(itemIndex);
+
+        // Set the item information as the text of the JTextArea
+        spcItemInfoTextArea[itemIndex].setText(itemInfo);
+
+        // Add the JTextArea to the SOUTH of the spcVendingP panel
+        spcVendingP[itemIndex].add(itemInfoTextArea[itemIndex], BorderLayout.SOUTH);
+
+        spcVendingP[itemIndex].setVisible(false);
+        add(spcVendingP[itemIndex]);
+    }
+    /**
      * Overrides the superclass's actionPerformed method to handle more button actions.
      */
     @Override
@@ -292,7 +492,67 @@ public class SpcGui extends Gui {
                 spcButtons[j].setEnabled(true);
                 spcButtons[j].setBackground(Color.LIGHT_GRAY);
             }
-
+        }
+        else if (click.getSource() == editConfirmItem) {
+            String editValString = vari.getText();
+            int editVal = parseFieldValue(vari);
+            int choice;
+            int index = (parseFieldValue(inde) - 1);
+            if(name.isSelected()) {
+                choice = 11;
+                vnd.editItem(choice, index, editValString);
+            }
+            else if(desc.isSelected()) {
+                choice = 12;
+                vnd.editItem(choice, index, editValString);
+            }
+            else if(calo.isSelected()) {
+                choice = 13;
+                vnd.editItem(choice, index, editVal);
+            }
+            else if(pric.isSelected()) {
+                choice = 14;
+                vnd.editItem(choice, index, editVal);
+            }
+            else if(quaA.isSelected()) {
+                choice = 15;
+                vnd.editItem(choice, index, editVal);
+            }
+            else if(quaM.isSelected()) {
+                choice = 16;
+                vnd.editItem(choice, index, editVal);
+            }
+            updateItemDetailPanel(index);
+            ediCake.setVisible(false);
+            added.setVisible(true);
+        }
+        else if (click.getSource() == addConfirm) {
+            int count = 12;
+            addCake.setVisible(false);
+            added.setVisible(true);
+            vnd.addNewItem(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan), addTag.getText(), addFlav.getText());
+            updateNewItemDetailPanel(count);
+            count++;
+        } 
+        else if (click.getSource() == delConfirm) {
+            delCake.setVisible(false);
+            added.setVisible(true);
+            vnd.deleteAnItem((parseFieldValue(delete)));
+            setupItemDetailPanel((parseFieldValue(delete)));
+        }
+        else if(click.getSource() == maintenanceB[2]) {
+            maintenanceMenuToggle(2);
+            vnd.setDefaults();
+        }
+        else if(click.getSource() == maintenanceB[3]) {
+            int profit = vnd.collectProfit();
+            colProfits.setText("Profit: "+ profit);
+            profit = 0;
+        }
+        else if(click.getSource() == maintenanceB[4]) {
+            String receipt = vnd.receipt();
+            colReceipt.setText(receipt);
+            receipt = " ";
         }
     }
 }
