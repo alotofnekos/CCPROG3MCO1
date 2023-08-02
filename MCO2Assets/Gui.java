@@ -67,6 +67,8 @@ public class Gui extends JFrame implements ActionListener {
     protected JButton deleCakeButton;
     protected JButton itemEditButton;
     protected JPanel added;
+    protected JTextArea canvas;
+    protected String occur;
 
     // Add cake variables
     protected JButton addConfirm;
@@ -823,10 +825,15 @@ public class Gui extends JFrame implements ActionListener {
  */
     public void cakeAdded() {
         added = new JPanel();
+        canvas = new JTextArea();
+        canvas.setEditable(false);
+        canvas.setLineWrap(true);
+        canvas.setWrapStyleWord(true);
+
+        added.add(canvas);
         added.setBounds(400, 50, 600, 450);
         added.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         added.setLayout(new GridLayout(0,1,1,0));
-        added.add(new JLabel("Values Changed"));
         added.setVisible(false);
         add(added);
     }
@@ -1030,8 +1037,11 @@ public class Gui extends JFrame implements ActionListener {
         }
         // Delete nth Cake using Index
         else if (click.getSource() == delConfirm) {
-            vnd.deleteACake((parseFieldValue(delete)-1));
-            setupItemDetailPanel((parseFieldValue(delete)-1));
+            occur = vnd.deleteACake((parseFieldValue(delete)));
+            setupItemDetailPanel((parseFieldValue(delete)));
+            canvas.setText(occur);
+            delCake.setVisible(false);
+            added.setVisible(true);
         }
         // Item Buttons in Vending
         else {
@@ -1057,3 +1067,4 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 }
+
