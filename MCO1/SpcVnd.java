@@ -1,5 +1,7 @@
 import java.util.ArrayList;
-
+/**
+ * This handles the workings of the special vending machine.
+ */
 public class SpcVnd extends RgVnd {
     private SpcStock spcItemStock;
     private SpcStock spcItemSold;
@@ -298,6 +300,7 @@ public class SpcVnd extends RgVnd {
      * @param choice tells which parameter to edit (11 for name, 12 for description)
      * @param index the index of the item to be edited
      * @param value the new value
+     * @return the transaction message
      */
     public String editItem(int choice, int index, String value){
         String output="";
