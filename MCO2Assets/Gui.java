@@ -826,7 +826,7 @@ public class Gui extends JFrame implements ActionListener {
         added.setBounds(400, 50, 600, 450);
         added.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         added.setLayout(new GridLayout(0,1,1,0));
-        added.add(new JLabel("Values Added"));
+        added.add(new JLabel("Values Changed"));
         added.setVisible(false);
         add(added);
     }
