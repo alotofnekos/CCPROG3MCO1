@@ -28,7 +28,7 @@ public class SpcGui extends Gui {
     private JPanel addItem;
     private JPanel delItem;
     private JPanel ediItem;
-    private int wMenu;
+    private JButton delSpcConfirm;
     /**
      * Constructor for the SpcGui class.
      *
@@ -503,12 +503,12 @@ public class SpcGui extends Gui {
         formatter.setAllowsInvalid(false); // Only allow valid integers
 
         delete = new JFormattedTextField(formatter);
-        delConfirm = new JButton("Confirm");
-        delConfirm.addActionListener(this);
+        delSpcConfirm = new JButton("Confirm");
+        delSpcConfirm.addActionListener(this);
 
         delItem.add(new JLabel("Insert Item Number To Delete"));
         delItem.add(delete);
-        delItem.add(delConfirm);
+        delItem.add(delSpcConfirm);
         delItem.setVisible(false);
     }
     /**
@@ -678,7 +678,7 @@ public class SpcGui extends Gui {
         else if (click.getSource() == spcAddItemButton) {
             spcItemMenuToggle(3);
         }
-        else if ((click.getSource() == editConfirmItem) && wMenu == 2) {
+        else if (click.getSource() == editConfirmItem) {
             String editValString = vari.getText();
             int editVal = parseFieldValue(vari);
             int choice;
@@ -711,7 +711,7 @@ public class SpcGui extends Gui {
             ediItem.setVisible(false);
             added.setVisible(true);
         }
-        else if ((click.getSource() == addConfirm) && wMenu == 2) {
+        else if (click.getSource() == addConfirm) {
             int count = 12;
             addItem.setVisible(false);
             added.setVisible(true);
@@ -719,62 +719,11 @@ public class SpcGui extends Gui {
             setupSpcItemInfoPanel(count);
             count++;
         } 
-        else if ((click.getSource() == delConfirm) && wMenu == 2) {
+        else if (click.getSource() == delSpcConfirm) {
             delItem.setVisible(false);
             added.setVisible(true);
             vnd.deleteAnItem((parseFieldValue(delete)));
             spcUpdateItemDetailPanel((parseFieldValue(delete)));
-        }
-        else if ((click.getSource() == editConfirmItem) && wMenu == 1) {
-            String editValString = vari.getText();
-            int editVal = parseFieldValue(vari);
-            int choice;
-            int index = (parseFieldValue(inde) - 1);
-            if(name.isSelected()) {
-                choice = 1;
-                vnd.editCake(choice, index, editValString);
-            }
-            else if(desc.isSelected()) {
-                choice = 2;
-                vnd.editCake(choice, index, editValString);
-            }
-            else if(calo.isSelected()) {
-                choice = 3;
-                vnd.editCake(choice, index, editVal);
-            }
-            else if(pric.isSelected()) {
-                choice = 4;
-                vnd.editCake(choice, index, editVal);
-            }
-            else if(quaA.isSelected()) {
-                choice = 5;
-                vnd.editCake(choice, index, editVal);
-            }
-            else if(quaM.isSelected()) {
-                choice = 6;
-                vnd.editCake(choice, index, editVal);
-            }
-            updateItemDetailPanel(index);
-            ediCake.setVisible(false);
-            added.setVisible(true);
-        }
-        else if ((click.getSource() == addConfirm) && wMenu == 1) {
-            int count = 10;
-            vnd.addNewCake(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan));
-            updateNewItemDetailPanel(count);
-            addCake.setVisible(false);
-            added.setVisible(true);
-            count++;
-        } 
-        else if ((click.getSource() == delConfirm) && wMenu == 1) {
-            vnd.deleteACake((parseFieldValue(delete)-1));
-            setupItemDetailPanel((parseFieldValue(delete)-1));
-            delCake.setVisible(false);
-            added.setVisible(true);
-        }
-        else if(click.getSource() == maintenanceB[1]) {
-            maintenanceMenuToggle(1);
-            wMenu = 1;
         }
         else if(click.getSource() == maintenanceB[3]) {
             maintenanceMenuToggle(3);
@@ -790,7 +739,6 @@ public class SpcGui extends Gui {
         }
         else if(click.getSource() == maintenanceB[5]) {
             maintenanceMenuToggle(5);
-            wMenu = 2;
         }
     }
 }
