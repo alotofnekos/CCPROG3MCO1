@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Runs the entire vending machine GUI
+ */
 public class Main extends JFrame implements ActionListener {
     private JButton regularVndButton;
     private JButton specialVndButton;
