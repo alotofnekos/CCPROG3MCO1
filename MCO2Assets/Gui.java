@@ -134,15 +134,15 @@ public class Gui extends JFrame implements ActionListener {
         buttons = new JButton[20];
         vendingP = new JPanel[20];
         // Maintenance menu initialization
-        maintenanceB = new JButton[5];
-        maintenanceP = new JPanel[5];
-        maintenanceL = new JLabel[5];
-        mainMainP = new JPanel[5];
+        maintenanceB = new JButton[6];
+        maintenanceP = new JPanel[6];
+        maintenanceL = new JLabel[6];
+        mainMainP = new JPanel[6];
         addCake = new JPanel();
         delCake = new JPanel();
         ediCake = new JPanel();
-        itemEditButton = new JButton("Item Edit Menu");
-        deleCakeButton = new JButton("Item Delete");
+        itemEditButton = new JButton("Cake Edit Menu");
+        deleCakeButton = new JButton("Delete Cake");
         addCakeButton = new JButton("Add Cake");
         // Purchase record initialization
         indexBought = new String[100];
@@ -371,6 +371,7 @@ public class Gui extends JFrame implements ActionListener {
     public void updateItemDetailPanel(int itemIndex) {
         String itemInfo = vnd.getCakeDetails(itemIndex);
         itemInfoTextArea[itemIndex].setText(itemInfo);
+        itemInfoTextArea[itemIndex].setEditable(false);
     }
 /**
  * Loads and resizes an image file to create an ImageIcon with the specified width and height.
@@ -573,7 +574,7 @@ public class Gui extends JFrame implements ActionListener {
         delConfirm = new JButton("Confirm");
         delConfirm.addActionListener(this);
 
-        delCake.add(new JLabel("Insert Cake Number To Delete [1-36]"));
+        delCake.add(new JLabel("Insert Cake Number To Delete"));
         delCake.add(delete);
         delCake.add(delConfirm);
         delCake.setVisible(false);
@@ -756,6 +757,10 @@ public class Gui extends JFrame implements ActionListener {
  * @param chosen The index of the maintenance menu panel to be made visible.
  */
     public void maintenanceMenuToggle(int Chosen) {
+        addCake.setVisible(false);
+        delCake.setVisible(false);
+        ediCake.setVisible(false);
+        
         for(int i = 0; i < 5; i++){
             mainMainP[i].setVisible(false);
         }
@@ -1017,7 +1022,7 @@ public class Gui extends JFrame implements ActionListener {
         // Add Coins Into The System
         else if (click.getSource() == editConfirmCoin) {
             int Bills[] = {parseFieldValue(p10), parseFieldValue(p20), parseFieldValue(p50), parseFieldValue(p100), parseFieldValue(p200), parseFieldValue(p500)};
-            inVisible();
+            mainMainP[0].setVisible(false);
             added.setVisible(true);
             vnd.billMaintenance(Bills);
         }
