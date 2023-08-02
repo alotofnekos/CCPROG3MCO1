@@ -383,6 +383,9 @@ public class SpcGui extends Gui {
     */
     @Override
     public void maintenanceMenuToggle(int Chosen) {
+
+        added.setVisible(false);
+        
         addCake.setVisible(false);
         delCake.setVisible(false);
         ediCake.setVisible(false);
@@ -405,6 +408,7 @@ public class SpcGui extends Gui {
         for(int i = 0; i < 6; i++){
             mainMainP[i].setVisible(false);
         }
+
         delItem.setVisible(false);
         addItem.setVisible(false);
         ediItem.setVisible(false);
@@ -751,20 +755,22 @@ public class SpcGui extends Gui {
                 vnd.editCake(choice, index, editVal);
             }
             updateItemDetailPanel(index);
-            ediItem.setVisible(false);
+            ediCake.setVisible(false);
             added.setVisible(true);
         }
         else if ((click.getSource() == addConfirm) && wMenu == 1) {
             int count = 10;
-            addItem.setVisible(false);
-            added.setVisible(true);
             vnd.addNewCake(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan));
             updateNewItemDetailPanel(count);
+            addCake.setVisible(false);
+            added.setVisible(true);
             count++;
         } 
         else if ((click.getSource() == delConfirm) && wMenu == 1) {
             vnd.deleteACake((parseFieldValue(delete)-1));
             setupItemDetailPanel((parseFieldValue(delete)-1));
+            delCake.setVisible(false);
+            added.setVisible(true);
         }
         else if(click.getSource() == maintenanceB[1]) {
             maintenanceMenuToggle(1);
