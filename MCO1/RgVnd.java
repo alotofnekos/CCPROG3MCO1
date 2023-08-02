@@ -19,11 +19,17 @@ public class RgVnd {
         vndItemSold = new RgStock();
         vndItemStock = new RgStock();
     }
-
+/**
+ * Clears the user's wallet
+ */
     public void clearUserWallet(){
         userWallet.clearWallet();        
     }
-
+/**
+ * Gets the cake details
+ * @param cakeIndex the index of the cake to be shown
+ * @return the cake details
+ */
     public String getCakeDetails(int cakeIndex){
         return vndItemStock.displayDetails(cakeIndex);
     }
@@ -161,6 +167,7 @@ public class RgVnd {
     }
 /**
  * Collects the current profit of the vending machine, and clears the reciept since profit has been obtained already.
+ * @return the profit collected
  */
     public int collectProfit(){
         int vendProfit = profit;
@@ -170,7 +177,9 @@ public class RgVnd {
         return vendProfit;
     }
 /**
- * Displays the menu, the list of items available to be bought at that moment.
+ * Gets the name of the cake at index
+ * @param index the index of the cake
+ * @return the name of the cake
  */
     public String getCakeName(int index){
         return vndItemStock.getCakeName(index);
