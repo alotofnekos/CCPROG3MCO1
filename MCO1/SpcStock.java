@@ -235,7 +235,7 @@ public class SpcStock {
         public int countItems() {
                 int intLoop;
                 int intCounter = 11;
-                for (intLoop = 11; intLoop < 20; intLoop++) {
+                for (intLoop = 11; intLoop < 16; intLoop++) {
                     if (!spitem[intLoop].getName().equals(" ")) {
                         intCounter = intCounter + 1;
                     }
