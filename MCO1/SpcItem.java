@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Handles an instance of a Cake add-on
+ */
 public class SpcItem extends RgItem {
     private ArrayList<String> incompatibleCakes;
     private String tag;
