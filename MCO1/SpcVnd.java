@@ -64,10 +64,12 @@ public class SpcVnd extends RgVnd {
         }
 
         output = output.concat("Total amount inserted: " +totalUserBill+"\n");
-        if(cakeIndex==-1){
+        if (cakeIndex == -1) {
             for (int i = 0; i < itemIndex.size(); i++) {
-                if(spcItemStock.getItemName(i).contains("Upgrade")||spcItemStock.getItemName(i).contains("Ice Cream")){
-                    output = output.concat(spcItemStock.getItemName(i) + "Cannot be bought by itself. Please try again.\n");
+                int index = itemIndex.get(i);
+                String itemName = spcItemStock.getItemName(index);
+                if (itemName.contains("Upgrade") || itemName.contains("Ice Cream")) {
+                    output = output.concat(itemName + " cannot be bought by itself. Please try again.\n");
                     return output;
                 }
             }
@@ -75,8 +77,8 @@ public class SpcVnd extends RgVnd {
                 int index = itemIndex.get(i);
                 totalPrice += spcItemStock.getItemPrice(index);
             }
-
         }
+        
         else{
             isItemValid = vndItemStock.validItem(cakeIndex);
             if (!isItemValid) {
@@ -86,20 +88,18 @@ public class SpcVnd extends RgVnd {
             }
 
             // Check if all special items are valid
-            for (int i = 0; i < itemIndex.size(); i++) {
-                int index = itemIndex.get(i);
-                isAddOnValid = (spcItemStock.validItem(index) && spcItemStock.isCompatible(index, vndItemStock.getCakeName(cakeIndex)));
-                if (!isAddOnValid) {
-                    output = output.concat("Special item " + spcItemStock.getItemName(index) + " is out of stock or is incompatible with the cake. Please try again.\n");
-                    userWallet.clearWallet();
-                    return output;
+            if (cakeIndex == -1) {
+                for (int i = 0; i < itemIndex.size(); i++) {
+                    int index = itemIndex.get(i); 
+                    if (spcItemStock.getItemName(index).contains("Upgrade") || spcItemStock.getItemName(index).contains("Ice Cream")) {
+                        output = output.concat(spcItemStock.getItemName(index) + "Cannot be bought by itself. Please try again.\n");
+                        return output;
+                    }
                 }
-            }
-
-            totalPrice = vndItemStock.getCakePrice(cakeIndex);
-            for (int i = 0; i < itemIndex.size(); i++) {
-                int index = itemIndex.get(i);
-                totalPrice += spcItemStock.getItemPrice(index);
+                for (int i = 0; i < itemIndex.size(); i++) {
+                    int index = itemIndex.get(i);
+                    totalPrice += spcItemStock.getItemPrice(index);
+                }
             }
         }
         if (canGiveChange == false) {
