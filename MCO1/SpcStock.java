@@ -164,6 +164,7 @@ public class SpcStock {
      * Adds an amount value to Item at index.
      * @param index the index of the Item to be edited
      * @param value the amount to be added
+     * @return transaction details
      */
         public String addInt(int index, int value){
             String output="";
@@ -180,6 +181,7 @@ public class SpcStock {
      * Subtracts an amount value to Item at index.
      * @param index the index of the Item to be edited
      * @param value the amount to be subtracted
+     * @return transaction details
      */
         public String subInt(int index, int value){
             String output="";
@@ -245,7 +247,7 @@ public class SpcStock {
     /**
      * Transfer a Item to another inventory when its bought
      *
-     * @param rgStock Where the Item is to be transferred. 
+     * @param spcStock Where the Item is to be transferred. 
      * @param index The position of the Item in the spitem[] array
      *
      */
@@ -318,5 +320,3 @@ public class SpcStock {
             return spitem[index].getFlavorText();
         }
 }
-
-
