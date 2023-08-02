@@ -196,6 +196,8 @@ public class Gui extends JFrame implements ActionListener {
         initializeUserOptions();
         createMenu();
         setupMainFrame();
+
+        vendingMachinePanel();
     }
 /**
  * This method sets up the main frame of the vending machine user interface.
