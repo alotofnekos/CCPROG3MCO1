@@ -534,7 +534,7 @@ public class Gui extends JFrame implements ActionListener {
 
         addName = new JFormattedTextField();
         addDesc = new JFormattedTextField();
-        addCalo = new JFormattedTextField();
+        addCalo = new JFormattedTextField(formatter);
         addPric = new JFormattedTextField(formatter);
         addQuan = new JFormattedTextField(formatter);
         addConfirm = new JButton("Confirm");
