@@ -241,8 +241,7 @@ public class SpcGui extends Gui {
             JOptionPane.showMessageDialog(null, result+"\nPlease reselect the cake, the add ons, and add bills before trying to buy again.","Purchase failed!", JOptionPane.INFORMATION_MESSAGE);
         }
         total = 0;
-        totalPrice=0;
-        previousCake =0;
+        totalPrice = 0;
         for(int j=0;j<buttons.length;j++){
             buttons[j].setBackground(Color.LIGHT_GRAY);
         }
@@ -440,7 +439,6 @@ public class SpcGui extends Gui {
     @Override
     public void updateNewItemDetailPanel(int itemIndex) {
         // Create a JTextArea to display the item information
-        spcButtons[itemIndex].setText("Addon#" + (itemIndex+1));
 
         spcItemInfoTextArea[itemIndex] = new JTextArea();
         spcItemInfoTextArea[itemIndex].setEditable(false);
@@ -448,13 +446,13 @@ public class SpcGui extends Gui {
         spcItemInfoTextArea[itemIndex].setWrapStyleWord(true);
 
         // Get the item information using getItemInfoString() method
-        String itemInfo = vnd.getCakeDetails(itemIndex);
+        String itemInfo = vnd.getItemDetails(itemIndex);
 
         // Set the item information as the text of the JTextArea
         spcItemInfoTextArea[itemIndex].setText(itemInfo);
 
         // Add the JTextArea to the SOUTH of the spcVendingP panel
-        spcVendingP[itemIndex].add(itemInfoTextArea[itemIndex], BorderLayout.SOUTH);
+        spcVendingP[itemIndex].add(spcItemInfoTextArea[itemIndex], BorderLayout.SOUTH);
 
         spcVendingP[itemIndex].setVisible(false);
         add(spcVendingP[itemIndex]);
@@ -531,7 +529,7 @@ public class SpcGui extends Gui {
             addCake.setVisible(false);
             added.setVisible(true);
             vnd.addNewItem(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan), addTag.getText(), addFlav.getText());
-            updateNewItemDetailPanel(count);
+            setupItemDetailPanel(count);
             count++;
         } 
         else if (click.getSource() == delConfirm) {
@@ -556,3 +554,4 @@ public class SpcGui extends Gui {
         }
     }
 }
+
