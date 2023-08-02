@@ -758,7 +758,7 @@ public class Gui extends JFrame implements ActionListener {
 /**
  * Toggles the visibility of maintenance menu panels based on the chosen option.
  * 
- * @param chosen The index of the maintenance menu panel to be made visible.
+ * @param Chosen The index of the maintenance menu panel to be made visible.
  */
     public void maintenanceMenuToggle(int Chosen) {
         addCake.setVisible(false);
@@ -773,7 +773,7 @@ public class Gui extends JFrame implements ActionListener {
 /**
  * Toggles the visibility of item menu panels based on the chosen option.
  * 
- * @param chosen The index of the item menu panel to be made visible.
+ * @param Chosen The index of the item menu panel to be made visible.
  */
     public void itemMenuToggle(int Chosen) {
         for(int i = 0; i < 5; i++){
