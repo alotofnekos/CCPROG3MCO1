@@ -59,38 +59,38 @@ public class Gui extends JFrame implements ActionListener {
     protected JFormattedTextField p200;
     protected JFormattedTextField p500;
 
-    //Item maintenance variables
-    protected JPanel addCake;
-    protected JPanel delCake;
-    protected JPanel ediCake;
+    // Cake maintenance variables
     protected JButton addCakeButton;
     protected JButton deleCakeButton;
     protected JButton itemEditButton;
+    protected JPanel addCake;
+    protected JPanel delCake;
+    protected JPanel ediCake;
+
+    // Notification variables
     protected JPanel added;
     protected JTextArea canvas;
     protected String occur;
 
     // Add cake variables
-    protected JButton addConfirm;
     protected JFormattedTextField addName;
     protected JFormattedTextField addDesc;
     protected JFormattedTextField addCalo;
     protected JFormattedTextField addPric;
     protected JFormattedTextField addQuan;
+    protected JButton addConfirm;
 
     // Edit cake variables
-    protected JButton editConfirmItem;
     protected ButtonGroup editRadioButtons;
-    protected JFormattedTextField inde;
-    protected JFormattedTextField vari;
-    
-    // Item edit variables
     protected JRadioButton name;
     protected JRadioButton desc;
     protected JRadioButton calo;
     protected JRadioButton pric;
     protected JRadioButton quaA;
     protected JRadioButton quaM;
+    protected JFormattedTextField inde;
+    protected JFormattedTextField vari;
+    protected JButton editConfirmItem;
 
     // Delete cake variables
     protected JFormattedTextField delete;
@@ -1041,9 +1041,10 @@ public class Gui extends JFrame implements ActionListener {
         // Add Coins Into The System
         else if (click.getSource() == editConfirmCoin) {
             int Bills[] = {parseFieldValue(p10), parseFieldValue(p20), parseFieldValue(p50), parseFieldValue(p100), parseFieldValue(p200), parseFieldValue(p500)};
-            mainMainP[0].setVisible(false);
-            added.setVisible(true);
             vnd.billMaintenance(Bills);
+            mainMainP[0].setVisible(false);
+            canvas.setText("Money Added");
+            added.setVisible(true);
         }
         // Item Buttons in Vending
         else {
@@ -1069,4 +1070,3 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 }
-
