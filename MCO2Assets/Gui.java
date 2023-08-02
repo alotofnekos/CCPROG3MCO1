@@ -993,55 +993,57 @@ public class Gui extends JFrame implements ActionListener {
             int index = (parseFieldValue(inde) - 1);
             if(name.isSelected()) {
                 choice = 1;
-                vnd.editCake(choice, index, editValString);
+                occur = vnd.editCake(choice, index, editValString);
             }
             else if(desc.isSelected()) {
                 choice = 2;
-                vnd.editCake(choice, index, editValString);
+                occur = vnd.editCake(choice, index, editValString);
             }
             else if(calo.isSelected()) {
                 choice = 3;
-                vnd.editCake(choice, index, editVal);
+                occur = vnd.editCake(choice, index, editVal);
             }
             else if(pric.isSelected()) {
                 choice = 4;
-                vnd.editCake(choice, index, editVal);
+                occur = vnd.editCake(choice, index, editVal);
             }
             else if(quaA.isSelected()) {
                 choice = 5;
-                vnd.editCake(choice, index, editVal);
+                occur = vnd.editCake(choice, index, editVal);
             }
             else if(quaM.isSelected()) {
                 choice = 6;
-                vnd.editCake(choice, index, editVal);
+                occur = vnd.editCake(choice, index, editVal);
             }
             updateItemDetailPanel(index);
+            canvas.setText(occur);
             ediCake.setVisible(false);
             added.setVisible(true);
         }
         // Add New Cake Into The System
         else if (click.getSource() == addConfirm) {
             int count = 10;
+            occur = vnd.addNewCake(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan));
+            updateNewItemDetailPanel(count);
+            canvas.setText(occur);
             addCake.setVisible(false);
             added.setVisible(true);
-            vnd.addNewCake(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan));
-            updateNewItemDetailPanel(count);
             count++;
         } 
+        // Delete nth Cake using Index
+        else if (click.getSource() == delConfirm) {
+            occur = vnd.deleteACake((parseFieldValue(delete))-1);
+            setupItemDetailPanel((parseFieldValue(delete))-1);
+            canvas.setText(occur);
+            delCake.setVisible(false);
+            added.setVisible(true);
+        }
         // Add Coins Into The System
         else if (click.getSource() == editConfirmCoin) {
             int Bills[] = {parseFieldValue(p10), parseFieldValue(p20), parseFieldValue(p50), parseFieldValue(p100), parseFieldValue(p200), parseFieldValue(p500)};
             mainMainP[0].setVisible(false);
             added.setVisible(true);
             vnd.billMaintenance(Bills);
-        }
-        // Delete nth Cake using Index
-        else if (click.getSource() == delConfirm) {
-            occur = vnd.deleteACake((parseFieldValue(delete)));
-            setupItemDetailPanel((parseFieldValue(delete)));
-            canvas.setText(occur);
-            delCake.setVisible(false);
-            added.setVisible(true);
         }
         // Item Buttons in Vending
         else {
