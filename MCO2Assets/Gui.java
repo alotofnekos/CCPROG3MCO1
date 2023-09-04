@@ -112,7 +112,7 @@ public class Gui extends JFrame implements ActionListener {
 
     //NOT FOR GUI
     protected int[] vndBills = {0, 0, 0, 0, 0, 0};
-    protected RgVnd vnd = new RgVnd();
+    private RgVnd vnd = new RgVnd();
     protected int selectedCake =-1;
     protected int total = 0;
     protected int totalPrice = 0;
@@ -164,7 +164,6 @@ public class Gui extends JFrame implements ActionListener {
             i++;
         }
         
-      
         itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\AppleCrumble2.jpg");
         itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\BlackForestCake1.jpg");
         itemImageFileNames.add("C:\\Users\\Angel\\Downloads\\CCPROG3MCO1\\MCO2Assets\\PremiumChocolateCake3.jpg");
@@ -373,6 +372,9 @@ public class Gui extends JFrame implements ActionListener {
  * @param itemIndex The index of the item in the vendingP array.
  */
     public void updateItemDetailPanel(int itemIndex) {
+        if(itemIndex==-1){
+            return;
+        }
         String itemInfo = vnd.getCakeDetails(itemIndex);
         itemInfoTextArea[itemIndex].setText(itemInfo);
         itemInfoTextArea[itemIndex].setEditable(false);
@@ -670,6 +672,9 @@ public class Gui extends JFrame implements ActionListener {
  * @param itemIndex The index of the cake item that was purchased.
  */
     public void recordPurchase(int itemIndex) {
+        if(itemIndex==-1){
+            return;
+        }
         String itemInfo = vnd.getCakeDetails(itemIndex);
         indexBought[bought] = itemInfo;
         bought++;
@@ -925,7 +930,9 @@ public class Gui extends JFrame implements ActionListener {
         total = 0;
         totalPrice =0;
         previousCake =0;
-        itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
+        if(selectedCake!=-1){
+           itemInfoTextArea[selectedCake].setText(vnd.getCakeDetails(selectedCake));
+        }
         selectedCake = -1;
         for(int j=0;j<buttons.length;j++){
             buttons[j].setBackground(Color.LIGHT_GRAY);
