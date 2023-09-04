@@ -310,6 +310,7 @@ public class SpcGui extends Gui {
         }
         total = 0;
         totalPrice = 0;
+        previousCake=0;
         for(int j=0;j<buttons.length;j++){
             buttons[j].setBackground(Color.LIGHT_GRAY);
         }
@@ -391,7 +392,7 @@ public class SpcGui extends Gui {
     }
     /**
     * Overrieds and retrieves the maintenance label for the specified index.
-    *
+    * 
     * @param index The index of the maintenance label.
     * @return The maintenance label corresponding to the given index.
     */
@@ -690,8 +691,131 @@ public class SpcGui extends Gui {
      */
     @Override
     public void actionPerformed(ActionEvent click) { 
-
-        super.actionPerformed(click);
+        if (click.getSource() == initializeMachine) {
+            vendingMachinePanel();
+        } 
+        else if (click.getSource() == itemMaintenance) {
+            maintenanceMenu();
+        } 
+        // Buy Item
+        else if (click.getSource() == buy) {
+            buy();
+        } 
+        // Maintenance Menu Options
+        else if (click.getSource() == maintenanceB[0]) {
+            maintenanceMenuToggle(0);
+        } 
+        else if (click.getSource() == maintenanceB[1]) {
+            maintenanceMenuToggle(1);
+        } 
+        else if (click.getSource() == maintenanceB[2]) {
+            maintenanceMenuToggle(2);
+            vnd.setDefaults();
+        } 
+        else if (click.getSource() == maintenanceB[3]) {
+            maintenanceMenuToggle(3);
+            profit = vnd.collectProfit();
+            colProfits.setText("Profit: "+ profit);
+            profit = 0;
+        } 
+        else if (click.getSource() == maintenanceB[4]) {
+            maintenanceMenuToggle(4);
+            receipt = vnd.receipt();
+            colReceipt.setText(receipt);
+            receipt = " ";
+        } 
+        // Item Maintenance Menu Options
+        else if (click.getSource() == itemEditButton) {
+            itemMenuToggle(1);
+        } 
+        else if (click.getSource() == deleCakeButton) {
+            itemMenuToggle(2);
+        } 
+        else if (click.getSource() == addCakeButton) {
+            itemMenuToggle(3);
+        } 
+        // Item Editing Allocation
+        else if (click.getSource() == editConfirmItem) {
+            String editValString = vari.getText();
+            int editVal = parseFieldValue(vari);
+            int choice;
+            int index = (parseFieldValue(inde) - 1);
+            if(name.isSelected()) {
+                choice = 1;
+                occur = vnd.editCake(choice, index, editValString);
+            }
+            else if(desc.isSelected()) {
+                choice = 2;
+                occur = vnd.editCake(choice, index, editValString);
+            }
+            else if(calo.isSelected()) {
+                choice = 3;
+                occur = vnd.editCake(choice, index, editVal);
+            }
+            else if(pric.isSelected()) {
+                choice = 4;
+                occur = vnd.editCake(choice, index, editVal);
+            }
+            else if(quaA.isSelected()) {
+                choice = 5;
+                occur = vnd.editCake(choice, index, editVal);
+            }
+            else if(quaM.isSelected()) {
+                choice = 6;
+                occur = vnd.editCake(choice, index, editVal);
+            }
+            updateItemDetailPanel(index);
+            canvas.setText(occur);
+            ediCake.setVisible(false);
+            added.setVisible(true);
+        }
+        // Add New Cake Into The System
+        else if (click.getSource() == addConfirm) {
+            int count = 10;
+            occur = vnd.addNewCake(addName.getText(), addDesc.getText(), parseFieldValue(addCalo), parseFieldValue(addPric), parseFieldValue(addQuan));
+            updateNewItemDetailPanel(count);
+            canvas.setText(occur);
+            addCake.setVisible(false);
+            added.setVisible(true);
+            count++;
+        } 
+        // Delete nth Cake using Index
+        else if (click.getSource() == delConfirm) {
+            occur = vnd.deleteACake((parseFieldValue(delete))-1);
+            setupItemDetailPanel((parseFieldValue(delete))-1);
+            canvas.setText(occur);
+            delCake.setVisible(false);
+            added.setVisible(true);
+        }
+        // Add Coins Into The System
+        else if (click.getSource() == editConfirmCoin) {
+            int Bills[] = {parseFieldValue(p10), parseFieldValue(p20), parseFieldValue(p50), parseFieldValue(p100), parseFieldValue(p200), parseFieldValue(p500)};
+            vnd.billMaintenance(Bills);
+            mainMainP[0].setVisible(false);
+            canvas.setText("Money Added");
+            added.setVisible(true);
+        }
+        // Item Buttons in Vending
+        else {
+            for (int i = 0; i < buttons.length; i++) {
+                if (click.getSource() == buttons[i] && menuInt == 0) {
+                    for(int j=0;j<buttons.length;j++){
+                        vendingP[j].setVisible(false);
+                        buttons[j].setBackground(Color.LIGHT_GRAY);
+                    }
+                    vendingP[i].setVisible(true);
+                    selectedCake = i;
+                    totalPrice -= previousCake;
+                    totalPrice += vnd.getCakePrice(i);
+                    previousCake = vnd.getCakePrice(i);
+                    amountTotal.setText( totalPrice + "Pesos");
+                    buttons[i].setBackground(Color.GREEN);
+                }
+            }
+            if (click.getSource() == coin && menuInt == 0) {
+                // Handle adding coins to the wallet
+                setUserWallet();
+            }
         for (int i = 0; i < spcButtons.length; i++) {
             if (click.getSource() == spcButtons[i] && menuInt == 0) {
                 for(int j=0;j<spcButtons.length;j++){
@@ -795,4 +919,5 @@ public class SpcGui extends Gui {
             maintenanceMenuToggle(5);
         }
     }
+}
 }
