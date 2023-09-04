@@ -66,6 +66,10 @@ public class SpcVnd extends RgVnd {
         }
 
         output = output.concat("Total amount inserted: " +totalUserBill+"\n");
+        if(totalUserBill==0){
+            output = output.concat("Please insert cash first before continuing your transaction");
+            return output;
+        }
         if (cakeIndex == -1) {
             for (int i = 0; i < itemIndex.size(); i++) {
                 int index = itemIndex.get(i);
@@ -88,7 +92,7 @@ public class SpcVnd extends RgVnd {
                 userWallet.clearWallet();
                 return output;
             }
-
+            totalPrice += vndItemStock.getCakePrice(cakeIndex);
             // Check if all special items are valid
             for (int i = 0; i < itemIndex.size(); i++) {
                 int index = itemIndex.get(i);
